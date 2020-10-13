@@ -1,7 +1,12 @@
 package ch.hearc.ariahelper.models
 
+import android.graphics.drawable.Drawable
+
 /**
- * To be done in other branch
+ * Simple data class, stock the full description/ID card of an item
  */
-class Item {
+data class Item(val name : String,
+                val description : String,
+                val value : MoneyValue,
+                val picture : Drawable){
 }
