@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.MoneyValueFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        tools:context=".ui.character.CharacterViewActivity">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/goldTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:text="@string/Zero_value" />
+
+        <ImageView
+            android:id="@+id/goldImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="2dp"
+            tools:srcCompat="@drawable/coin_icon" />
+
+        <TextView
+            android:id="@+id/silverTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:text="@string/Zero_value" />
+
+        <ImageView
+            android:id="@+id/silverImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="2dp"
+            tools:srcCompat="@drawable/coin_icon" />
+
+        <TextView
+            android:id="@+id/bronzeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:text="@string/Zero_value" />
+
+        <ImageView
+            android:id="@+id/bronzeImageView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="2dp"
+            tools:srcCompat="@drawable/coin_icon" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+</FrameLayout>
