@@ -32,12 +32,15 @@
                 android:id="@+id/fragment"
                 android:name="ch.hearc.ariahelper.ui.fragments.MoneyValueFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" >
+
+            </androidx.fragment.app.FragmentContainerView>
 
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
         </LinearLayout>
     </RelativeLayout>
 
@@ -47,7 +50,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/TopLayout"
         android:layout_alignParentStart="false"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="5dp">
 
         <Button
             android:id="@+id/button"
@@ -70,26 +75,22 @@
             android:layout_weight="1"
             android:text="Button" />
 
-        <ProgressBar
-            android:id="@+id/progressBar2"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/diceProgressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/buttonLayout" />
+        android:layout_below="@id/buttonLayout"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="5dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/attributesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/progressBar"
+        android:layout_below="@id/diceProgressBar"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:reverseLayout="true">
@@ -99,6 +100,7 @@
         android:id="@+id/skillsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/attributesRecyclerView" />
+        android:layout_below="@id/attributesRecyclerView"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 </RelativeLayout>
