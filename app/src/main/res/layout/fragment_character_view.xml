@@ -93,8 +93,7 @@
         android:layout_below="@id/diceProgressBar"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:reverseLayout="true">
-    </androidx.recyclerview.widget.RecyclerView>
+        app:reverseLayout="true"></androidx.recyclerview.widget.RecyclerView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/skillsRecyclerView"

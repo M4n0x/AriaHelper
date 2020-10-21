@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ch.hearc.ariahelper.R
+import ch.hearc.ariahelper.models.Attribute
+import ch.hearc.ariahelper.models.Character
+import ch.hearc.ariahelper.models.commonpool.AttributeBasicPool
+import kotlinx.android.synthetic.main.fragment_character_view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -18,16 +18,19 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class CharacterViewFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var attributeAdapter : AttributeRecViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+       // var dummyCharacter = Character("Jeanne")
+
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        attributeAdapter = AttributeRecViewAdapter(AttributeBasicPool.ATTRIBUTES)
+        attributesRecyclerView!!.adapter = attributeAdapter
     }
 
     override fun onCreateView(
@@ -47,13 +50,10 @@ class CharacterViewFragment : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment CharacterViewFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             CharacterViewFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
                 }
             }
     }
