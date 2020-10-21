@@ -22,4 +22,10 @@
         android:name="ch.hearc.ariahelper.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_lootdm"
+        android:name="ch.hearc.ariahelper.ui.loot.dm.ItemFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_slideshow" />
 </navigation>

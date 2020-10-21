@@ -7,6 +7,6 @@ import android.graphics.drawable.Drawable
  */
 data class Item(val name : String,
                 val description : String,
-                val value : MoneyValue,
-                val picture : Drawable){
+                val quality : Int,
+                val picture : String){
 }
