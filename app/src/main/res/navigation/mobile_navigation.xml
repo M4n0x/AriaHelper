@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="ch.hearc.ariahelper.ui.slideshow.SlideshowFragment"
+        android:name="ch.hearc.ariahelper.ui.fragments.MoneyValueFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_money_value" />
 </navigation>
