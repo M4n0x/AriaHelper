@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.Attribute
-import kotlinx.android.synthetic.main.attribute_recycler_view.view.*
+import kotlinx.android.synthetic.main.attribute_recycler_view_column.view.*
 
 class AttributeRecViewAdapter(private val attributes: MutableList<Attribute>) :
     RecyclerView.Adapter<AttributeRecViewAdapter.AttributeViewHolder>() {
 
+    /// Internal hodler class
     class AttributeViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         private var view: View = v
         private var attribute: Attribute? = null
@@ -21,14 +22,19 @@ class AttributeRecViewAdapter(private val attributes: MutableList<Attribute>) :
             view.valueTextView.text = attribute.value.toString()
         }
 
+        fun bindCustomCase(name : String, value : String){
+            this.attribute = null
+            view.nameTextView.text = name
+            view.valueTextView.text = value
+        }
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): AttributeRecViewAdapter.AttributeViewHolder {
+    ): AttributeViewHolder {
         val inflatedView = LayoutInflater.from(parent.context).inflate(
-            R.layout.attribute_recycler_view,
+            R.layout.attribute_recycler_view_column,
             parent,
             false
         )
@@ -36,14 +42,17 @@ class AttributeRecViewAdapter(private val attributes: MutableList<Attribute>) :
     }
 
     override fun onBindViewHolder(
-        holder: AttributeRecViewAdapter.AttributeViewHolder,
+        holder: AttributeViewHolder,
         position: Int
     ) {
-        holder.bindAttribute(attributes[position])
+        when(position){
+            in 0 until attributes.size -> holder.bindAttribute(attributes[position])
+            attributes.size -> holder.bindCustomCase("click", "ajouter")
+        }
     }
 
     override fun getItemCount(): Int {
-        return attributes.size
+        return attributes.size + 1
     }
 
 }

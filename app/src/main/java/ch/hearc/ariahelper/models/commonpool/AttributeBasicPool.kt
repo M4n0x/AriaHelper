@@ -14,7 +14,7 @@ object AttributeBasicPool {
             Attribute("charisme"),
             Attribute("intelligence"),
             Attribute("dextérité"),
-            Attribute("sagesse")
+            Attribute("sagesse"),
+            Attribute("agilité"),
         ) as MutableList<Attribute>
-
 }
