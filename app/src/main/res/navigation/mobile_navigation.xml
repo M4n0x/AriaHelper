@@ -9,7 +9,17 @@
         android:id="@+id/nav_home"
         android:name="ch.hearc.ariahelper.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_gallery"
+            app:destination="@id/nav_gallery" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_slideshow"
+            app:destination="@id/nav_slideshow" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_lootdm2"
+            app:destination="@id/nav_lootdm" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_gallery"
@@ -27,5 +37,15 @@
         android:id="@+id/nav_lootdm"
         android:name="ch.hearc.ariahelper.ui.loot.dm.ItemFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_item_list" >
+        <action
+            android:id="@+id/action_nav_lootdm_to_fragmenttLootDetail"
+            app:destination="@id/fragmenttLootDetail" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmenttLootDetail"
+        android:name="ch.hearc.ariahelper.ui.loot.dm.ItemDetailsFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_item_details" />
 </navigation>

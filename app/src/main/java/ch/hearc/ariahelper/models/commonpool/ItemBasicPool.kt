@@ -9,8 +9,12 @@ import java.util.ArrayList
  */
 object ItemBasicPool {
     val ITEMS: MutableList<Item> = listOf<Item>(
-        Item("Chaise de jardin", "Description", 1, "test"),
-        Item("Casque de Qualité Allemande", "Description", 2, "test")
+        Item("Chaise de jardin", "Description", 1, "ic_menu_camera"),
+        Item("Chaise de jardin", "Description", 1, "ic_menu_camera"),
+        Item("Chaise de jardin", "Description", 1, "ic_menu_camera"),
+        Item("Chaise de jardin", "Description", 1, "ic_menu_camera"),
+        Item("Chaise de jardin", "Description", 1, "ic_menu_camera"),
+        Item("Casque de Qualité Allemande", "Description", 2, "ic_menu_gallery")
     ) as MutableList<Item>
 
     init {

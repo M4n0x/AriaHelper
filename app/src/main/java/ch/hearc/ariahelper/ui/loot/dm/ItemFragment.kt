@@ -30,6 +30,8 @@ class ItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+
         val view = inflater.inflate(R.layout.fragment_item_list, container, false)
 
         // Set the adapter
@@ -39,9 +41,10 @@ class ItemFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = ItemRecyclerViewAdapter(ItemBasicPool.ITEMS)
+                adapter = ItemRecyclerViewAdapter(ItemBasicPool.ITEMS, context, this@ItemFragment)
             }
         }
+
         return view
     }
 
