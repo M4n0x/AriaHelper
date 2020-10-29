@@ -20,5 +20,5 @@ data class Character(val name: String,
                      val skillList : MutableList<Skill>) : Parcelable {
 
     //basic constructor with just a name
-    constructor(name: String) : this(name, 0, null, MoneyValue(0,0,0), ItemBasicPool.ITEMS, AttributeBasicPool.ATTRIBUTES, SkillBasicPool.SKILLS)
+    constructor(name: String) : this(name, 0, null, MoneyValue(0,0,0), ItemBasicPool.basicItems(), AttributeBasicPool.basicAttributes(), SkillBasicPool.basicSkills())
 }

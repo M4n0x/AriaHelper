@@ -8,21 +8,21 @@
 
     <ImageView
         android:id="@+id/goldImageView"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:contentDescription="@string/gold_coin_desc"
         android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/gold" />
+        app:srcCompat="@drawable/icone_gold" />
 
     <TextView
         android:id="@+id/goldTextView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:padding="2dp"
+        android:padding="5dp"
         android:text="@string/Zero_value"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,21 +31,21 @@
 
     <ImageView
         android:id="@+id/silverImageView"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:contentDescription="@string/silver_coin_desc"
         android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/goldTextView"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/silver" />
+        app:srcCompat="@drawable/icone_silver" />
 
     <TextView
         android:id="@+id/silverTextView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:padding="2dp"
+        android:padding="5dp"
         android:text="@string/Zero_value"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,21 +54,21 @@
 
     <ImageView
         android:id="@+id/bronzeImageView"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:contentDescription="@string/bronze_coin_desc"
         android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/silverTextView"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bronze" />
+        app:srcCompat="@drawable/icone_bronze" />
 
     <TextView
         android:id="@+id/bronzeTextView"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:padding="2dp"
+        android:padding="5dp"
         android:text="@string/Zero_value"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"

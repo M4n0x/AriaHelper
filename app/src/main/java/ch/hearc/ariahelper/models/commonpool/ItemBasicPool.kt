@@ -8,5 +8,7 @@ import java.util.ArrayList
  * Basic pool of items so that the app is not empty
  */
 object ItemBasicPool {
-    val ITEMS: MutableList<Item> = ArrayList<Item>()
+    public fun basicItems() : MutableList<Item> {
+        return mutableListOf()
+    }
 }

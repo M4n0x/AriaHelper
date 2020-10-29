@@ -8,4 +8,4 @@ import kotlinx.android.parcel.Parcelize
  * Value c [0;100]
  */
 @Parcelize
-data class Skill(val name : String, val description : String, val value : Int = 50) : Parcelable
+data class Skill(var name : String, var description : String, var value : Int = 50) : Parcelable

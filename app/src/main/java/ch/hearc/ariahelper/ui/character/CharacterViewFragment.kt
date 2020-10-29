@@ -8,11 +8,14 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.navGraphViewModels
 import ch.hearc.ariahelper.R
-import ch.hearc.ariahelper.models.commonpool.AttributeBasicPool
 import kotlinx.android.synthetic.main.fragment_character_view.*
 import ch.hearc.ariahelper.models.Character
+import ch.hearc.ariahelper.ui.character.adapters.AttributeRecViewAdapter
+import ch.hearc.ariahelper.ui.character.adapters.SkillRecViewAdapter
 
 
 /**
@@ -23,36 +26,45 @@ import ch.hearc.ariahelper.models.Character
 class CharacterViewFragment : Fragment() {
     private lateinit var attributeAdapter : AttributeRecViewAdapter
     private lateinit var skillAdapter : SkillRecViewAdapter
-    private lateinit var dummyCharacter : Character
+    private val characterViewModel : CharacterViewModel by navGraphViewModels(R.id.mobile_navigation) {
+        //defaultViewModelProviderFactory or the ViewModelProvider.Factory you are using.
+        defaultViewModelProviderFactory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //dummy for test : Retrieve from bundle later
-        dummyCharacter = Character("Jeanne")
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        var currentCharacter = characterViewModel.character.value!!
+
         //set adapter to attribute RV
-        attributeAdapter = AttributeRecViewAdapter(dummyCharacter.attributeList)
+        attributeAdapter = AttributeRecViewAdapter(currentCharacter.attributeList)
         attributesRecyclerView!!.adapter = attributeAdapter
 
         //set adapter to skill RV
-        skillAdapter = SkillRecViewAdapter(dummyCharacter.skillList)
+        skillAdapter = SkillRecViewAdapter(currentCharacter.skillList)
         skillsRecyclerView!!.adapter = skillAdapter
+
+        characterViewModel.character.observe(viewLifecycleOwner, Observer {
+            currentCharacter = characterViewModel.character.value!!
+            attributeAdapter.changeList(currentCharacter.attributeList)
+            skillAdapter.changeList(currentCharacter.skillList)
+        })
 
         //TODO change later - put progress as WIP
         diceProgressBar.setProgress(10, true)
 
         //put characters in spinner
-        //TODO link data of all characters here
-        val characterNames = arrayListOf("Jeanne D'arc", "Grand-Jean", "Atlan")
+        //TODO link names of all characters here
+        val characterNames = arrayListOf(currentCharacter.name, "Jeanne D'arc", "Grand-Jean", "Atlan")
 
-        val adapter = ArrayAdapter(requireContext(),
-            android.R.layout.simple_spinner_dropdown_item, characterNames)
-        spinner.adapter = adapter
+        spinner.adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_dropdown_item,
+            characterNames)
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -60,8 +72,10 @@ class CharacterViewFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                //TODO change character here
-                Log.i("CHARACTER CHANGED", "onItemSelected: " + characterNames[position])
+                if(characterNames[position] != currentCharacter.name){
+                    Log.i("change", "onItemSelected: change character")
+                    characterViewModel._character.postValue(Character(characterNames[position]))
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -77,18 +91,13 @@ class CharacterViewFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_character_view, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @return A new instance of fragment CharacterViewFragment.
-         */
-        @JvmStatic
-        fun newInstance() =
-            CharacterViewFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        buttonCharacterSettings.setOnClickListener {
+            val directions =
+                CharacterViewFragmentDirections.actionNavCharacterToCharacterSettingsFragment()
+            view.findNavController().navigate(directions)
+        }
     }
 }
