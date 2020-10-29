@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import ch.hearc.ariahelper.MainActivity
 import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.Item
 
@@ -24,7 +24,7 @@ import ch.hearc.ariahelper.models.Item
 class ItemRecyclerViewAdapter(
     private val values: List<Item>,
     private val context: Context,
-    private val source: Fragment
+    private var showSelect: Boolean,
 ) : RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -42,16 +42,32 @@ class ItemRecyclerViewAdapter(
         holder.idView.text = item.name
         holder.contentView.text = item.quality.toString()
         holder.imageView.setImageDrawable(this.getImage(context, item.picture))
+        holder.selectView.visibility = if (showSelect) View.VISIBLE else View.GONE
+
+        holder.itemView.setOnLongClickListener {
+            showSelect = !showSelect
+            this@ItemRecyclerViewAdapter.notifyDataSetChanged()
+            return@setOnLongClickListener true
+        }
 
         holder.itemView.setOnClickListener { view ->
-            val frag = ItemDetailsFragment()
-            val args = Bundle()
-            args.putParcelable("data", item)
-            frag.arguments = args
+            if (!showSelect) {
+                val args = Bundle()
+                args.putParcelable("data", item)
 
-            view.findNavController().navigate(R.id.action_nav_lootdm_to_fragmenttLootDetail, args)
+                view.findNavController().navigate(
+                    R.id.action_nav_lootdm_to_fragmenttLootDetail,
+                    args
+                )
+            } else {
+                holder.selectView.isChecked = !holder.selectView.isChecked
+            }
+
         }
+
     }
+
+
 
     private fun getImage(c: Context, ImageName: String?): Drawable? {
         return c.resources.getDrawable(
@@ -69,6 +85,7 @@ class ItemRecyclerViewAdapter(
         val idView: TextView = view.findViewById(R.id.itemName)
         val contentView: TextView = view.findViewById(R.id.ItemQuality)
         val imageView: ImageView = view.findViewById(R.id.itemImage)
+        val selectView: CheckBox = view.findViewById(R.id.itemSelected)
 
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"

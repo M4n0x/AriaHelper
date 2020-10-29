@@ -27,14 +27,9 @@ class ItemDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
         val view = inflater.inflate(R.layout.fragment_item_details, container, false)
-
         val title : TextView = view.findViewById(R.id.itemTitle)
-
-
         val viewHolder: ViewHolder = ViewHolder(view)
-
 
         val item : Item? = arguments?.getParcelable("data")
         if (item != null) {
@@ -46,8 +41,6 @@ class ItemDetailsFragment : Fragment() {
             }
 
         }
-
-
 
         return view
     }

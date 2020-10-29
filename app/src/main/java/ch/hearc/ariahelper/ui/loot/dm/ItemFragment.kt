@@ -17,13 +17,11 @@ import ch.hearc.ariahelper.models.commonpool.ItemBasicPool
 class ItemFragment : Fragment() {
 
     private var columnCount = 1
+    var showSelect : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        arguments?.let {
-            columnCount = it.getInt(ARG_COLUMN_COUNT)
-        }
     }
 
     override fun onCreateView(
@@ -31,6 +29,9 @@ class ItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        arguments?.let {
+            showSelect = it.getBoolean("isSelect")
+        }
 
         val view = inflater.inflate(R.layout.fragment_item_list, container, false)
 
@@ -41,7 +42,7 @@ class ItemFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = ItemRecyclerViewAdapter(ItemBasicPool.ITEMS, context, this@ItemFragment)
+                adapter = ItemRecyclerViewAdapter(ItemBasicPool.ITEMS, context, showSelect)
             }
         }
 
@@ -51,7 +52,7 @@ class ItemFragment : Fragment() {
     companion object {
 
         // TODO: Customize parameter argument names
-        const val ARG_COLUMN_COUNT = "column-count"
+        private const val ARG_COLUMN_COUNT = "column-count"
 
         // TODO: Customize parameter initialization
         @JvmStatic
