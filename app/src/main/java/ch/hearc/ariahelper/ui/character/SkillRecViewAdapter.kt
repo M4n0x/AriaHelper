@@ -5,11 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ch.hearc.ariahelper.R
-import ch.hearc.ariahelper.models.Attribute
 import ch.hearc.ariahelper.models.Skill
-import kotlinx.android.synthetic.main.attribute_recycler_view_column.view.*
-import kotlinx.android.synthetic.main.attribute_recycler_view_column.view.nameTextView
-import kotlinx.android.synthetic.main.attribute_recycler_view_column.view.valueTextView
 import kotlinx.android.synthetic.main.skill_recycler_view_row.view.*
 
 class SkillRecViewAdapter (private val skills: MutableList<Skill>) :

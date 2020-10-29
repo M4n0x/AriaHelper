@@ -9,12 +9,12 @@ import java.util.ArrayList
  */
 object AttributeBasicPool {
     val ATTRIBUTES: MutableList<Attribute> =
-        listOf<Attribute>(
+        mutableListOf<Attribute>(
             Attribute("force"),
             Attribute("charisme"),
             Attribute("intelligence"),
             Attribute("dextérité"),
             Attribute("sagesse"),
             Attribute("agilité"),
-        ) as MutableList<Attribute>
+        )
 }

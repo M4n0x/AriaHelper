@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -28,13 +33,27 @@
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_marginStart="16dp"
-            android:padding="10dp"
+            android:background="@drawable/rectangle_border"
+            android:padding="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintBottom_toTopOf="@id/fragment"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/buttonCharacterSettings"
             app:layout_constraintStart_toEndOf="@+id/characterImageView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/buttonCharacterSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/button_settings_description"
+            android:foregroundGravity="center"
+            android:src="@drawable/settings_icon"
+            app:layout_constraintBottom_toTopOf="@id/fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/spinner"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.fragment.app.FragmentContainerView
@@ -42,7 +61,7 @@
             android:name="ch.hearc.ariahelper.ui.fragments.MoneyValueFragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginVertical="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/characterImageView"
             app:layout_constraintTop_toBottomOf="@id/spinner">
@@ -81,6 +100,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle_border_left"
                     android:gravity="center"
+                    android:padding="3dp"
                     android:text="@string/dice_value_6"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/textViewD10"
@@ -93,6 +113,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle_border"
                     android:gravity="center"
+                    android:padding="3dp"
                     android:text="@string/dice_value_10"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/textViewD100"
@@ -105,6 +126,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rectangle_border_right"
                     android:gravity="center"
+                    android:padding="3dp"
                     android:text="@string/dice_value_100"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -120,6 +142,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:progressTint="@color/nice_purple"
+            android:progressBackgroundTint="#8099999C"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -148,4 +172,6 @@
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
+
 </RelativeLayout>
+</ScrollView>

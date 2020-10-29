@@ -8,7 +8,8 @@ import kotlinx.android.parcel.Parcelize
  * Simple data class, stock the full description/ID card of an item
  */
 @Parcelize
-data class Item(val name : String,
-                val description : String,
-                val value : MoneyValue,
-                val picture : String) : Parcelable
+data class Item(
+    var name : String,
+    val description : String,
+    var value : MoneyValue,
+    val picture : String) : Parcelable

@@ -3,13 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_character">
 
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/nav_character"
         android:name="ch.hearc.ariahelper.ui.character.CharacterViewFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_character_view" />
+        tools:layout="@layout/fragment_character_view" >
+        <action
+            android:id="@+id/action_nav_character_to_attributeUpdateFragment"
+            app:destination="@id/attributeUpdateFragment" />
+        <action
+            android:id="@+id/action_nav_character_to_skillUpdateFragment"
+            app:destination="@id/skillUpdateFragment" />
+        <action
+            android:id="@+id/action_nav_character_to_characterSettingsFragment"
+            app:destination="@id/characterSettingsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_gallery"
@@ -22,4 +32,27 @@
         android:name="ch.hearc.ariahelper.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/attributeUpdateFragment"
+        android:name="ch.hearc.ariahelper.ui.character.partials.AttributeUpdateFragment"
+        android:label="fragment_attribute_update"
+        tools:layout="@layout/fragment_attribute_update" >
+        <argument
+            android:name="position"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/skillUpdateFragment"
+        android:name="ch.hearc.ariahelper.ui.character.partials.SkillUpdateFragment"
+        android:label="fragment_skill_update"
+        tools:layout="@layout/fragment_skill_update" >
+        <argument
+            android:name="position"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterSettingsFragment"
+        android:name="ch.hearc.ariahelper.ui.character.partials.CharacterSettingsFragment"
+        android:label="fragment_character_settings"
+        tools:layout="@layout/fragment_character_settings" />
 </navigation>

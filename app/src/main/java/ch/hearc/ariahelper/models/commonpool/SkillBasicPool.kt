@@ -10,7 +10,7 @@ import java.util.ArrayList
  */
 object SkillBasicPool {
     val SKILLS: MutableList<Skill> =
-        listOf<Skill>(
+        mutableListOf<Skill>(
             Skill("Courir, Sauter", "Permet de passer des obstacles"),
             Skill("Mentir / convaincre", "Persuade une tièrce personne d'un fait, réel ou non"),
             Skill("Escalader", "Permet de franchir des parroies abruptes"),
@@ -19,5 +19,5 @@ object SkillBasicPool {
             Skill("Intimider", "Force la main à une tièrce personne par la peur"),
             Skill("Parler aux animaux", "Discute sommairement avec un animal"),
             Skill("Lonnnnng skill", "Discute sommairement avec un animal, Discute sommairement avec un animal, Discute sommairement avec un animal"),
-            ) as MutableList<Skill>
+            )
 }
