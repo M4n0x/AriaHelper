@@ -7,8 +7,10 @@ import java.util.ArrayList
 /**
  * Basic pool of items so that the app is not empty
  */
+
 object ItemBasicPool {
-    val ITEMS: MutableList<Item> = listOf<Item>(
+    val ITEMS: MutableList<Item> = mutableListOf<Item>(
+        Item("Chaise de jardin", "Description", 1, "ic_menu_camera"),
         Item("Chaise de jardin", "Description", 1, "ic_menu_camera"),
         Item("Chaise de jardin", "Description", 1, "ic_menu_camera"),
         Item("Chaise de jardin", "Description", 1, "ic_menu_camera"),

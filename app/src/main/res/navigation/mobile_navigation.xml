@@ -45,6 +45,9 @@
             android:id="@+id/action_nav_lootdm_to_fragmenttLootDetail"
 
             app:destination="@id/fragmenttLootDetail" />
+        <action
+            android:id="@+id/action_nav_lootdm_to_fragmentAddItem"
+            app:destination="@id/fragmentAddItem" />
     </fragment>
 
     <fragment
@@ -52,4 +55,14 @@
         android:name="ch.hearc.ariahelper.ui.loot.dm.ItemDetailsFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_item_details" />
+
+    <fragment
+        android:id="@+id/fragmentAddItem"
+        android:name="ch.hearc.ariahelper.ui.common.AddItemFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_add_item" >
+        <action
+            android:id="@+id/action_fragmentAddItem_to_nav_lootdm"
+            app:destination="@id/nav_lootdm" />
+    </fragment>
 </navigation>

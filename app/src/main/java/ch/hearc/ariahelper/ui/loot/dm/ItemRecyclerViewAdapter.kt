@@ -3,6 +3,7 @@ package ch.hearc.ariahelper.ui.loot.dm
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,12 +28,16 @@ class ItemRecyclerViewAdapter(
     private var showSelect: Boolean,
 ) : RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder>() {
 
+    private val selected : MutableList<Item> = mutableListOf()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
             R.layout.fragment_item,
             parent,
             false
         )
+
+        selected.clear()
 
         return ViewHolder(view)
     }
@@ -54,16 +59,17 @@ class ItemRecyclerViewAdapter(
             if (!showSelect) {
                 val args = Bundle()
                 args.putParcelable("data", item)
-
-                view.findNavController().navigate(
-                    R.id.action_nav_lootdm_to_fragmenttLootDetail,
-                    args
-                )
+                view.findNavController().navigate(R.id.action_nav_lootdm_to_fragmenttLootDetail, args)
             } else {
                 holder.selectView.isChecked = !holder.selectView.isChecked
+                if (holder.selectView.isChecked) selected.add(item) else selected.remove(item)
+                Log.d("test", selected.toString())
             }
-
         }
+
+    }
+
+    private fun getSelected() {
 
     }
 
