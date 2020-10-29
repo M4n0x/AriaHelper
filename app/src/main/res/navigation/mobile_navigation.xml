@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/nav_character"
         android:name="ch.hearc.ariahelper.ui.character.CharacterViewFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_character_view" >
+        android:label="@string/menu_char"
+        tools:layout="@layout/fragment_character_view">
         <action
             android:id="@+id/action_nav_character_to_attributeUpdateFragment"
             app:destination="@id/attributeUpdateFragment" />
@@ -35,8 +35,8 @@
     <fragment
         android:id="@+id/attributeUpdateFragment"
         android:name="ch.hearc.ariahelper.ui.character.partials.AttributeUpdateFragment"
-        android:label="fragment_attribute_update"
-        tools:layout="@layout/fragment_attribute_update" >
+        android:label="@string/menu_attribute"
+        tools:layout="@layout/fragment_attribute_update">
         <argument
             android:name="position"
             app:argType="integer" />
@@ -44,8 +44,8 @@
     <fragment
         android:id="@+id/skillUpdateFragment"
         android:name="ch.hearc.ariahelper.ui.character.partials.SkillUpdateFragment"
-        android:label="fragment_skill_update"
-        tools:layout="@layout/fragment_skill_update" >
+        android:label="@string/menu_skill"
+        tools:layout="@layout/fragment_skill_update">
         <argument
             android:name="position"
             app:argType="integer" />
@@ -53,6 +53,6 @@
     <fragment
         android:id="@+id/characterSettingsFragment"
         android:name="ch.hearc.ariahelper.ui.character.partials.CharacterSettingsFragment"
-        android:label="fragment_character_settings"
+        android:label="@string/menu_char_settings"
         tools:layout="@layout/fragment_character_settings" />
 </navigation>

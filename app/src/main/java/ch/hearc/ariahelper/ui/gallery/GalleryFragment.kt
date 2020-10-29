@@ -44,7 +44,6 @@ class GalleryFragment : Fragment() {
 
             galleryViewModel._text.postValue("LOOSER")
         }).start()
-    //debile putain
 
         return root
     }

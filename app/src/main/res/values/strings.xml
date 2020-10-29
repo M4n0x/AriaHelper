@@ -11,10 +11,8 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="App_name">Aria Helper</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Zero_value">0</string>
-    <string name="menu_character">Character</string>
     <string name="Base_Textview">Text View</string>
     <string name="image_character_description">Image of the currently chosen character</string>
     <string name="dice_value_6">D6</string>
@@ -41,4 +39,9 @@
     <string name="button_confirm">Confirmer</string>
     <string name="button_delete">Supprimer</string>
     <string name="button_settings_description">Bouton pour accéder aux paramètres du personnage (modifier, supprimer)</string>
+    <string name="skill_update_title">Modifier un talent</string>
+    <string name="menu_char">Personnage</string>s
+    <string name="menu_char_settings">Personnage - paramètres</string>
+    <string name="menu_attribute">Personnage - attribut</string>
+    <string name="menu_skill">Personnage - talent</string>
 </resources>

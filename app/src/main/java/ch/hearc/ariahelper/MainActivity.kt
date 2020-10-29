@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {

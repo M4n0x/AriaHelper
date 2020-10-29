@@ -12,7 +12,7 @@ import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.Attribute
 import ch.hearc.ariahelper.models.Skill
 import ch.hearc.ariahelper.ui.character.CharacterViewModel
-import kotlinx.android.synthetic.main.fragment_attribute_update.*
+import kotlinx.android.synthetic.main.fragment_skill_update.*
 
 class SkillUpdateFragment : Fragment() {
     private val args: SkillUpdateFragmentArgs by navArgs()
@@ -27,7 +27,7 @@ class SkillUpdateFragment : Fragment() {
     ): View? {
         val position = args.position
         if(position >= 0){
-            skill = characterViewModel.character.value!!.skillList[position]
+            skill = characterViewModel.character.value!!.skillList[position]!!
         } else {
             skill = Skill("nouveau talent", "Description", 50)
             characterViewModel._character.value!!.skillList.add(skill)
@@ -38,18 +38,20 @@ class SkillUpdateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*nameEdit.setText(attribute.name)
-        valueEdit.setText(attribute.value.toString())
+        skillNameEdit.setText(skill.name)
+        skillDescriptionEdit.setText(skill.description)
+        skillValueNumberEdit.setText(skill.value.toString())
 
         buttonConfirm.setOnClickListener {
-            attribute.name = nameEdit.text.toString()
-            attribute.value = valueEdit.text.toString().toInt()
+            skill.name = skillNameEdit.text.toString()
+            skill.description = skillDescriptionEdit.text.toString()
+            skill.value = skillValueNumberEdit.text.toString().toInt()
             findNavController().navigateUp()
         }
 
         buttonDelete.setOnClickListener {
-            characterViewModel._character.value!!.attributeList.remove(attribute)
+            characterViewModel._character.value!!.skillList.remove(skill)
             findNavController().navigateUp()
-        }*/
+        }
     }
 }

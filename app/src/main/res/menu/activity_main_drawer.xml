@@ -7,7 +7,7 @@
         <item
             android:id="@+id/nav_character"
             android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menu_character" />
+            android:title="@string/menu_char" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"

@@ -1,4 +1,4 @@
-package ch.hearc.ariahelper.ui.character
+package ch.hearc.ariahelper.ui.character.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +7,10 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.Attribute
+import ch.hearc.ariahelper.ui.character.CharacterViewFragmentDirections
 import kotlinx.android.synthetic.main.attribute_recycler_view_column.view.*
 
-class AttributeRecViewAdapter(private val attributes: MutableList<Attribute>) :
+class AttributeRecViewAdapter(private var attributes: MutableList<Attribute>) :
     RecyclerView.Adapter<AttributeRecViewAdapter.AttributeViewHolder>() {
 
     /// Internal hodler class
@@ -20,7 +21,10 @@ class AttributeRecViewAdapter(private val attributes: MutableList<Attribute>) :
 
         init{
             view.setOnClickListener {
-                val directions = CharacterViewFragmentDirections.actionNavCharacterToAttributeUpdateFragment(position!!)
+                val directions =
+                    CharacterViewFragmentDirections.actionNavCharacterToAttributeUpdateFragment(
+                        position!!
+                    )
                 view.findNavController().navigate(directions)
             }
         }
@@ -58,12 +62,17 @@ class AttributeRecViewAdapter(private val attributes: MutableList<Attribute>) :
     ) {
         when(position){
             in 0 until attributes.size -> holder.bindAttribute(attributes[position], position)
-            attributes.size -> holder.bindCustomCase("click", "ajouter")
+            attributes.size -> holder.bindCustomCase("ajouter", "+")
         }
     }
 
     override fun getItemCount(): Int {
         return attributes.size + 1
+    }
+
+    public fun changeList(newAttributes : MutableList<Attribute>){
+        this.attributes = newAttributes
+        notifyDataSetChanged()
     }
 
 }

@@ -13,7 +13,6 @@ import ch.hearc.ariahelper.models.Attribute
 import ch.hearc.ariahelper.ui.character.CharacterViewModel
 import kotlinx.android.synthetic.main.fragment_attribute_update.*
 
-
 class AttributeUpdateFragment : Fragment() {
     private val args: AttributeUpdateFragmentArgs by navArgs()
     private val characterViewModel : CharacterViewModel by navGraphViewModels(R.id.mobile_navigation) {
@@ -27,7 +26,7 @@ class AttributeUpdateFragment : Fragment() {
     ): View? {
         val position = args.position
         if(position >= 0){
-            attribute = characterViewModel.character.value!!.attributeList[position]
+            attribute = characterViewModel.character.value!!.attributeList[position]!!
         } else {
             attribute = Attribute("Empty", 0)
             characterViewModel._character.value!!.attributeList.add(attribute)
