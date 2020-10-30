@@ -2,6 +2,7 @@ package ch.hearc.ariahelper.ui.fragments
 
 import android.os.Bundle
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -51,7 +52,7 @@ class MoneyValueFragment : Fragment() {
     public fun displayMoney(moneyValue: MoneyValue){
         goldEditText.setText(moneyValue.gold.toString())
         silverEditText.setText(moneyValue.silver.toString())
-        goldEditText.setText(moneyValue.bronze.toString())
+        bronzeEditText.setText(moneyValue.bronze.toString())
     }
 
     public fun unLink(){
@@ -66,16 +67,16 @@ class MoneyValueFragment : Fragment() {
         unLink()
         displayMoney(character.money)
         goldWatcher = goldEditText.doAfterTextChanged {
-            if(it !=null && !it.isEmpty())
-                character.money.gold = it.toString()?.toInt() ?: 0
+            if(it != null && !it.isEmpty())
+                character.money.gold = it.toString()?.toInt()
         }
         silverWatcher = silverEditText.doAfterTextChanged {
             if(it !=null && !it.isEmpty())
-                character.money.silver = it.toString()?.toInt() ?: 0
+                character.money.silver = it.toString()?.toInt()
         }
         bronzeWatcher = bronzeEditText.doAfterTextChanged {
             if(it !=null && !it.isEmpty())
-                character.money.bronze = it.toString()?.toInt() ?: 0
+                character.money.bronze = it.toString()?.toInt()
         }
     }
 }
