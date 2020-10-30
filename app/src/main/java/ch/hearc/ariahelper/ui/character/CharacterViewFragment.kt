@@ -10,22 +10,21 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import ch.hearc.ariahelper.R
 import kotlinx.android.synthetic.main.fragment_character_view.*
 import ch.hearc.ariahelper.models.Character
+import ch.hearc.ariahelper.models.CharacterPersistenceManager
 import ch.hearc.ariahelper.ui.character.adapters.AttributeRecViewAdapter
 import ch.hearc.ariahelper.ui.character.adapters.SkillRecViewAdapter
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CharacterViewFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CharacterViewFragment : Fragment() {
+    private val NEW_CHARACTER_NAME = "Nouveau personnage"
     private lateinit var attributeAdapter : AttributeRecViewAdapter
     private lateinit var skillAdapter : SkillRecViewAdapter
+    private var currentPosition : Int ? = null
     private val characterViewModel : CharacterViewModel by navGraphViewModels(R.id.mobile_navigation) {
         //defaultViewModelProviderFactory or the ViewModelProvider.Factory you are using.
         defaultViewModelProviderFactory
@@ -54,12 +53,13 @@ class CharacterViewFragment : Fragment() {
             skillAdapter.changeList(currentCharacter.skillList)
         })
 
-        //TODO change later - put progress as WIP
+        //TODO change later - put progress as WIP with accelerometer
         diceProgressBar.setProgress(10, true)
 
         //put characters in spinner
-        //TODO link names of all characters here
-        val characterNames = arrayListOf(currentCharacter.name, "Jeanne D'arc", "Grand-Jean", "Atlan")
+        val characterNames = CharacterPersistenceManager.getAllCharacterNames()
+        currentPosition = characterNames.indexOf(currentCharacter.name)
+        characterNames.add(NEW_CHARACTER_NAME)
 
         spinner.adapter = ArrayAdapter(
             requireContext(),
@@ -72,9 +72,20 @@ class CharacterViewFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if(characterNames[position] != currentCharacter.name){
-                    Log.i("change", "onItemSelected: change character")
-                    characterViewModel._character.postValue(Character(characterNames[position]))
+                when(position){
+                    currentPosition -> { /*nothing to be done :-)*/ }
+                    characterNames.size-1 -> {
+                        val character = Character(NEW_CHARACTER_NAME)
+                        CharacterPersistenceManager.registerCharacter(character)
+                        val directions =
+                            CharacterViewFragmentDirections.actionNavCharacterToCharacterSettingsFragment()
+                        characterViewModel._character.postValue(character)
+                        this@CharacterViewFragment.findNavController().navigate(directions)
+                    }
+                    else -> {
+                        currentPosition = position
+                        characterViewModel._character.postValue(CharacterPersistenceManager.getCharacterByPosition(currentPosition!!))
+                    }
                 }
             }
 
