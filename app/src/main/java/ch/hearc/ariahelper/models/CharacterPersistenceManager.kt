@@ -6,42 +6,44 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
-import java.nio.file.Path
 
 //object : singleton
 object CharacterPersistenceManager {
-    private val PREFIX : String = "Characters"
-    private val LASTCHARPREFIX : String = "$PREFIX/lastSelected"
+    private const val PREFIX : String = "Characters"
+    private const val LASTCHARPREFIX : String = "lastSelected"
+    private const val CHARAC_LIMIT = 1000
     private val charsetUTF8 = Charsets.UTF_8
-    private val CHARAC_LIMIT = 1000
     private lateinit var characterDirectory : File
+    private lateinit var lastSelectedDirectory : File
 
-    private var lastSelectedCharacter : Int? = null
+    private var lastSelectedCharacterId : Int? = null
     private var characters : MutableList<Character> = ArrayList<Character>()
 
     public fun init(context: Context){
         val path = context.filesDir
         characterDirectory = File(path, PREFIX)
         characterDirectory.mkdirs()
+        lastSelectedDirectory = File(path, LASTCHARPREFIX)
+        lastSelectedDirectory.mkdirs()
         loadAllCharacters()
     }
 
     private fun loadAllCharacters(){
-        characterDirectory.list()?.forEach {
-            val file = File(characterDirectory, it)
-            val character = Json.decodeFromString<Character>(file.readText(charsetUTF8))
+        characters.clear()
+        characterDirectory.listFiles()?.forEach {
+            val character = Json.decodeFromString<Character>(it.readText(charsetUTF8))
             characters.add(character)
         }
         if(characters.isEmpty()){
             val character = Character("Premier personnage") as Character
             registerCharacter(character)
-            lastSelectedCharacter = character.id
+            lastSelectedCharacterId = character.id
         } else {
-            val file = File(characterDirectory, LASTCHARPREFIX)
+            val file = File(lastSelectedDirectory, LASTCHARPREFIX)
             if(file.exists())
-                lastSelectedCharacter = file.readText().toInt()
+                lastSelectedCharacterId = file.readText().toInt()
             else
-                lastSelectedCharacter = null
+                lastSelectedCharacterId = characters.first().id
         }
     }
 
@@ -49,8 +51,8 @@ object CharacterPersistenceManager {
         characters.forEach{
             saveCharacter(it)
         }
-        val file = File(characterDirectory, LASTCHARPREFIX)
-        file.writeText(lastSelectedCharacter.toString())
+        val fileLastSelected = File(lastSelectedDirectory, LASTCHARPREFIX)
+        fileLastSelected.writeText(lastSelectedCharacterId.toString())
     }
 
     private fun saveCharacter(char : Character){
@@ -65,6 +67,7 @@ object CharacterPersistenceManager {
             //save the character to reserve the file
             saveCharacter(character)
         }
+        lastSelectedCharacterId = character.id
         characters.add(character)
     }
 
@@ -80,11 +83,13 @@ object CharacterPersistenceManager {
     }
 
     public fun getLastCharacter() : Character{
-        val character : Character ?
-        if(lastSelectedCharacter == null){
+        var character : Character ? = null
+        lastSelectedCharacterId = lastSelectedCharacterID()
+        try{
+            character = getCharacterByID(lastSelectedCharacterId!!)
+        } catch(e : Exception){
             character = characters.first()
-        } else {
-            character = characters[lastSelectedCharacter!!] ?: characters.first()
+            lastSelectedCharacterId = character.id
         }
         return character!!
     }
@@ -95,30 +100,32 @@ object CharacterPersistenceManager {
         return names
     }
 
-    public fun getAllCharacterNamesOrderedById() : ArrayList<String> {
-        val names = ArrayList<String>()
-        characters.forEach{ names.add(it.id!!, it.name) }
-        return names
+    public fun getAllCharacterNamesId() : ArrayList<CharacterIdSpinnerContainer> {
+        val namedId = ArrayList<CharacterIdSpinnerContainer>()
+        characters.forEach{ namedId.add(CharacterIdSpinnerContainer(it.name, it.id!!)) }
+        return namedId
     }
-
 
     public fun getCharacterByID(id: Int) : Character? {
         characters.forEach{
             if(it.id == id){
-                lastSelectedCharacter = characters.indexOf(it)
+                lastSelectedCharacterId = it.id
                 return it
             }
         }
         throw Exception("Character doesnt exist")
     }
 
-    public fun getCharacterByPosition(position: Int) : Character {
-        lastSelectedCharacter = position
-        return characters[position]
-    }
+    public fun lastSelectedCharacterID() : Int{ return lastSelectedCharacterId ?: characters.first().id!! }
 
     public fun deleteCharacterById(id : Int){
+        //safety
+        if(characters.size == 1)
+            return
         val charToDelete = getCharacterByID(id)
+        if(charToDelete?.id == lastSelectedCharacterId){
+            lastSelectedCharacterId = null
+        }
         characters.remove(charToDelete)
         File(characterDirectory, charToDelete!!.id.toString()).delete()
     }

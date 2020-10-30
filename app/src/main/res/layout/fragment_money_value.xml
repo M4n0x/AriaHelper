@@ -17,12 +17,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icone_gold" />
 
-    <TextView
-        android:id="@+id/goldTextView"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+    <EditText
+        android:id="@+id/goldTextEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:ems="2"
         android:gravity="center"
-        android:padding="5dp"
+        android:inputType="number"
+
+        android:padding="10dp"
         android:text="@string/Zero_value"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,17 +38,19 @@
         android:layout_height="50dp"
         android:contentDescription="@string/silver_coin_desc"
         android:padding="2dp"
+        android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/goldTextView"
+        app:layout_constraintLeft_toRightOf="@id/goldTextEdit"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icone_silver" />
 
-    <TextView
-        android:id="@+id/silverTextView"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+    <EditText
+        android:id="@+id/silverTextEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:ems="2"
         android:gravity="center"
-        android:padding="5dp"
+        android:padding="10dp"
         android:text="@string/Zero_value"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,18 +62,20 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:contentDescription="@string/bronze_coin_desc"
+        android:inputType="number"
         android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/silverTextView"
+        app:layout_constraintLeft_toRightOf="@id/silverTextEdit"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icone_bronze" />
 
-    <TextView
-        android:id="@+id/bronzeTextView"
+    <EditText
+        android:id="@+id/bronzeTextEdit"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
+        android:ems="2"
         android:gravity="center"
-        android:padding="5dp"
+        android:padding="10dp"
         android:text="@string/Zero_value"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"

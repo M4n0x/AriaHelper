@@ -9,5 +9,5 @@ import kotlinx.serialization.Serializable
  */
 @Parcelize
 @Serializable
-data class MoneyValue(val gold : Int, val silver : Int, val bronze : Int) : Parcelable {
+data class MoneyValue(var gold : Int, var silver : Int, var bronze : Int) : Parcelable {
 }

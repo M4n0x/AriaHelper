@@ -48,8 +48,8 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    override fun onDestroy() {
+    override fun onPause() {
         CharacterPersistenceManager.saveAllCharacter()
-        super.onDestroy()
+        super.onPause()
     }
 }
