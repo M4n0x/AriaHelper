@@ -18,9 +18,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="@string/attribute_update_title"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:text="@string/attribute_update_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

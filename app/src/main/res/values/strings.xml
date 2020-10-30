@@ -44,4 +44,10 @@
     <string name="menu_char_settings">Personnage - paramètres</string>
     <string name="menu_attribute">Personnage - attribut</string>
     <string name="menu_skill">Personnage - talent</string>
+    <string name="button_rename_text">renommer</string>
+    <string name="settings_title">Paramètres du personnage</string>
+    <string name="character_name_settings_textview">"Nom du personnage : "</string>
+    <string name="base_name_settings_textview">nom</string>
+    <string name="character_settings_textview_text">"ID du personnage : "</string>
+    <string name="level_textview_title">"Niveau : "</string>
 </resources>
