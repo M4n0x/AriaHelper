@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        //init character persistence manager from the start of the activity
+        //init character persistence manager from the start of the activity (need context to access file system)
         CharacterPersistenceManager.init(this)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)

@@ -11,5 +11,5 @@ class CharacterViewModel : ViewModel() {
         value = CharacterPersistenceManager.getLastCharacter()
     }
 
-    val character: LiveData<Character> = _character
+    public val character: LiveData<Character> = _character
 }

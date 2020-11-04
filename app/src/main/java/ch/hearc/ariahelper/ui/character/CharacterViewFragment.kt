@@ -32,6 +32,10 @@ class CharacterViewFragment : Fragment() {
         //defaultViewModelProviderFactory or the ViewModelProvider.Factory you are using.
         defaultViewModelProviderFactory
     }
+    private val characterComponentViewModel : CharacterComponentViewModel by navGraphViewModels(R.id.mobile_navigation) {
+        //defaultViewModelProviderFactory or the ViewModelProvider.Factory you are using.
+        defaultViewModelProviderFactory
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +56,13 @@ class CharacterViewFragment : Fragment() {
             fragMoney.linkToPlayer(currentCharacter)
             levelTextEdit.setText(currentCharacter.level.toString())
         })
+
+        //attach observers to dice values
+        characterComponentViewModel.D6.observe(viewLifecycleOwner,{textViewD6Result.text = "D$it"})
+        characterComponentViewModel.D10.observe(viewLifecycleOwner,{textViewD10Result.text = "D$it"})
+        characterComponentViewModel.D100.observe(viewLifecycleOwner,{textViewD100Result.text = "D$it"})
+        //attach observer to progress bar
+        characterComponentViewModel.Progress.observe(viewLifecycleOwner,{})
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_character_view, container, false)
