@@ -14,6 +14,5 @@ import kotlinx.serialization.Serializable
 data class Item(
     var name : String,
     val description : String,
-    var value : MoneyValue,
+    var quality : Int,
     val picture : String) : Parcelable
-
