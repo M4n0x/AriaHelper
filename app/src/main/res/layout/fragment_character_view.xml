@@ -138,7 +138,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="30dp">
+                    android:layout_height="40dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/D6Layout"
@@ -152,11 +152,9 @@
 
                         <TextView
                             android:id="@+id/textViewD6"
-                            style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:gravity="center"
-                            android:padding="3dp"
                             android:text="@string/dice_value_6"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/textViewD6Result"
@@ -168,7 +166,6 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:gravity="center"
-                            android:padding="3dp"
                             android:text="@string/Zero_value"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -188,11 +185,9 @@
 
                         <TextView
                             android:id="@+id/textViewD10"
-                            style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:gravity="center"
-                            android:padding="3dp"
                             android:text="@string/dice_value_10"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/textViewD10Result"
@@ -204,7 +199,6 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:gravity="center"
-                            android:padding="3dp"
                             android:text="@string/Zero_value"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -225,11 +219,9 @@
 
                         <TextView
                             android:id="@+id/textViewD100"
-                            style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:gravity="center"
-                            android:padding="3dp"
                             android:text="@string/dice_value_100"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@id/textViewD100Result"
@@ -241,7 +233,6 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:gravity="center"
-                            android:padding="3dp"
                             android:text="@string/Zero_value"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -261,7 +252,6 @@
 
                         <EditText
                             android:id="@+id/textViewDCustom"
-                            style="@style/Widget.AppCompat.TextView.SpinnerItem"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:background="@android:color/transparent"
@@ -282,7 +272,6 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:gravity="center"
-                            android:padding="3dp"
                             android:text="@string/Zero_value"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"

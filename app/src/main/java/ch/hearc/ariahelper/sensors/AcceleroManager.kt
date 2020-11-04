@@ -10,6 +10,7 @@ class AcceleroManager(private val characterComponentViewModel: CharacterComponen
     private var mSensorManager : SensorManager?= null
     private var mAccelerometer : Sensor ?= null
 
+
     override fun onSensorChanged(event: SensorEvent?) {
         TODO("Not yet implemented")
     }

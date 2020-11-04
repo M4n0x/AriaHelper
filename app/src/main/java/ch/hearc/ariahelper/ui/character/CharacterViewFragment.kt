@@ -61,6 +61,8 @@ class CharacterViewFragment : Fragment() {
         characterComponentViewModel.D6.observe(viewLifecycleOwner,{textViewD6Result.text = "D$it"})
         characterComponentViewModel.D10.observe(viewLifecycleOwner,{textViewD10Result.text = "D$it"})
         characterComponentViewModel.D100.observe(viewLifecycleOwner,{textViewD100Result.text = "D$it"})
+        characterComponentViewModel.DCUSTOM.observe(viewLifecycleOwner,{textViewDCustomResult.text = "D$it"})
+
         //attach observer to progress bar
         characterComponentViewModel.Progress.observe(viewLifecycleOwner,{})
 
