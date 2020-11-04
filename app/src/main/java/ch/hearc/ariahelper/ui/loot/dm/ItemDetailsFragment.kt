@@ -36,10 +36,9 @@ class ItemDetailsFragment : Fragment() {
             title.text = item.name
             with(viewHolder) {
                 titleView.text = item.name
-                descriptionView.text = item.name
+                descriptionView.text = item.description
                 imageView.setImageDrawable(getImage(requireContext(), item.picture))
             }
-
         }
 
         return view
