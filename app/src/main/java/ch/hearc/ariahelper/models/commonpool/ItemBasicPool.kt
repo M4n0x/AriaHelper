@@ -19,7 +19,7 @@ object ItemBasicPool {
         Item("Casque de Qualité Allemande", "Description", 2, "ic_menu_gallery")
     ) as MutableList<Item>
 
-    init {
-        //add basic items here
+    public fun basicItems() : MutableList<Item> {
+        return mutableListOf()
     }
 }

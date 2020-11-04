@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_character">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="ch.hearc.ariahelper.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" >
+        android:id="@+id/nav_character"
+        android:name="ch.hearc.ariahelper.ui.character.CharacterViewFragment"
+        android:label="@string/menu_char"
+        tools:layout="@layout/fragment_character_view">
         <action
-            android:id="@+id/action_nav_home_to_nav_gallery"
-            app:destination="@id/nav_gallery" />
+            android:id="@+id/action_nav_character_to_attributeUpdateFragment"
+            app:destination="@id/attributeUpdateFragment" />
         <action
-            android:id="@+id/action_nav_home_to_nav_slideshow"
-            app:destination="@id/nav_slideshow" />
+            android:id="@+id/action_nav_character_to_skillUpdateFragment"
+            app:destination="@id/skillUpdateFragment" />
         <action
-            android:id="@+id/action_nav_home_to_nav_lootdm2"
-            app:destination="@id/nav_lootdm" />
+            android:id="@+id/action_nav_character_to_characterSettingsFragment"
+            app:destination="@id/characterSettingsFragment" />
     </fragment>
 
     <fragment
@@ -65,4 +65,27 @@
             android:id="@+id/action_fragmentAddItem_to_nav_lootdm"
             app:destination="@id/nav_lootdm" />
     </fragment>
+    <fragment
+        android:id="@+id/attributeUpdateFragment"
+        android:name="ch.hearc.ariahelper.ui.character.partials.AttributeUpdateFragment"
+        android:label="@string/menu_attribute"
+        tools:layout="@layout/fragment_attribute_update">
+        <argument
+            android:name="position"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/skillUpdateFragment"
+        android:name="ch.hearc.ariahelper.ui.character.partials.SkillUpdateFragment"
+        android:label="@string/menu_skill"
+        tools:layout="@layout/fragment_skill_update">
+        <argument
+            android:name="position"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterSettingsFragment"
+        android:name="ch.hearc.ariahelper.ui.character.partials.CharacterSettingsFragment"
+        android:label="@string/menu_char_settings"
+        tools:layout="@layout/fragment_character_settings" />
 </navigation>

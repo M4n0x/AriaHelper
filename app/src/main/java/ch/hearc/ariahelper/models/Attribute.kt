@@ -1,7 +1,12 @@
 package ch.hearc.ariahelper.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import kotlinx.serialization.Serializable
+
 /**
  * An attribute is a simple name->value class to stock attributes such as strenght, charisma, etc...
  */
-data class Attribute(val name : String, val value : Int=0) {
-}
+@Parcelize
+@Serializable
+data class Attribute(var name : String, var value : Int=0) : Parcelable
