@@ -12,7 +12,11 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Serializable
 data class Item(
+    var id : Int?,
     var name : String,
     val description : String,
     var quality : Int,
-    val picture : String) : Parcelable
+    val picture : String) : Parcelable {
+
+    constructor(name: String, description: String, quality: Int, picture: String) : this(null, name, description, quality, picture)
+}

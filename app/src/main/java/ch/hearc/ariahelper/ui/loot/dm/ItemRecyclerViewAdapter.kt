@@ -63,7 +63,6 @@ class ItemRecyclerViewAdapter(
             } else {
                 holder.selectView.isChecked = !holder.selectView.isChecked
                 if (holder.selectView.isChecked) selected.add(item) else selected.remove(item)
-                Log.d("test", selected.toString())
             }
         }
 

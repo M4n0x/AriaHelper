@@ -18,10 +18,11 @@ class ItemFragment : Fragment() {
 
     private var columnCount = 1
     var showSelect : Boolean = false
+    var rvAdapter : ItemRecyclerViewAdapter ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        rvAdapter = rvAdapter ?: ItemRecyclerViewAdapter(ItemBasicPool.ITEMS, requireContext(), showSelect)
     }
 
     override fun onCreateView(
@@ -42,11 +43,17 @@ class ItemFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = ItemRecyclerViewAdapter(ItemBasicPool.ITEMS, context, showSelect)
+                adapter = rvAdapter
             }
         }
 
         return view
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+
     }
 
     companion object {
