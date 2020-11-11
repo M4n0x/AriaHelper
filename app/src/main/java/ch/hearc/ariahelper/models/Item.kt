@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 import kotlinx.serialization.Serializable
 
 /**
- * Simple data class, stock the full description/ID card of an item
+ * Simple data class, stock the Item information
  */
 
 @Parcelize
