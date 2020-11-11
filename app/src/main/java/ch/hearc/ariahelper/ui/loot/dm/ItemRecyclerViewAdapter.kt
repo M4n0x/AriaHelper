@@ -2,6 +2,7 @@ package ch.hearc.ariahelper.ui.loot.dm
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.Item
+import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
 
 /**
  * [RecyclerView.Adapter] that can display a [Item].
@@ -44,7 +46,7 @@ class ItemRecyclerViewAdapter(
         val item : Item = values[position]
         holder.idView.text = item.name
         holder.contentView.text = item.quality.toString()
-        holder.imageView.setImageDrawable(this.getImage(context, item.picture))
+        holder.imageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(item.picture))
         holder.selectView.visibility = if (showSelect) View.VISIBLE else View.GONE
 
         //On long click view we enabled multi select
@@ -57,7 +59,7 @@ class ItemRecyclerViewAdapter(
         // on simple click two situation :
         // 1. Multi select is not enable : we show item details
         // 2. Multi select is enabled : we select item
-        // This datas aren't persisted between view creation on purpose
+        // This data aren't persisted between view creation on purpose
         // cause this seem more convenient for the user
         holder.itemView.setOnClickListener { view ->
             if (!showSelect) {
@@ -71,19 +73,6 @@ class ItemRecyclerViewAdapter(
             }
         }
 
-    }
-
-    /**
-     * This allow to load images from drawable resources
-     */
-    private fun getImage(c: Context, ImageName: String?): Drawable? {
-        return c.resources.getDrawable(
-            c.resources.getIdentifier(
-                ImageName,
-                "drawable",
-                c.packageName
-            )
-        )
     }
 
     override fun getItemCount(): Int = values.size

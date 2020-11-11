@@ -12,6 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import ch.hearc.ariahelper.models.persistence.CharacterPersistenceManager
 import ch.hearc.ariahelper.models.persistence.LootPersistenceManager
+import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         //init character persistence manager from the start of the activity
         CharacterPersistenceManager.init(this)
         LootPersistenceManager.init(this)
+        PicturePersistenceManager.init(this)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
