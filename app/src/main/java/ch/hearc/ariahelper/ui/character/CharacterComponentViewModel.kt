@@ -6,6 +6,9 @@ import androidx.lifecycle.ViewModel
 import ch.hearc.ariahelper.models.Character
 import ch.hearc.ariahelper.models.CharacterPersistenceManager
 
+/**
+ * View model for the communication between the Character fragment and the Accelerometer service
+ */
 class CharacterComponentViewModel : ViewModel() {
 
     // ---dices---
@@ -47,12 +50,10 @@ class CharacterComponentViewModel : ViewModel() {
     }
     public val DCUSTOM: LiveData<Int> = _DCUSTOM
 
-
+    // --Progress bar---
     //progressBar value
     public val _Progress = MutableLiveData<Int>().apply {
-        value = 100
+        value = 0
     }
     public val Progress: LiveData<Int> = _Progress
-
-
 }

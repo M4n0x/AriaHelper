@@ -13,6 +13,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import ch.hearc.ariahelper.models.Character
 import ch.hearc.ariahelper.models.CharacterPersistenceManager
+import ch.hearc.ariahelper.sensors.AcceleroManager
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity() {
