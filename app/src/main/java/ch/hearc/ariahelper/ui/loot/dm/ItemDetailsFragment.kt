@@ -1,7 +1,5 @@
 package ch.hearc.ariahelper.ui.loot.dm
 
-import android.content.Context
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.Item
+import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
 
 class ItemDetailsFragment : Fragment() {
 
@@ -37,21 +36,11 @@ class ItemDetailsFragment : Fragment() {
             with(viewHolder) {
                 titleView.text = item.name
                 descriptionView.text = item.description
-                imageView.setImageDrawable(getImage(requireContext(), item.picture))
+                imageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(item.picture))
             }
         }
 
         return view
-    }
-
-    private fun getImage(c: Context, ImageName: String?): Drawable? {
-        return c.resources.getDrawable(
-            c.resources.getIdentifier(
-                ImageName,
-                "drawable",
-                c.packageName
-            )
-        )
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
