@@ -1,6 +1,8 @@
-package ch.hearc.ariahelper.models
+package ch.hearc.ariahelper.models.persistence
 
 import android.content.Context
+import ch.hearc.ariahelper.models.Character
+import ch.hearc.ariahelper.models.CharacterIdSpinnerContainer
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -81,8 +83,8 @@ object CharacterPersistenceManager {
         throw Exception("ID limit reached")
     }
 
-    public fun getLastCharacter() : Character{
-        var character : Character ? = null
+    public fun getLastCharacter() : Character {
+        var character : Character? = null
         lastSelectedCharacterId = lastSelectedCharacterID()
         try{
             character = getCharacterByID(lastSelectedCharacterId!!)

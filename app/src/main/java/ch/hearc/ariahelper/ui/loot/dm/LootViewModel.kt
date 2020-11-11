@@ -3,13 +3,15 @@ package ch.hearc.ariahelper.ui.loot.dm
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ch.hearc.ariahelper.models.Character
-import ch.hearc.ariahelper.models.CharacterPersistenceManager
+import ch.hearc.ariahelper.models.Item
 
+/**
+ * This ViewModel is used to keep track of current list items
+ */
 class LootViewModel : ViewModel() {
-    public val _adapter = MutableLiveData<ItemRecyclerViewAdapter>().apply {
-        value = null
-    }
+    public val _itemList = MutableLiveData<MutableList<Item>>()
+    public val itemList: LiveData<MutableList<Item>> = _itemList
 
-    public val adapter: LiveData<ItemRecyclerViewAdapter> = _adapter
+    public val _selectedItemList = MutableLiveData<MutableList<Item>>()
+    public val selectedItemList: LiveData<MutableList<Item>> = _selectedItemList
 }

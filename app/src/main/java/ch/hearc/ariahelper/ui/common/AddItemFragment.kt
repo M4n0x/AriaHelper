@@ -14,6 +14,7 @@ import ch.hearc.ariahelper.models.Item
 import ch.hearc.ariahelper.models.QUALITY
 import ch.hearc.ariahelper.models.commonpool.ItemBasicPool
 import ch.hearc.ariahelper.ui.character.CharacterViewModel
+import ch.hearc.ariahelper.ui.loot.dm.LootViewModel
 import kotlinx.android.synthetic.main.fragment_add_item.*
 import kotlinx.android.synthetic.main.fragment_add_item.view.*
 
@@ -29,7 +30,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class AddItemFragment : Fragment() {
-    private val characterViewModel : CharacterViewModel by navGraphViewModels(R.id.mobile_navigation) {
+    private val lootViewModel : LootViewModel by navGraphViewModels(R.id.mobile_navigation) {
         //defaultViewModelProviderFactory or the ViewModelProvider.Factory you are using.
         defaultViewModelProviderFactory
     }
@@ -49,7 +50,7 @@ class AddItemFragment : Fragment() {
 
         view.btnSubmit.setOnClickListener{
             //ItemBasicPool.ITEMS.add(Item(view.inputName.text.toString(), view.inputDescription.text.toString(), view.inputQuality.selectedItemId.toInt(), "ic_menu_slideshow" ))
-            characterViewModel.character.value!!.itemList.add(Item(view.inputName.text.toString(), view.inputDescription.text.toString(), view.inputQuality.selectedItemId.toInt(), "ic_menu_slideshow" ))
+            lootViewModel.itemList.value!!.add(Item(view.inputName.text.toString(), view.inputDescription.text.toString(), view.inputQuality.selectedItemId.toInt(), "ic_menu_slideshow" ))
             view.findNavController().navigate(R.id.action_fragmentAddItem_to_nav_lootdm)
         }
 

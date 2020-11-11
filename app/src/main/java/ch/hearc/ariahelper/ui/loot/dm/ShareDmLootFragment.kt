@@ -1,41 +1,37 @@
 package ch.hearc.ariahelper.ui.loot.dm
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.navigation.navGraphViewModels
 import ch.hearc.ariahelper.R
+import ch.hearc.ariahelper.models.persistence.LootPersistenceManager
 import kotlinx.android.synthetic.main.fragment_share_dm_loot.*
 import kotlinx.android.synthetic.main.fragment_share_dm_loot.view.*
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
 
 /**
  * A simple [Fragment] subclass.
  * Use the [ShareDmLootFragment.newInstance] factory method to
  * create an instance of this fragment.
+ * This class is used for the DM loot view.
  */
 class ShareDmLootFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            
-        }
+    private val lootViewModel : LootViewModel by navGraphViewModels(R.id.mobile_navigation) {
+        defaultViewModelProviderFactory
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // set itemlist to setup ItemFragment
+        lootViewModel._itemList.value = LootPersistenceManager.getLoot()
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_share_dm_loot, container, false)
 
+        // on btn add click we change view
         view.btnAdd.setOnClickListener {
             view.findNavController().navigate(R.id.action_nav_lootdm_to_fragmentAddItem)
         }
