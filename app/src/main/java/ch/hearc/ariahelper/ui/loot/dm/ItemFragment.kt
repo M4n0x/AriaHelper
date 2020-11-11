@@ -18,11 +18,9 @@ class ItemFragment : Fragment() {
 
     private var columnCount = 1
     var showSelect : Boolean = false
-    var rvAdapter : ItemRecyclerViewAdapter ? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        rvAdapter = rvAdapter ?: ItemRecyclerViewAdapter(ItemBasicPool.ITEMS, requireContext(), showSelect)
     }
 
     override fun onCreateView(
@@ -43,31 +41,11 @@ class ItemFragment : Fragment() {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = rvAdapter
+                adapter = ItemRecyclerViewAdapter(ItemBasicPool.ITEMS, requireContext(), showSelect)
             }
         }
 
         return view
     }
 
-    override fun onStop() {
-        super.onStop()
-
-
-    }
-
-    companion object {
-
-        // TODO: Customize parameter argument names
-        private const val ARG_COLUMN_COUNT = "column-count"
-
-        // TODO: Customize parameter initialization
-        @JvmStatic
-        fun newInstance(columnCount: Int) =
-            ItemFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_COLUMN_COUNT, columnCount)
-                }
-            }
-    }
 }
