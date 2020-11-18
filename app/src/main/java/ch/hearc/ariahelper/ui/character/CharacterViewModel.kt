@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ch.hearc.ariahelper.models.Character
+import ch.hearc.ariahelper.models.CharacterIdSpinnerContainer
 import ch.hearc.ariahelper.models.persistence.CharacterPersistenceManager
 
 /**

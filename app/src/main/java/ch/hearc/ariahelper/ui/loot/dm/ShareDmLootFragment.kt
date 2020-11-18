@@ -1,16 +1,14 @@
 package ch.hearc.ariahelper.ui.loot.dm
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.persistence.LootPersistenceManager
-import kotlinx.android.synthetic.main.fragment_share_dm_loot.*
 import kotlinx.android.synthetic.main.fragment_share_dm_loot.view.*
 
 /**
@@ -25,7 +23,7 @@ class ShareDmLootFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // set itemlist to setup ItemFragment
+        // set itemlist to setup ItemFragment as it'll be used in the next navigation fragment
         lootViewModel._itemList.value = LootPersistenceManager.getLoot()
 
         // Inflate the layout for this fragment

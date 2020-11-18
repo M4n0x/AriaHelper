@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.navigation.navGraphViewModels
 import ch.hearc.ariahelper.R
 
-
 /**
  * A simple [Fragment] subclass.
  * this fragment is representing a list of Item.
@@ -31,14 +30,14 @@ class ItemFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_item_list, container, false)
 
-        // Set the adapter
+        // Set the Recxclerview
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = when {
                     columnCount <= 1 -> LinearLayoutManager(context)
                     else -> GridLayoutManager(context, columnCount)
                 }
-                adapter = ItemRecyclerViewAdapter(lootViewModel, requireContext())
+                adapter = ItemRecyclerViewAdapter(lootViewModel)
             }
         }
 

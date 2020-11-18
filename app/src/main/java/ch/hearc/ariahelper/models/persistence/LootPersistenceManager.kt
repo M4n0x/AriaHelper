@@ -1,14 +1,11 @@
 package ch.hearc.ariahelper.models.persistence
 
 import android.content.Context
-import android.util.Log
-import ch.hearc.ariahelper.models.Character
 import ch.hearc.ariahelper.models.Item
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
-
 
 /**
  * This class is used to persists DM Items loot between app's launch
@@ -23,7 +20,10 @@ object LootPersistenceManager {
 
     private lateinit var loot : MutableList<Item>
 
-    public fun init(context: Context){
+    /**
+     * init class look for folder loot
+     */
+    fun init(context: Context){
         val path = context.filesDir
         lootDirectory = File(path, PREFIX)
         lootDirectory.mkdirs()
@@ -39,11 +39,11 @@ object LootPersistenceManager {
         }
     }
 
-    public fun getLoot() :  MutableList<Item>{
+    fun getLoot() :  MutableList<Item>{
         return loot
     }
 
-    public fun save(){
+    fun save(){
         val file = File(lootDirectory, FILENAME)
         val string = Json.encodeToString(loot)
         file.writeText(string)

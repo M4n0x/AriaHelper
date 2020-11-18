@@ -1,8 +1,7 @@
 package ch.hearc.ariahelper.models
 
-import android.graphics.drawable.Drawable
-import ch.hearc.ariahelper.models.commonpool.AttributeBasicPool
 import android.os.Parcelable
+import ch.hearc.ariahelper.models.commonpool.AttributeBasicPool
 import ch.hearc.ariahelper.models.commonpool.ItemBasicPool
 import ch.hearc.ariahelper.models.commonpool.SkillBasicPool
 import kotlinx.android.parcel.Parcelize

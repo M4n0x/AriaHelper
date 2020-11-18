@@ -1,8 +1,5 @@
 package ch.hearc.ariahelper.ui.loot.dm
 
-import android.content.Context
-import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,8 +19,7 @@ import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
  * It allows to multi select items
  */
 class ItemRecyclerViewAdapter(
-    private val lvm : LootViewModel,
-    private val context: Context,
+    private val lvm: LootViewModel,
     private var showSelect: Boolean = false,
 ) : RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder>() {
 
