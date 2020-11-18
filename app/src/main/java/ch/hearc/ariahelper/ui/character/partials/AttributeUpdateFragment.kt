@@ -26,7 +26,7 @@ class AttributeUpdateFragment : Fragment() {
     ): View? {
         val position = args.position
         if(position >= 0){
-            attribute = characterViewModel.character.value!!.attributeList[position]!!
+            attribute = characterViewModel.character.value!!.attributeList[position]
         } else {
             attribute = Attribute("Empty", 0)
             characterViewModel._character.value!!.attributeList.add(attribute)

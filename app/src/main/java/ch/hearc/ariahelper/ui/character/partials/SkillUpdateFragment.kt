@@ -27,7 +27,7 @@ class SkillUpdateFragment : Fragment() {
     ): View? {
         val position = args.position
         if(position >= 0){
-            skill = characterViewModel.character.value!!.skillList[position]!!
+            skill = characterViewModel.character.value!!.skillList[position]
         } else {
             skill = Skill("nouveau talent", "Description", 50)
             characterViewModel._character.value!!.skillList.add(skill)

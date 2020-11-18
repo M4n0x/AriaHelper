@@ -12,13 +12,11 @@ import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.Item
 import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
 
-class ItemDetailsFragment : Fragment() {
 
-    companion object {
-        fun newInstance(): ItemDetailsFragment {
-            return ItemDetailsFragment()
-        }
-    }
+/**
+ * This class is used to display item details
+ */
+class ItemDetailsFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,10 +26,12 @@ class ItemDetailsFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_item_details, container, false)
         val title : TextView = view.findViewById(R.id.itemTitle)
-        val viewHolder: ViewHolder = ViewHolder(view)
+        val viewHolder = ViewHolder(view)
 
+        // data is an argument's navigation action, we get the item from there
         val item : Item? = arguments?.getParcelable("data")
         if (item != null) {
+            //if item not empty we populate data in the viewHolder
             title.text = item.name
             with(viewHolder) {
                 titleView.text = item.name

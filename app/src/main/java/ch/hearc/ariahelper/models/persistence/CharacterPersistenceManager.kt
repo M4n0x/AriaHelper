@@ -36,7 +36,7 @@ object CharacterPersistenceManager {
             characters.add(character)
         }
         if(characters.isEmpty()){
-            val character = Character("Premier personnage") as Character
+            val character = Character("Premier personnage")
             registerCharacter(character)
             lastSelectedCharacterId = character.id
         } else {
@@ -84,7 +84,7 @@ object CharacterPersistenceManager {
     }
 
     public fun getLastCharacter() : Character {
-        var character : Character? = null
+        var character : Character?
         lastSelectedCharacterId = lastSelectedCharacterID()
         try{
             character = getCharacterByID(lastSelectedCharacterId!!)
