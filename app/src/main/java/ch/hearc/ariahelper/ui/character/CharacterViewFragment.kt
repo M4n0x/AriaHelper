@@ -19,8 +19,8 @@ import ch.hearc.ariahelper.R
 import kotlinx.android.synthetic.main.fragment_character_view.*
 import ch.hearc.ariahelper.models.Character
 import ch.hearc.ariahelper.models.CharacterIdSpinnerContainer
-import ch.hearc.ariahelper.models.CharacterPersistenceManager
 import ch.hearc.ariahelper.sensors.AcceleroManager
+import ch.hearc.ariahelper.models.persistence.CharacterPersistenceManager
 import ch.hearc.ariahelper.ui.character.adapters.AttributeRecViewAdapter
 import ch.hearc.ariahelper.ui.character.adapters.SkillRecViewAdapter
 import ch.hearc.ariahelper.ui.fragments.MoneyValueFragment
