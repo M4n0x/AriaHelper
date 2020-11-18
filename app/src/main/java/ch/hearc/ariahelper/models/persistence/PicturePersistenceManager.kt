@@ -17,7 +17,6 @@ import java.util.*
 object PicturePersistenceManager {
     private const val PREFIX : String = "pictures"
 
-    private val charsetUTF8 = Charsets.UTF_8
     private lateinit var picturesDir : File
 
     private lateinit var context: Context
@@ -59,9 +58,9 @@ object PicturePersistenceManager {
             e.printStackTrace()
         } finally {
             try {
-                fos?.close() // close file in anycase
+                fos?.close() // close file in any case
             } catch (e: IOException) {
-                e.printStackTrace() // handle if file doesnt exist
+                e.printStackTrace() // handle if file doesn't exist
             }
         }
 

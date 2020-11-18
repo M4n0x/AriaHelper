@@ -1,6 +1,5 @@
 package ch.hearc.ariahelper.ui.common
 
-import android.R.attr
 import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
@@ -77,6 +76,7 @@ class AddItemFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
+
             RESULT_GALLERY -> if (data != null ) {
                 //On gallery result, we save the picture in our app intern data
                 path = data.data?.let { PicturePersistenceManager.save(it) }
@@ -87,6 +87,7 @@ class AddItemFragment : Fragment() {
                         it
                     )
                 })
+
             }
         }
     }

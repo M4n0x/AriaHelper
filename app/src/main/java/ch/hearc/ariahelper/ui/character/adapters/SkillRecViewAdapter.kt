@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.skill_recycler_view_row.view.*
 class SkillRecViewAdapter (private var skills: MutableList<Skill>) :
     RecyclerView.Adapter<SkillRecViewAdapter.SkillViewHolder>() {
 
-    /// Internal hodler class
+    /// Internal holder class
     class SkillViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         private var view: View = v
         private var skill: Skill? = null
@@ -26,7 +26,6 @@ class SkillRecViewAdapter (private var skills: MutableList<Skill>) :
                 view.findNavController().navigate(directions)
             }
         }
-
 
         fun bindAttribute(skill : Skill, position: Int) {
             this.skill = skill
@@ -71,7 +70,7 @@ class SkillRecViewAdapter (private var skills: MutableList<Skill>) :
         return skills.size + 1
     }
 
-    public fun changeList(newSkills : MutableList<Skill>){
+    fun changeList(newSkills : MutableList<Skill>){
         this.skills = newSkills
         notifyDataSetChanged()
     }
