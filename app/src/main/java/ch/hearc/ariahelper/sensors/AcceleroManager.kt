@@ -49,6 +49,6 @@ class AcceleroManager(
     }
 
     override fun run() {
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_GAME)
     }
 }
