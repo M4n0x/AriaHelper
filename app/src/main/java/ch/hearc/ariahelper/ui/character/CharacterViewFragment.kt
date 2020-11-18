@@ -50,11 +50,9 @@ class CharacterViewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var currentCharacter = characterViewModel.character.value!!
-
         //init character observer
         characterViewModel.character.observe(viewLifecycleOwner, Observer {
-            currentCharacter = characterViewModel.character.value!!
+            val currentCharacter = characterViewModel.character.value!!
             attributeAdapter.changeList(currentCharacter.attributeList)
             skillAdapter.changeList(currentCharacter.skillList)
             val fragMoney = childFragmentManager.findFragmentById(R.id.fragmentCharacterMoney) as MoneyValueFragment
@@ -76,9 +74,14 @@ class CharacterViewFragment : Fragment() {
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         selectSpinnerPlayer() //put the good selected player BEFORE the view is created (risk of invalid selection)
+        super.onViewStateRestored(savedInstanceState)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        //start accelerometer
         acceleroManager = AcceleroManager(characterComponentViewModel, requireContext())
         Thread(acceleroManager).start()
-        super.onViewStateRestored(savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -170,14 +173,23 @@ class CharacterViewFragment : Fragment() {
         //"level" field binded to player level
         levelTextEdit.doAfterTextChanged {
             if(it!=null && !it.isEmpty()){
-                characterViewModel.character.value!!.level = it.toString().toInt()
+                try {
+                    characterViewModel.character.value!!.level = it.toString().toInt()
+                } catch (e : NumberFormatException){
+                    levelTextEdit.setText(characterViewModel.character.value!!.level.toString())
+                }
             }
         }
 
         //Link custom dice text edit to DCustom
         textViewDCustom.doAfterTextChanged {
             if (it != null && !it.isEmpty()) {
-                characterComponentViewModel._DCUSTOMREQ.value = it.toString().toInt()
+                try {
+                    characterComponentViewModel._DCUSTOMREQ.value = it.toString().toInt()
+                } catch (e : NumberFormatException){
+                    textViewDCustom.setText(characterComponentViewModel._DCUSTOMREQ.value.toString())
+                }
+
             }
         }
     }

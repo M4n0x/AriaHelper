@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        //init character persistence manager from the start of the activity (need context to access file system)
+        //init persistence managers from the start of the activity (need context to access file system)
         CharacterPersistenceManager.init(this)
         LootPersistenceManager.init(this)
         PicturePersistenceManager.init(this)

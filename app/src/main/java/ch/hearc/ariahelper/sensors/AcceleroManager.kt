@@ -13,7 +13,9 @@ import ch.hearc.ariahelper.ui.character.CharacterComponentViewModel
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-
+/**
+ * WIP - basic sensor, intelligence is yet to be made
+ */
 class AcceleroManager(
     private val characterComponentViewModel: CharacterComponentViewModel,
     context: Context
@@ -28,7 +30,6 @@ class AcceleroManager(
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event!!.sensor.type == Sensor.TYPE_ACCELEROMETER) {
-            Log.d("TAG", "register sensor")
             val x: Float = event.values[0]
             val y: Float = event.values[1]
             val z: Float = event.values[2]
@@ -43,7 +44,7 @@ class AcceleroManager(
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
 
-    public fun stopSensor(){
+    fun stopSensor(){
         Log.d("TAG", "stopSensor: Sensor unregistered")
         sensorManager.unregisterListener(this)
     }

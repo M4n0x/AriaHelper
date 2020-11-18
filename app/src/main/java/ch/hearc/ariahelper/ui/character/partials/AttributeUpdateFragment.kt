@@ -13,6 +13,9 @@ import ch.hearc.ariahelper.models.Attribute
 import ch.hearc.ariahelper.ui.character.CharacterViewModel
 import kotlinx.android.synthetic.main.fragment_attribute_update.*
 
+/**
+ * Attribute creation/modification fragment
+ */
 class AttributeUpdateFragment : Fragment() {
     private val args: AttributeUpdateFragmentArgs by navArgs()
     private val characterViewModel : CharacterViewModel by navGraphViewModels(R.id.mobile_navigation) {
@@ -26,8 +29,10 @@ class AttributeUpdateFragment : Fragment() {
     ): View? {
         val position = args.position
         if(position >= 0){
+            //get the attribute to change in the character
             attribute = characterViewModel.character.value!!.attributeList[position]
         } else {
+            //create new attribute
             attribute = Attribute("Empty", 0)
             characterViewModel._character.value!!.attributeList.add(attribute)
         }
@@ -37,18 +42,19 @@ class AttributeUpdateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //display attribute in fragment
         nameEdit.setText(attribute.name)
         valueEdit.setText(attribute.value.toString())
 
         buttonConfirm.setOnClickListener {
             attribute.name = nameEdit.text.toString()
             attribute.value = valueEdit.text.toString().toInt()
-            findNavController().navigateUp()
+            findNavController().navigateUp() //go back to stack
         }
 
         buttonDelete.setOnClickListener {
             characterViewModel._character.value!!.attributeList.remove(attribute)
-            findNavController().navigateUp()
+            findNavController().navigateUp() //go back to stack
         }
     }
 
