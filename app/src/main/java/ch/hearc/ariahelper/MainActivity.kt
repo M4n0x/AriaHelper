@@ -10,6 +10,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import ch.hearc.ariahelper.models.Character
+import ch.hearc.ariahelper.sensors.AcceleroManager
 import ch.hearc.ariahelper.models.persistence.CharacterPersistenceManager
 import ch.hearc.ariahelper.models.persistence.LootPersistenceManager
 import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
@@ -23,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        //init character persistence manager from the start of the activity
+        //init character persistence manager from the start of the activity (need context to access file system)
         CharacterPersistenceManager.init(this)
         LootPersistenceManager.init(this)
         PicturePersistenceManager.init(this)

@@ -8,19 +8,20 @@
 
     <ImageView
         android:id="@+id/goldImageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/COINS_DIMENSION"
+        android:layout_height="@dimen/COINS_DIMENSION"
         android:contentDescription="@string/gold_coin_desc"
         android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/icone_gold" />
 
     <EditText
         android:id="@+id/goldTextEdit"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:ems="2"
         android:gravity="center"
         android:inputType="number"
@@ -34,11 +35,11 @@
 
     <ImageView
         android:id="@+id/silverImageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/COINS_DIMENSION"
+        android:layout_height="@dimen/COINS_DIMENSION"
         android:contentDescription="@string/silver_coin_desc"
-        android:padding="2dp"
         android:inputType="number"
+        android:padding="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/goldTextEdit"
         app:layout_constraintTop_toTopOf="parent"
@@ -47,7 +48,7 @@
     <EditText
         android:id="@+id/silverTextEdit"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:ems="2"
         android:gravity="center"
         android:padding="10dp"
@@ -59,8 +60,8 @@
 
     <ImageView
         android:id="@+id/bronzeImageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="@dimen/COINS_DIMENSION"
+        android:layout_height="@dimen/COINS_DIMENSION"
         android:contentDescription="@string/bronze_coin_desc"
         android:inputType="number"
         android:padding="2dp"
@@ -72,7 +73,7 @@
     <EditText
         android:id="@+id/bronzeTextEdit"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:ems="2"
         android:gravity="center"
         android:padding="10dp"

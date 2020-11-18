@@ -13,11 +13,13 @@ import ch.hearc.ariahelper.ui.character.CharacterViewModel
 import kotlinx.android.synthetic.main.fragment_character_settings.*
 import kotlinx.android.synthetic.main.fragment_character_settings.buttonConfirm
 
+/**
+ * Simple Character Settings fragment
+ */
 class CharacterSettingsFragment : Fragment() {
     private val characterViewModel : CharacterViewModel by navGraphViewModels(R.id.mobile_navigation) {
         defaultViewModelProviderFactory
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

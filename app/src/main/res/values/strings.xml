@@ -51,4 +51,5 @@
     <string name="base_name_settings_textview">nom</string>
     <string name="character_settings_textview_text">"ID du personnage : "</string>
     <string name="level_textview_title">"Niveau : "</string>
+    <string name="custom_dice_text">autre</string>
 </resources>
