@@ -50,7 +50,7 @@ class CharacterViewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var currentCharacter = characterViewModel.character.value!!
+        var currentCharacter: Character
 
         //init character observer
         characterViewModel.character.observe(viewLifecycleOwner, Observer {

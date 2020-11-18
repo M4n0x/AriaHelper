@@ -77,18 +77,16 @@ class AddItemFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
-            RESULT_GALLERY -> if (null != attr.data) {
-                if (data != null ) {
-                    //On gallery result, we save the picture in our app intern data
-                    path = data.data?.let { PicturePersistenceManager.save(it) }
+            RESULT_GALLERY -> if (data != null ) {
+                //On gallery result, we save the picture in our app intern data
+                path = data.data?.let { PicturePersistenceManager.save(it) }
 
-                    //As the picture is saved we load the freshly saved image in the bitmap picture
-                    itemImg.setImageBitmap(path?.let {
-                        PicturePersistenceManager.getBitmapFromFilename(
-                            it
-                        )
-                    })
-                }
+                //As the picture is saved we load the freshly saved image in the bitmap picture
+                itemImg.setImageBitmap(path?.let {
+                    PicturePersistenceManager.getBitmapFromFilename(
+                        it
+                    )
+                })
             }
         }
     }

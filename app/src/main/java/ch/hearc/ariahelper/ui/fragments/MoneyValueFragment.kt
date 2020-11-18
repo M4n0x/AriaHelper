@@ -31,9 +31,9 @@ class MoneyValueFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        goldEditText = view?.findViewById<EditText>(R.id.goldTextEdit)!!
-        silverEditText = view?.findViewById<EditText>(R.id.silverTextEdit)!!
-        bronzeEditText = view?.findViewById<EditText>(R.id.bronzeTextEdit)!!
+        goldEditText = view.findViewById<EditText>(R.id.goldTextEdit)!!
+        silverEditText = view.findViewById<EditText>(R.id.silverTextEdit)!!
+        bronzeEditText = view.findViewById<EditText>(R.id.bronzeTextEdit)!!
     }
 
     override fun onResume() {
@@ -63,15 +63,15 @@ class MoneyValueFragment : Fragment() {
         displayMoney(character.money)
         goldWatcher = goldEditText.doAfterTextChanged {
             if(it != null && it.isNotEmpty())
-                character.money.gold = it.toString()?.toInt()
+                character.money.gold = it.toString().toInt()
         }
         silverWatcher = silverEditText.doAfterTextChanged {
             if(it !=null && it.isNotEmpty())
-                character.money.silver = it.toString()?.toInt()
+                character.money.silver = it.toString().toInt()
         }
         bronzeWatcher = bronzeEditText.doAfterTextChanged {
             if(it !=null && it.isNotEmpty())
-                character.money.bronze = it.toString()?.toInt()
+                character.money.bronze = it.toString().toInt()
         }
     }
 }
