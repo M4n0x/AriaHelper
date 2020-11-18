@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import ch.hearc.ariahelper.models.Character
+import ch.hearc.ariahelper.models.CharacterIdSpinnerContainer
 import ch.hearc.ariahelper.models.persistence.CharacterPersistenceManager
 
 /**
@@ -15,7 +16,6 @@ class CharacterViewModel : ViewModel() {
     }
 
     public val character: LiveData<Character> = _character
-
     /**
      * Change the selected character with the ID of the next Character
      */

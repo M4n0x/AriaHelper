@@ -3,8 +3,7 @@ package ch.hearc.ariahelper.ui.character
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ch.hearc.ariahelper.models.Character
-import ch.hearc.ariahelper.models.CharacterPersistenceManager
+import ch.hearc.ariahelper.models.persistence.CharacterPersistenceManager
 
 /**
  * View model for the communication between the Character fragment and the Accelerometer service
