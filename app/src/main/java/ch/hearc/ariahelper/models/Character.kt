@@ -1,18 +1,27 @@
 package ch.hearc.ariahelper.models
 
-import android.graphics.drawable.Drawable
+import android.os.Parcelable
+import ch.hearc.ariahelper.models.commonpool.AttributeBasicPool
 import ch.hearc.ariahelper.models.commonpool.ItemBasicPool
 import ch.hearc.ariahelper.models.commonpool.SkillBasicPool
+import kotlinx.android.parcel.Parcelize
+import kotlinx.serialization.Serializable
 
 /**
  * Stock the character with its context (item and skills)
  */
-data class Character(val name: String, val level: Int,
-                     val picture: Drawable ? = null,
-                     val money : MoneyValue,
-                     val itemList : MutableList<Item>,
-                     val skillList : MutableList<Skill>) {
+@Parcelize
+@Serializable
+data class Character(
+    var id: Int ? = null,
+    var name: String,
+    var level: Int,
+    val picture: String? = null,
+    val money : MoneyValue,
+    val itemList : MutableList<Item>,
+    val attributeList : MutableList<Attribute>,
+    val skillList : MutableList<Skill>) : Parcelable {
 
     //basic constructor with just a name
-    constructor(name: String) : this(name, 0, null, MoneyValue(0,0,0), ItemBasicPool.ITEMS, SkillBasicPool.SKILLS)
+    constructor(name: String) : this(null, name, 0, null, MoneyValue(0,0,0), ItemBasicPool.basicItems(), AttributeBasicPool.basicAttributes(), SkillBasicPool.basicSkills())
 }

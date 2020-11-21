@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".ui.fragments.MoneyValueFragment">
+
+    <EditText
+        android:id="@+id/goldTextEdit"
+        android:layout_width="@dimen/COINS_DIMENSION"
+        android:layout_height="@dimen/COINS_DIMENSION"
+        android:layout_marginHorizontal="5dp"
+        android:background="@drawable/icone_gold"
+        android:ems="2"
+        android:gravity="bottom|center_horizontal"
+        android:inputType="number"
+        android:padding="10dp"
+        android:text="@string/Zero_value"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/silverTextEdit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/silverTextEdit"
+        android:layout_width="@dimen/COINS_DIMENSION"
+        android:layout_height="@dimen/COINS_DIMENSION"
+        android:layout_marginHorizontal="5dp"
+        android:background="@drawable/icone_silver"
+        android:ems="2"
+        android:gravity="bottom|center_horizontal"
+        android:padding="10dp"
+        android:text="@string/Zero_value"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/bronzeTextEdit"
+        app:layout_constraintStart_toEndOf="@id/goldTextEdit"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/bronzeTextEdit"
+        android:layout_width="@dimen/COINS_DIMENSION"
+        android:layout_height="@dimen/COINS_DIMENSION"
+        android:layout_marginHorizontal="5dp"
+        android:background="@drawable/icone_bronze"
+        android:ems="2"
+        android:gravity="bottom|center_horizontal"
+        android:padding="10dp"
+        android:text="@string/Zero_value"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/silverTextEdit"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

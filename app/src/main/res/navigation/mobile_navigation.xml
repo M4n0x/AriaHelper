@@ -3,13 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_character">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="ch.hearc.ariahelper.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_character"
+        android:name="ch.hearc.ariahelper.ui.character.CharacterViewFragment"
+        android:label="@string/menu_char"
+        tools:layout="@layout/fragment_character_view">
+        <action
+            android:id="@+id/action_nav_character_to_attributeUpdateFragment"
+            app:destination="@id/attributeUpdateFragment" />
+        <action
+            android:id="@+id/action_nav_character_to_skillUpdateFragment"
+            app:destination="@id/skillUpdateFragment" />
+        <action
+            android:id="@+id/action_nav_character_to_characterSettingsFragment"
+            app:destination="@id/characterSettingsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_gallery"
@@ -22,4 +32,60 @@
         android:name="ch.hearc.ariahelper.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_lootdm"
+        android:name="ch.hearc.ariahelper.ui.loot.dm.ShareDmLootFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_item_list" >
+        <argument
+            android:name="isSelect"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_nav_lootdm_to_fragmenttLootDetail"
+
+            app:destination="@id/fragmenttLootDetail" />
+        <action
+            android:id="@+id/action_nav_lootdm_to_fragmentAddItem"
+            app:destination="@id/fragmentAddItem" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmenttLootDetail"
+        android:name="ch.hearc.ariahelper.ui.loot.dm.ItemDetailsFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_item_details" />
+
+    <fragment
+        android:id="@+id/fragmentAddItem"
+        android:name="ch.hearc.ariahelper.ui.common.AddItemFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_add_item" >
+        <action
+            android:id="@+id/action_fragmentAddItem_to_nav_lootdm"
+            app:destination="@id/nav_lootdm" />
+    </fragment>
+    <fragment
+        android:id="@+id/attributeUpdateFragment"
+        android:name="ch.hearc.ariahelper.ui.character.partials.AttributeUpdateFragment"
+        android:label="@string/menu_attribute"
+        tools:layout="@layout/fragment_attribute_update">
+        <argument
+            android:name="position"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/skillUpdateFragment"
+        android:name="ch.hearc.ariahelper.ui.character.partials.SkillUpdateFragment"
+        android:label="@string/menu_skill"
+        tools:layout="@layout/fragment_skill_update">
+        <argument
+            android:name="position"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterSettingsFragment"
+        android:name="ch.hearc.ariahelper.ui.character.partials.CharacterSettingsFragment"
+        android:label="@string/menu_char_settings"
+        tools:layout="@layout/fragment_character_settings" />
 </navigation>

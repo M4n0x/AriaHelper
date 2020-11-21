@@ -10,4 +10,46 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_lootdm">Loot DM</string>
+    <string name="App_name">Aria Helper</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Zero_value">0</string>
+    <string name="Base_Textview">Text View</string>
+    <string name="image_character_description">Image of the currently chosen character</string>
+    <string name="dice_value_6">D6</string>
+    <string name="dice_value_10">D10</string>
+    <string name="dice_value_100">D100</string>
+    <string name="gold_coin_desc">Gold coin icon</string>
+    <string name="silver_coin_desc">Silver coin icon</string>
+    <string name="bronze_coin_desc">Bronze coin icon</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="attribute_update_title">Modifier un attribut</string>
+    <string name="button_confirm">Confirmer</string>
+    <string name="button_delete">Supprimer</string>
+    <string name="button_settings_description">Bouton pour accéder aux paramètres du personnage (modifier, supprimer)</string>
+    <string name="skill_update_title">Modifier un talent</string>
+    <string name="menu_char">Personnage</string>s
+    <string name="menu_char_settings">Personnage - paramètres</string>
+    <string name="menu_attribute">Personnage - attribut</string>
+    <string name="menu_skill">Personnage - talent</string>
+    <string name="button_rename_text">renommer</string>
+    <string name="settings_title">Paramètres du personnage</string>
+    <string name="character_name_settings_textview">"Nom du personnage : "</string>
+    <string name="base_name_settings_textview">nom</string>
+    <string name="character_settings_textview_text">"ID du personnage : "</string>
+    <string name="level_textview_title">"Niveau : "</string>
+    <string name="custom_dice_text">autre</string>
 </resources>
