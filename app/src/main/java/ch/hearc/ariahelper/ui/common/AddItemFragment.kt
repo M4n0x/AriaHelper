@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.Item
@@ -28,7 +29,7 @@ class AddItemFragment : Fragment() {
     }
 
     // var path used to store the store the file name of the newly stored image
-    private var path : String? = null
+    private var path : String? = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,6 +58,7 @@ class AddItemFragment : Fragment() {
         view.btnSubmit.setOnClickListener{
             //before going back we add the new item to the itemList
             // we doesn't know whatever is behind itemList (it can be player's loot or dm)
+
             lootViewModel.itemList.value!!.add(
                 Item(
                     view.inputName.text.toString(),
@@ -66,7 +68,7 @@ class AddItemFragment : Fragment() {
                 )
             )
             // view.findNavController().navigate(R.id.action_fragmentAddItem_to_nav_lootdm) previous nav, not agnotic so replace by the line below
-            parentFragmentManager.popBackStack();
+            findNavController().navigateUp()
         }
 
         return view

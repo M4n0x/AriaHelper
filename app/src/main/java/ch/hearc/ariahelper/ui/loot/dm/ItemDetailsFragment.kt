@@ -7,16 +7,22 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.Item
 import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
-
+import kotlinx.android.synthetic.main.fragment_item_details.*
+import kotlinx.android.synthetic.main.fragment_item_details.view.*
 
 /**
  * This class is used to display item details
  */
 class ItemDetailsFragment : Fragment() {
+    private val lootViewModel : LootViewModel by navGraphViewModels(R.id.mobile_navigation) {
+        defaultViewModelProviderFactory
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,8 +35,9 @@ class ItemDetailsFragment : Fragment() {
         val viewHolder = ViewHolder(view)
 
         // data is an argument's navigation action, we get the item from there
-        val item : Item? = arguments?.getParcelable("data")
-        if (item != null) {
+        val position : Int? = arguments?.getInt("position")
+        if (position != null) {
+            val item : Item = lootViewModel.itemList.value!![position]
             //if item not empty we populate data in the viewHolder
             title.text = item.name
             with(viewHolder) {
@@ -39,6 +46,14 @@ class ItemDetailsFragment : Fragment() {
                 imageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(item.picture))
             }
         }
+
+        view.btnDelete.setOnClickListener {
+            if (position != null) {
+                lootViewModel.itemList.value!!.removeAt(position)
+            }
+            findNavController().navigateUp()
+        }
+
 
         return view
     }

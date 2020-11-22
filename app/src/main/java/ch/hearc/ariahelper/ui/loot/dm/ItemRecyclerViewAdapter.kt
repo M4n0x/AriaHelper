@@ -60,7 +60,7 @@ class ItemRecyclerViewAdapter(
         holder.itemView.setOnClickListener { view ->
             if (!showSelect) {
                 val args = Bundle()
-                args.putParcelable("data", item)
+                args.putInt("position", position)
                 view.findNavController().navigate(R.id.action_nav_lootdm_to_fragmenttLootDetail, args)
             } else {
                 holder.selectView.isChecked = !holder.selectView.isChecked
