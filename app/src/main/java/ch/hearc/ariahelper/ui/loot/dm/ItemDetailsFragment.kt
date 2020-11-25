@@ -43,7 +43,8 @@ class ItemDetailsFragment : Fragment() {
             with(viewHolder) {
                 titleView.text = item.name
                 descriptionView.text = item.description
-                imageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(item.picture))
+                if (item.picture != null && item.picture != "")
+                    imageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(item.picture))
             }
         }
 
