@@ -17,7 +17,9 @@ class CharacterComponentViewModel : ViewModel() {
         _D6.postValue(d6)
         _D10.postValue(d10)
         _D100.postValue(d100)
-        _DCUSTOM.postValue(dCustom)
+        if(dCustom != 0){
+            _DCUSTOM.postValue(dCustom)
+        }
     }
 
     // ---properties
