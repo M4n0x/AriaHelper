@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
@@ -39,7 +40,6 @@ class ItemDetailsFragment : Fragment() {
         if (position != null) {
             val item : Item = lootViewModel.itemList.value!![position]
             //if item not empty we populate data in the viewHolder
-            title.text = item.name
             with(viewHolder) {
                 titleView.text = item.name
                 descriptionView.text = item.description
@@ -54,6 +54,13 @@ class ItemDetailsFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        view.btnEdit.setOnClickListener {
+            if (position != null) {
+                val args = Bundle()
+                args.putInt("position", position)
+                view.findNavController().navigate(R.id.action_fragmenttLootDetail_to_fragmentAddItem, args)
+            }
+        }
 
         return view
     }

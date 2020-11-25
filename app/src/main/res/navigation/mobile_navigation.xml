@@ -28,22 +28,12 @@
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="ch.hearc.ariahelper.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-    <fragment
         android:id="@+id/nav_lootdm"
         android:name="ch.hearc.ariahelper.ui.loot.dm.ShareDmLootFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_item_list" >
-        <argument
-            android:name="isSelect"
-            app:argType="boolean"
-            android:defaultValue="false" />
         <action
             android:id="@+id/action_nav_lootdm_to_fragmenttLootDetail"
-
             app:destination="@id/fragmenttLootDetail" />
         <action
             android:id="@+id/action_nav_lootdm_to_fragmentAddItem"
@@ -54,13 +44,17 @@
         android:id="@+id/fragmenttLootDetail"
         android:name="ch.hearc.ariahelper.ui.loot.dm.ItemDetailsFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_item_details" />
+        tools:layout="@layout/fragment_item_details" >
+        <action
+            android:id="@+id/action_fragmenttLootDetail_to_fragmentAddItem"
+            app:destination="@id/fragmentAddItem" />
+    </fragment>
 
     <fragment
         android:id="@+id/fragmentAddItem"
-        android:name="ch.hearc.ariahelper.ui.common.AddItemFragment"
+        android:name="ch.hearc.ariahelper.ui.common.CreateOrUpdateItemFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_add_item" >
+        tools:layout="@layout/fragment_add_or_update_item" >
         <action
             android:id="@+id/action_fragmentAddItem_to_nav_lootdm"
             app:destination="@id/nav_lootdm" />
