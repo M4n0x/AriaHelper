@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import ch.hearc.ariahelper.R
-import ch.hearc.ariahelper.models.Character
-import ch.hearc.ariahelper.models.CharacterPersistenceManager
+import ch.hearc.ariahelper.models.persistence.CharacterPersistenceManager
 import ch.hearc.ariahelper.ui.character.CharacterViewModel
 import kotlinx.android.synthetic.main.fragment_character_settings.*
 import kotlinx.android.synthetic.main.fragment_character_settings.buttonConfirm
