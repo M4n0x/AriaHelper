@@ -10,8 +10,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import ch.hearc.ariahelper.models.Character
-import ch.hearc.ariahelper.sensors.AcceleroManager
 import ch.hearc.ariahelper.models.persistence.CharacterPersistenceManager
 import ch.hearc.ariahelper.models.persistence.LootPersistenceManager
 import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
@@ -36,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-        R.id.nav_character, R.id.nav_gallery, R.id.nav_lootdm), drawerLayout)
+        R.id.nav_character, R.id.nav_character_loot, R.id.nav_lootdm), drawerLayout)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

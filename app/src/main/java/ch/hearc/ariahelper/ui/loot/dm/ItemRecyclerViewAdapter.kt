@@ -42,7 +42,8 @@ class ItemRecyclerViewAdapter(
         val item : Item = values[position]
         holder.idView.text = item.name
         holder.contentView.text = item.quality.toString()
-        holder.imageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(item.picture))
+        if (item.picture != null && item.picture != "")
+            holder.imageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(item.picture))
         holder.selectView.visibility = if (showSelect) View.VISIBLE else View.GONE
 
         //On long click view we enabled multi select
@@ -61,7 +62,7 @@ class ItemRecyclerViewAdapter(
             if (!showSelect) {
                 val args = Bundle()
                 args.putInt("position", position)
-                view.findNavController().navigate(R.id.action_nav_lootdm_to_fragmenttLootDetail, args)
+                view.findNavController().navigate(R.id.action_loot_to_fragmentLootDetail, args)
             } else {
                 holder.selectView.isChecked = !holder.selectView.isChecked
                 if (holder.selectView.isChecked) selected.add(item) else selected.remove(item)

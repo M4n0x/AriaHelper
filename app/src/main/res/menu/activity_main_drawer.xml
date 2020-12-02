@@ -9,9 +9,9 @@
             android:icon="@drawable/ic_launcher_foreground"
             android:title="@string/menu_char" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_character_loot"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:title="@string/menu_loot_char" />
         <item
             android:id="@+id/nav_lootdm"
             android:icon="@drawable/ic_menu_slideshow"
