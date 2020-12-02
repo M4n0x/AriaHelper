@@ -25,7 +25,7 @@ class AcceleroManager(
     private var accelerometer: Sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
     //accelerometer attributes
-    private var currentEntropy: Float=0f
+    private var currentEntropy: Float = 0f
     private val ENTROPY_TRESHOLD : Float = 10f
 
     override fun onSensorChanged(event: SensorEvent?) {

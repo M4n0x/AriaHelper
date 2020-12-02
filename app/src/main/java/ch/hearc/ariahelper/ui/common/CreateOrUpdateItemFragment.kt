@@ -19,6 +19,7 @@ import ch.hearc.ariahelper.models.Item
 import ch.hearc.ariahelper.models.QUALITY
 import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
 import ch.hearc.ariahelper.ui.loot.dm.LootViewModel
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.fragment_add_or_update_item.*
 import kotlinx.android.synthetic.main.fragment_add_or_update_item.view.*
 
@@ -57,8 +58,8 @@ class CreateOrUpdateItemFragment : Fragment() {
 
         //if item not empty we populate data in the viewHolder
         with(viewHolder) {
-            titleView.text = item.name
-            descriptionView.text = item.description
+            titleView.setText(item.name)
+            descriptionView.setText(item.description)
             if (item.picture != null && item.picture != "")
                 imageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(item.picture))
             qualityView.setSelection(item.quality)
@@ -120,9 +121,9 @@ class CreateOrUpdateItemFragment : Fragment() {
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val titleView: TextView = view.inputName
+        val titleView: TextInputEditText = view.inputNameEdit
         val qualityView: Spinner = view.inputQuality
-        val descriptionView: TextView = view.inputDescription
+        val descriptionView: TextInputEditText = view.inputDescriptionEdit
         val imageView: ImageView = view.itemImg
 
         override fun toString(): String {
