@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.Item
 import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
-import kotlinx.android.synthetic.main.fragment_item_details.*
 import kotlinx.android.synthetic.main.fragment_item_details.view.*
 
 /**
