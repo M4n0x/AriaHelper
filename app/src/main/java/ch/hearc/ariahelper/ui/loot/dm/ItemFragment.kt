@@ -30,7 +30,7 @@ class ItemFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_item_list, container, false)
 
-        // Set the Recxclerview
+        // Set the Recyclerview
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = when {

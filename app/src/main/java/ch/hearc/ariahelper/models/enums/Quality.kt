@@ -1,10 +1,10 @@
-package ch.hearc.ariahelper.models
+package ch.hearc.ariahelper.models.enums
 
 
 /**
  * This enum is used to set quality on items
  */
-enum class QUALITY{
+enum class Quality{
     POOR,
     COMMON,
     RARE,

@@ -2,7 +2,7 @@ package ch.hearc.ariahelper.ui.character
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,13 +17,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import ch.hearc.ariahelper.R
 import kotlinx.android.synthetic.main.fragment_character_view.*
-import ch.hearc.ariahelper.models.Character
 import ch.hearc.ariahelper.models.CharacterIdSpinnerContainer
 import ch.hearc.ariahelper.sensors.AcceleroManager
-import ch.hearc.ariahelper.models.persistence.CharacterPersistenceManager
+import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
 import ch.hearc.ariahelper.ui.character.adapters.AttributeRecViewAdapter
 import ch.hearc.ariahelper.ui.character.adapters.SkillRecViewAdapter
+import ch.hearc.ariahelper.ui.common.CreateOrUpdateItemFragment
 import ch.hearc.ariahelper.ui.fragments.MoneyValueFragment
+import kotlinx.android.synthetic.main.fragment_add_or_update_item.*
 
 
 class CharacterViewFragment : Fragment() {
@@ -97,10 +98,21 @@ class CharacterViewFragment : Fragment() {
         initSpinner()
         selectSpinnerPlayer()
         initListeners()
+        initPicture()
 
         //init simple values
         diceProgressBar.setProgress(characterComponentViewModel.Progress.value!!, true)
         textViewDCustom.setText(characterComponentViewModel.DCUSTOMREQ.value.toString());
+    }
+
+    private fun initPicture() {
+        characterImageView.setOnClickListener {
+            val galleryIntent = Intent(
+                Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            )
+            startActivityForResult(galleryIntent, CreateOrUpdateItemFragment.RESULT_GALLERY)
+        }
     }
 
     override fun onPause() {
@@ -160,7 +172,15 @@ class CharacterViewFragment : Fragment() {
                         characterViewModel.changeCharacter(idSelected)
                     }
                 }
+
+                //on change character we set the picture
+                if (characterViewModel.character.value!=null && characterViewModel.character.value?.picture!=null) {
+                    characterImageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(
+                        characterViewModel.character.value!!.picture!!
+                    ))
+                }
             }
+
             //Nothing to be done
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
@@ -172,7 +192,7 @@ class CharacterViewFragment : Fragment() {
     private fun initListeners(){
         //"level" field binded to player level
         levelTextEdit.doAfterTextChanged {
-            if(it!=null && !it.isEmpty()){
+            if(it!=null && it.isNotEmpty()){
                 try {
                     characterViewModel.character.value!!.level = it.toString().toInt()
                 } catch (e : NumberFormatException){
@@ -183,13 +203,12 @@ class CharacterViewFragment : Fragment() {
 
         //Link custom dice text edit to DCustom
         textViewDCustom.doAfterTextChanged {
-            if (it != null && !it.isEmpty()) {
+            if (it != null && it.isNotEmpty()) {
                 try {
                     characterComponentViewModel._DCUSTOMREQ.value = it.toString().toInt()
                 } catch (e : NumberFormatException){
                     textViewDCustom.setText(characterComponentViewModel._DCUSTOMREQ.value.toString())
                 }
-
             }
         }
     }
@@ -203,6 +222,25 @@ class CharacterViewFragment : Fragment() {
             if (characterNamesID[i].id == id){
                 spinner.setSelection(i)
                 break
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            CreateOrUpdateItemFragment.RESULT_GALLERY -> if (data != null ) {
+                //On gallery result, we save the picture in our app intern data
+                if (characterViewModel.character.value != null) {
+                    characterViewModel.character.value?.picture =
+                        data.data?.let { PicturePersistenceManager.save(it) }
+
+                    //As the picture is saved we load the freshly saved image in the bitmap picture
+                    characterImageView.setImageBitmap(characterViewModel.character.value?.picture?.let {
+                        PicturePersistenceManager.getBitmapFromFilename(it)
+                    })
+                }
             }
         }
     }

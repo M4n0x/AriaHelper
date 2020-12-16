@@ -9,14 +9,13 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.Item
-import ch.hearc.ariahelper.models.QUALITY
+import ch.hearc.ariahelper.models.enums.Quality
 import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
 import ch.hearc.ariahelper.ui.loot.dm.LootViewModel
 import com.google.android.material.textfield.TextInputEditText
@@ -45,10 +44,10 @@ class CreateOrUpdateItemFragment : Fragment() {
         val viewHolder = ViewHolder(view)
 
         //Show a list of quality based on enum [QUALITY]
-        view.inputQuality.adapter = ArrayAdapter<QUALITY>(
+        view.inputQuality.adapter = ArrayAdapter<Quality>(
             this.requireContext(),
             android.R.layout.simple_spinner_item,
-            QUALITY.values()
+            Quality.values()
         )
 
         val position : Int? = arguments?.getInt("position")
