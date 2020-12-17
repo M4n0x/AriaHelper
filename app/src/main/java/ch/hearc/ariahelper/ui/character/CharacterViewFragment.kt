@@ -1,8 +1,6 @@
 package ch.hearc.ariahelper.ui.character
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +15,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import ch.hearc.ariahelper.R
 import kotlinx.android.synthetic.main.fragment_character_view.*
-import ch.hearc.ariahelper.models.Character
 import ch.hearc.ariahelper.models.CharacterIdSpinnerContainer
-import ch.hearc.ariahelper.sensors.AcceleroManager
-import ch.hearc.ariahelper.models.persistence.CharacterPersistenceManager
+import ch.hearc.ariahelper.sensors.accelerometer.AcceleroManager
+import ch.hearc.ariahelper.sensors.wifip2p.WifiP2PViewModel
 import ch.hearc.ariahelper.ui.character.adapters.AttributeRecViewAdapter
 import ch.hearc.ariahelper.ui.character.adapters.SkillRecViewAdapter
 import ch.hearc.ariahelper.ui.fragments.MoneyValueFragment
@@ -39,6 +36,7 @@ class CharacterViewFragment : Fragment() {
         //defaultViewModelProviderFactory or the ViewModelProvider.Factory you are using.
         defaultViewModelProviderFactory
     }
+
     private val characterComponentViewModel : CharacterComponentViewModel by navGraphViewModels(R.id.mobile_navigation) {
         //defaultViewModelProviderFactory or the ViewModelProvider.Factory you are using.
         defaultViewModelProviderFactory
@@ -79,9 +77,20 @@ class CharacterViewFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        //start accelerometer
+        //Init accelerometer manager
         acceleroManager = AcceleroManager(characterComponentViewModel, requireContext())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //Start the accelerometer registering
         Thread(acceleroManager).start()
+    }
+
+    override fun onPause() {
+        //Stop the accelerometer (unregister) which also stops the thread
+        acceleroManager.stopSensor()
+        super.onPause()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -101,11 +110,6 @@ class CharacterViewFragment : Fragment() {
         //init simple values
         diceProgressBar.setProgress(characterComponentViewModel.Progress.value!!, true)
         textViewDCustom.setText(characterComponentViewModel.DCUSTOMREQ.value.toString());
-    }
-
-    override fun onPause() {
-        acceleroManager.stopSensor()
-        super.onPause()
     }
 
     /**

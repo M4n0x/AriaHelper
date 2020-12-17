@@ -15,8 +15,8 @@ class CharacterViewModel : ViewModel() {
     val _character = MutableLiveData<Character>().apply {
         value = CharacterPersistenceManager.getLastCharacter()
     }
-
     val character: LiveData<Character> = _character
+
     /**
      * Change the selected character with the ID of the next Character
      */

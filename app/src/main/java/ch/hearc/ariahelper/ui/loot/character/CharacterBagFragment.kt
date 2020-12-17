@@ -10,6 +10,7 @@ import androidx.navigation.navGraphViewModels
 import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.ui.character.CharacterViewModel
 import ch.hearc.ariahelper.ui.loot.dm.LootViewModel
+import ch.hearc.ariahelper.ui.loot.modal.WifiP2PConnectionDialog
 import kotlinx.android.synthetic.main.fragment_share_dm_loot.view.*
 
 /**
@@ -35,6 +36,10 @@ class CharacterBagFragment : Fragment() {
         // on btn add click we change view
         view.btnAdd.setOnClickListener {
             view.findNavController().navigate(R.id.action_loot_to_fragmentAddItem)
+        }
+
+        view.btnNFC.setOnClickListener{
+            WifiP2PConnectionDialog().show(parentFragmentManager, "Wifi peer2peer connection")
         }
 
         return view

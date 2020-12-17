@@ -1,4 +1,4 @@
-package ch.hearc.ariahelper.sensors
+package ch.hearc.ariahelper.sensors.accelerometer
 
 import android.content.Context
 import android.content.Context.SENSOR_SERVICE
@@ -13,9 +13,6 @@ import ch.hearc.ariahelper.ui.character.CharacterComponentViewModel
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-/**
- * WIP - basic sensor, intelligence is yet to be made
- */
 class AcceleroManager(
     private val characterComponentViewModel: CharacterComponentViewModel,
     context: Context
