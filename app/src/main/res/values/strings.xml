@@ -7,10 +7,10 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
     <string name="menu_lootdm">Loot DM</string>
+    <string name="menu_loot_char">My bag</string>
+    <string name="loot_details">Details</string>
+    <string name="loot_add">Add loot</string>
     <string name="App_name">Aria Helper</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Zero_value">0</string>

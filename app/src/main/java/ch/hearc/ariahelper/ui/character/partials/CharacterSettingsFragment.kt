@@ -33,18 +33,20 @@ class CharacterSettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val character = characterViewModel.character.value
 
+        //display character settings
         editTextCharacterName.setText(character?.name)
         textViewIDSecond.text = character?.id.toString()
 
         buttonConfirm.setOnClickListener{
             character?.name = editTextCharacterName.text.toString()
-            findNavController().navigateUp()
+            findNavController().navigateUp() //go back to stack
         }
 
         buttonDelete.setOnClickListener{
+            //delete character and change selected character
             CharacterPersistenceManager.deleteCharacterById(character?.id!!)
             characterViewModel._character.postValue(CharacterPersistenceManager.getLastCharacter())
-            findNavController().navigateUp()
+            findNavController().navigateUp() //go back to stack
         }
     }
 

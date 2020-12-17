@@ -13,7 +13,9 @@ import kotlin.math.roundToInt
 import kotlin.math.sqrt
 import kotlin.random.Random
 
-
+/**
+ * WIP - basic sensor, intelligence is yet to be made
+ */
 class AcceleroManager(
     private val characterComponentViewModel: CharacterComponentViewModel,
     context: Context
@@ -35,6 +37,7 @@ class AcceleroManager(
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event!!.sensor.type == Sensor.TYPE_ACCELEROMETER && countEntropy) {
+
             val x: Float = event.values[0]
             val y: Float = event.values[1]
             val z: Float = event.values[2]
@@ -112,6 +115,7 @@ class AcceleroManager(
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+
 
     public fun stopSensor() {
         sensorManager.unregisterListener(this)

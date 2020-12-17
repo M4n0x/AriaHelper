@@ -1,8 +1,7 @@
 package ch.hearc.ariahelper.models
 
-import android.graphics.drawable.Drawable
-import ch.hearc.ariahelper.models.commonpool.AttributeBasicPool
 import android.os.Parcelable
+import ch.hearc.ariahelper.models.commonpool.AttributeBasicPool
 import ch.hearc.ariahelper.models.commonpool.ItemBasicPool
 import ch.hearc.ariahelper.models.commonpool.SkillBasicPool
 import kotlinx.android.parcel.Parcelize
@@ -17,8 +16,8 @@ data class Character(
     var id: Int ? = null,
     var name: String,
     var level: Int,
-    val picture: String? = null,
-    val money : MoneyValue,
+    var picture: String? = null,
+    var money : MoneyValue,
     val itemList : MutableList<Item>,
     val attributeList : MutableList<Attribute>,
     val skillList : MutableList<Skill>) : Parcelable {

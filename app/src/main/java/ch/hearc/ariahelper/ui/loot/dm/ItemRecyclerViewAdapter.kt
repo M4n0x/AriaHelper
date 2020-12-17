@@ -1,8 +1,5 @@
 package ch.hearc.ariahelper.ui.loot.dm
 
-import android.content.Context
-import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,8 +19,7 @@ import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
  * It allows to multi select items
  */
 class ItemRecyclerViewAdapter(
-    private val lvm : LootViewModel,
-    private val context: Context,
+    private val lvm: LootViewModel,
     private var showSelect: Boolean = false,
 ) : RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder>() {
 
@@ -46,7 +42,8 @@ class ItemRecyclerViewAdapter(
         val item : Item = values[position]
         holder.idView.text = item.name
         holder.contentView.text = item.quality.toString()
-        holder.imageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(item.picture))
+        if (item.picture != null && item.picture != "")
+            holder.imageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(item.picture))
         holder.selectView.visibility = if (showSelect) View.VISIBLE else View.GONE
 
         //On long click view we enabled multi select
@@ -64,8 +61,8 @@ class ItemRecyclerViewAdapter(
         holder.itemView.setOnClickListener { view ->
             if (!showSelect) {
                 val args = Bundle()
-                args.putParcelable("data", item)
-                view.findNavController().navigate(R.id.action_nav_lootdm_to_fragmenttLootDetail, args)
+                args.putInt("position", position)
+                view.findNavController().navigate(R.id.action_loot_to_fragmentLootDetail, args)
             } else {
                 holder.selectView.isChecked = !holder.selectView.isChecked
                 if (holder.selectView.isChecked) selected.add(item) else selected.remove(item)

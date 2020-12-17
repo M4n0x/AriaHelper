@@ -14,6 +14,9 @@ import ch.hearc.ariahelper.models.Skill
 import ch.hearc.ariahelper.ui.character.CharacterViewModel
 import kotlinx.android.synthetic.main.fragment_skill_update.*
 
+/**
+ * Skill creation/modification fragment
+ */
 class SkillUpdateFragment : Fragment() {
     private val args: SkillUpdateFragmentArgs by navArgs()
     private val characterViewModel : CharacterViewModel by navGraphViewModels(R.id.mobile_navigation) {
@@ -27,8 +30,10 @@ class SkillUpdateFragment : Fragment() {
     ): View? {
         val position = args.position
         if(position >= 0){
-            skill = characterViewModel.character.value!!.skillList[position]!!
+            //get skill from selecter character
+            skill = characterViewModel.character.value!!.skillList[position]
         } else {
+            //create new skill
             skill = Skill("nouveau talent", "Description", 50)
             characterViewModel._character.value!!.skillList.add(skill)
         }
@@ -38,20 +43,22 @@ class SkillUpdateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //display skill in fragment
         skillNameEdit.setText(skill.name)
         skillDescriptionEdit.setText(skill.description)
         skillValueNumberEdit.setText(skill.value.toString())
 
         buttonConfirm.setOnClickListener {
+            //update skill with given values
             skill.name = skillNameEdit.text.toString()
             skill.description = skillDescriptionEdit.text.toString()
             skill.value = skillValueNumberEdit.text.toString().toInt()
-            findNavController().navigateUp()
+            findNavController().navigateUp() //go back to stack
         }
 
         buttonDelete.setOnClickListener {
             characterViewModel._character.value!!.skillList.remove(skill)
-            findNavController().navigateUp()
+            findNavController().navigateUp() //go back to stack
         }
     }
 }

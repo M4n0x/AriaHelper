@@ -22,45 +22,50 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="ch.hearc.ariahelper.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="ch.hearc.ariahelper.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-    <fragment
         android:id="@+id/nav_lootdm"
         android:name="ch.hearc.ariahelper.ui.loot.dm.ShareDmLootFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_item_list" >
-        <argument
-            android:name="isSelect"
-            app:argType="boolean"
-            android:defaultValue="false" />
+        android:label="@string/menu_lootdm"
+        tools:layout="@layout/fragment_share_dm_loot" >
         <action
-            android:id="@+id/action_nav_lootdm_to_fragmenttLootDetail"
-
-            app:destination="@id/fragmenttLootDetail" />
+            android:id="@+id/action_loot_to_fragmentLootDetail"
+            app:destination="@id/fragmentLootDetail" />
         <action
-            android:id="@+id/action_nav_lootdm_to_fragmentAddItem"
+            android:id="@+id/action_loot_to_fragmentAddItem"
             app:destination="@id/fragmentAddItem" />
     </fragment>
 
     <fragment
-        android:id="@+id/fragmenttLootDetail"
+        android:id="@+id/nav_character_loot"
+        android:name="ch.hearc.ariahelper.ui.loot.character.CharacterBagFragment"
+        android:label="@string/menu_loot_char"
+        tools:layout="@layout/fragment_character_bag" >
+        <action
+            android:id="@+id/action_loot_to_fragmentLootDetail"
+            app:destination="@id/fragmentLootDetail" />
+        <action
+            android:id="@+id/action_loot_to_fragmentAddItem"
+            app:destination="@id/fragmentAddItem" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragmentLootDetail"
         android:name="ch.hearc.ariahelper.ui.loot.dm.ItemDetailsFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_item_details" />
+        android:label="@string/loot_details"
+        tools:layout="@layout/fragment_item_details" >
+        <argument
+            android:name="position"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_fragmenttLootDetail_to_fragmentAddItem"
+            app:destination="@id/fragmentAddItem" />
+    </fragment>
 
     <fragment
         android:id="@+id/fragmentAddItem"
-        android:name="ch.hearc.ariahelper.ui.common.AddItemFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_add_item" >
+        android:name="ch.hearc.ariahelper.ui.common.CreateOrUpdateItemFragment"
+        android:label="@string/loot_add"
+        tools:layout="@layout/fragment_add_or_update_item" >
         <action
             android:id="@+id/action_fragmentAddItem_to_nav_lootdm"
             app:destination="@id/nav_lootdm" />

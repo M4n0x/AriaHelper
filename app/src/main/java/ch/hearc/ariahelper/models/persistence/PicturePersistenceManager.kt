@@ -5,12 +5,10 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
-import ch.hearc.ariahelper.models.Item
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
-
 
 /**
  * This class is used to persists DM Items loot between app's launch
@@ -19,7 +17,6 @@ import java.util.*
 object PicturePersistenceManager {
     private const val PREFIX : String = "pictures"
 
-    private val charsetUTF8 = Charsets.UTF_8
     private lateinit var picturesDir : File
 
     private lateinit var context: Context
@@ -31,12 +28,22 @@ object PicturePersistenceManager {
         this.context = context
     }
 
+    /**
+     * This function is used to retrieve an image from pictures
+     * @param   filename  id filename used to retrieve image
+     * @return      return a bitmap of the image if found
+     */
     fun getBitmapFromFilename(filename: String) : Bitmap {
         val file = File(picturesDir, filename)
         return BitmapFactory.decodeFile(file.absolutePath)
     }
 
-
+    /**
+     * This function is used to save the picture from the gallery
+     * and store it in the app intern data
+     * @param   uri uri of the file we want to save in intern app data
+     * @return  return the file's id newly stored in app
+     */
     fun save(uri: Uri) : String {
         val bitmap : Bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
         val filename : String = UUID.randomUUID().toString() + ".png"
@@ -51,12 +58,16 @@ object PicturePersistenceManager {
             e.printStackTrace()
         } finally {
             try {
-                fos?.close()
+                fos?.close() // close file in any case
             } catch (e: IOException) {
-                e.printStackTrace()
+                e.printStackTrace() // handle if file doesn't exist
             }
         }
 
         return filename
     }
+
+    /**
+     * TODO : create a function to delete/remove image
+     */
 }
