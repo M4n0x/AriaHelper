@@ -26,12 +26,11 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private val intentFilter = IntentFilter()
+    private lateinit var intentFilter : IntentFilter
 
     //wifiP2P
     private lateinit var channel: WifiP2pManager.Channel
     private lateinit var manager: WifiP2pManager
-    private lateinit var wifiP2pManager : BroadcastReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,20 +73,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        unregisterReceiver(wifiP2pManager)
+        unregisterReceiver(WifiP2PReceiver)
         CharacterPersistenceManager.saveAllCharacter()
         LootPersistenceManager.save()
     }
 
     override fun onResume() {
-        wifiP2pManager = WifiP2PReceiver(channel, manager, this)
-        registerReceiver(wifiP2pManager as BroadcastReceiver, intentFilter)
+        registerReceiver(WifiP2PReceiver, intentFilter)
         super.onResume()
     }
 
     private fun initWifiPeer2Peer(){
         // --- wifi P2P intent filter init ---
-        val intentFilter = IntentFilter().apply {
+        intentFilter = IntentFilter().apply {
             addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION)
             addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION)
             addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION)
@@ -96,5 +94,6 @@ class MainActivity : AppCompatActivity() {
 
         manager = getSystemService(Context.WIFI_P2P_SERVICE) as WifiP2pManager
         channel = manager.initialize(this, mainLooper, null)
+        WifiP2PReceiver.init(channel, manager, this)
     }
 }
