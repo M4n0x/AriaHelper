@@ -23,4 +23,9 @@ class WifiP2PViewModel : ViewModel() {
         value = false
     }
     val searching: LiveData<Boolean> = _searching
+
+    val _p2pEnabled = MutableLiveData<Boolean>().apply {
+        value = true
+    }
+    val p2pEnabled: LiveData<Boolean> = _p2pEnabled
 }

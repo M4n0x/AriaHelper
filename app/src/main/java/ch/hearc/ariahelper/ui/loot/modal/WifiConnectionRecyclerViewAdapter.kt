@@ -15,8 +15,9 @@ class WifiConnectionRecyclerViewAdapter(
 ) : RecyclerView.Adapter<WifiConnectionRecyclerViewAdapter.ViewHolder>() {
 
     fun updateDeviceList(deviceList : WifiP2pDeviceList ?){
-        //values = deviceList
+        values = deviceList
         notifyDataSetChanged()
+        Log.d("IN RECYCLER", "\nupdateDeviceList: ${deviceList?.deviceList}\n")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,7 +33,6 @@ class WifiConnectionRecyclerViewAdapter(
     }
 
     override fun getItemCount(): Int {
-        Log.d("IN ADAPTER", "getItemCount: ${values?.deviceList?.size ?: 0}")
         return values?.deviceList?.size ?: 0
     }
 

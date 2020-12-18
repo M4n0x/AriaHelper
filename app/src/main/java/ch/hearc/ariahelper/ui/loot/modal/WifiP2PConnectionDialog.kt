@@ -38,14 +38,9 @@ class WifiP2PConnectionDialog : DialogFragment() {
         dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corner);
         val view = inflater.inflate(R.layout.fragment_wifip2p_connection_modal, container, false)
 
-        // Set the adapter
+        // Init the devices adapter
         adapter = WifiConnectionRecyclerViewAdapter(WifiP2PReceiver.wifiViewModel.peers.value)
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = LinearLayoutManager(context)
-                adapter = this@WifiP2PConnectionDialog.adapter
-            }
-        }
+
         return view
     }
 
@@ -78,6 +73,11 @@ class WifiP2PConnectionDialog : DialogFragment() {
                 btnRefresh.text = resources.getString(R.string.refresh_string)
             }
         })
+
+        with(listDevices) {
+            layoutManager = LinearLayoutManager(context)
+            adapter = this@WifiP2PConnectionDialog.adapter
+        }
     }
 
     override fun onStart() {

@@ -28,55 +28,36 @@ object WifiP2PReceiver : BroadcastReceiver() {
         manager = _manager
         activity = _activity
 
-        //check permission for later use
-        if (ActivityCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            val permissions = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION)
-            ActivityCompat.requestPermissions(activity, permissions,0)
-        }
+        checkPermission()
     }
 
     override fun onReceive(context: Context, intent: Intent) {
+        // Check to see if Wi-Fi is enabled and notify appropriate activity
         when (intent.action) {
             WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION -> {
-                // Check to see if Wi-Fi is enabled and notify appropriate activity
-                when (intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE, -1)) {
-                    WifiP2pManager.WIFI_P2P_STATE_ENABLED -> {
-                        Toast.makeText(context, "Wifi peer to peer enabled", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                    else -> {
-                        Toast.makeText(context, "Wifi peer to peer disabled", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
+                val state = intent.getIntExtra(WifiP2pManager.EXTRA_WIFI_STATE, -1)
+                wifiViewModel._p2pEnabled.value = (state ==  WifiP2pManager.WIFI_P2P_STATE_ENABLED)
             }
             WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION -> {
                 Toast.makeText(context, "Discovered peers :-)", Toast.LENGTH_SHORT).show()
                 wifiViewModel._searching.value = false
+                checkPermission()
                 manager.requestPeers(channel) { peers: WifiP2pDeviceList? ->
+                    Log.d("TAG", "onReceive: ${peers?.deviceList}")
                     wifiViewModel._peers.value = peers
                 }
             }
             WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION -> {
                 // Respond to new connection or disconnections
-                Toast.makeText(context, "Someone is trying to make a connection", Toast.LENGTH_SHORT)
-                    .show()
             }
             WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION -> {
                 // Respond to this device's wifi state changing
-                Toast.makeText(context, "This device changed", Toast.LENGTH_SHORT)
-                    .show()
             }
         }
     }
 
     fun discoverPeers(){
-        if(wifiViewModel._searching.value!!)
-            return
+        checkPermission()
         manager.discoverPeers(channel, object : WifiP2pManager.ActionListener {
             override fun onSuccess() {
                 wifiViewModel._searching.value = true
@@ -110,6 +91,7 @@ object WifiP2PReceiver : BroadcastReceiver() {
     fun connect(device : WifiP2pDevice){
         val config = WifiP2pConfig()
         config.deviceAddress = device.deviceAddress
+        checkPermission()
         manager?.connect(channel, config, object : WifiP2pManager.ActionListener {
 
             override fun onSuccess() {
@@ -120,6 +102,17 @@ object WifiP2PReceiver : BroadcastReceiver() {
                 Toast.makeText(activity, "Failing to connect to ${device.deviceName}", Toast.LENGTH_LONG).show()
             }
         })
+    }
 
+    private fun checkPermission(){
+        //check permission for later use
+        if (ActivityCompat.checkSelfPermission(
+                activity,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            val permissions = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION)
+            ActivityCompat.requestPermissions(activity, permissions,0)
+        }
     }
 }
