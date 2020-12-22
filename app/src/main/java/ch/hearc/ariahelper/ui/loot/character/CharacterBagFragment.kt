@@ -1,6 +1,7 @@
 package ch.hearc.ariahelper.ui.loot.character
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import ch.hearc.ariahelper.R
+import ch.hearc.ariahelper.sensors.wifip2p.WifiP2PReceiver
 import ch.hearc.ariahelper.ui.character.CharacterViewModel
 import ch.hearc.ariahelper.ui.loot.dm.LootViewModel
 import ch.hearc.ariahelper.ui.loot.modal.WifiModalBuilder
 import ch.hearc.ariahelper.ui.loot.modal.WifiP2PConnectionDialog
+import kotlinx.android.synthetic.main.fragment_character_bag.*
 import kotlinx.android.synthetic.main.fragment_share_dm_loot.view.*
+import java.lang.Exception
 
 /**
  * A simple [Fragment] subclass.
@@ -40,9 +44,30 @@ class CharacterBagFragment : Fragment() {
         }
 
         view.btnNFC.setOnClickListener{
-            WifiModalBuilder.buildAndShow(requireContext(), parentFragmentManager, "Wifi P2P connection modal")
+            try {
+                WifiModalBuilder.buildAndShow(
+                    requireContext(),
+                    parentFragmentManager,
+                    "Wifi P2P connection modal"
+                )
+                //TODO : remove items
+                //clear selected items list
+                //remove items from the character
+            }catch (e : Exception){
+
+            }
         }
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        //enable share button only when items have been selected
+        lootViewModel.selectedItemList.observe(viewLifecycleOwner, {
+            btnNFC.isEnabled = !lootViewModel.selectedItemList.value.isNullOrEmpty()
+        })
+        btnNFC.isEnabled = false
     }
 }

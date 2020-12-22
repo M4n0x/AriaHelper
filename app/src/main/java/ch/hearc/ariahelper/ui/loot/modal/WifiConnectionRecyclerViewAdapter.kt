@@ -2,13 +2,16 @@ package ch.hearc.ariahelper.ui.loot.modal
 
 import android.net.wifi.p2p.WifiP2pDevice
 import android.net.wifi.p2p.WifiP2pDeviceList
+import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import ch.hearc.ariahelper.R
+import ch.hearc.ariahelper.sensors.wifip2p.WifiP2PReceiver
 
 class WifiConnectionRecyclerViewAdapter(
     private var values: WifiP2pDeviceList ?
@@ -17,7 +20,6 @@ class WifiConnectionRecyclerViewAdapter(
     fun updateDeviceList(deviceList : WifiP2pDeviceList ?){
         values = deviceList
         notifyDataSetChanged()
-        Log.d("IN RECYCLER", "\nupdateDeviceList: ${deviceList?.deviceList}\n")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,9 +29,14 @@ class WifiConnectionRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values!!.deviceList!!.elementAt(position)!!
-        holder.idView.text = item.deviceAddress
-        holder.contentView.text = item.deviceName
+        val device = values!!.deviceList!!.elementAt(position)!!
+        holder.idView.text = device.deviceAddress
+        holder.contentView.text = device.deviceName
+
+        // cause this seem more convenient for the user
+        holder.itemView.setOnClickListener { view ->
+            WifiP2PReceiver.connect(device)
+        }
     }
 
     override fun getItemCount(): Int {

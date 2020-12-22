@@ -1,6 +1,7 @@
 package ch.hearc.ariahelper.ui.loot.dm
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -66,7 +67,8 @@ class ItemRecyclerViewAdapter(
             } else {
                 holder.selectView.isChecked = !holder.selectView.isChecked
                 if (holder.selectView.isChecked) selected.add(item) else selected.remove(item)
-                lvm._selectedItemList.postValue(selected)
+                Log.d("TAG", "onBindViewHolder: value set")
+                lvm._selectedItemList.value = selected
             }
         }
 
