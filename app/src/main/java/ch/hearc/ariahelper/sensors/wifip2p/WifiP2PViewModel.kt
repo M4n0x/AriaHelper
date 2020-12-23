@@ -5,8 +5,6 @@ import android.net.wifi.p2p.WifiP2pDeviceList
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ch.hearc.ariahelper.models.Character
-import ch.hearc.ariahelper.models.persistence.CharacterPersistenceManager
 
 class WifiP2PViewModel : ViewModel() {
     val _peers = MutableLiveData<WifiP2pDeviceList>().apply {
@@ -14,10 +12,10 @@ class WifiP2PViewModel : ViewModel() {
     }
     val peers: LiveData<WifiP2pDeviceList> = _peers
 
-    val _connectedPeer = MutableLiveData<WifiP2pDevice>().apply {
+    val _peerConnecting = MutableLiveData<WifiP2pDevice>().apply {
         value = null
     }
-    val connectedPeer: LiveData<WifiP2pDevice> = _connectedPeer
+    val peerConnecting: LiveData<WifiP2pDevice> = _peerConnecting
 
     val _searching = MutableLiveData<Boolean>().apply {
         value = false
@@ -33,4 +31,10 @@ class WifiP2PViewModel : ViewModel() {
         value = true
     }
     val p2pSupported: LiveData<Boolean> = _p2pSupported
+
+    val _p2pActivated = MutableLiveData<Boolean>().apply {
+        value = true
+    }
+    val p2pActivated: LiveData<Boolean> = _p2pActivated
+
 }

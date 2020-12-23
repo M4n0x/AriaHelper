@@ -34,7 +34,7 @@ class WifiConnectionRecyclerViewAdapter(
         holder.contentView.text = device.deviceName
 
         // cause this seem more convenient for the user
-        holder.itemView.setOnClickListener { view ->
+        holder.itemView.setOnClickListener {
             WifiP2PReceiver.connect(device)
         }
     }

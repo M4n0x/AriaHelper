@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import ch.hearc.ariahelper.R
+import ch.hearc.ariahelper.models.Item
 import ch.hearc.ariahelper.sensors.wifip2p.WifiP2PReceiver
 import ch.hearc.ariahelper.ui.character.CharacterViewModel
 import ch.hearc.ariahelper.ui.loot.dm.LootViewModel
@@ -30,6 +31,7 @@ class CharacterBagFragment : Fragment() {
     private val lootViewModel : LootViewModel by navGraphViewModels(R.id.mobile_navigation) {
         defaultViewModelProviderFactory
     }
+    private var modal : WifiP2PConnectionDialog ? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // set itemlist to setup ItemFragment as it'll be used in the next navigation fragment
@@ -45,14 +47,20 @@ class CharacterBagFragment : Fragment() {
 
         view.btnNFC.setOnClickListener{
             try {
-                WifiModalBuilder.buildAndShow(
+                val sentList = lootViewModel.selectedItemList.value!!
+                WifiP2PReceiver.chargeItems(sentList) {
+                    modal?.also {
+                        it.dismiss()
+                    }
+                    val newItemList = lootViewModel.itemList.value!!
+                    newItemList.removeAll(sentList)
+                    lootViewModel._itemList.value = newItemList
+                }
+                modal = WifiModalBuilder.buildAndShow(
                     requireContext(),
                     parentFragmentManager,
                     "Wifi P2P connection modal"
                 )
-                //TODO : remove items
-                //clear selected items list
-                //remove items from the character
             }catch (e : Exception){
 
             }
@@ -64,10 +72,11 @@ class CharacterBagFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //enable share button only when items have been selected
+        //enable share button only when item(s) have been selected
         lootViewModel.selectedItemList.observe(viewLifecycleOwner, {
             btnNFC.isEnabled = !lootViewModel.selectedItemList.value.isNullOrEmpty()
         })
+        //no item is selected from start : This button is natively disabled
         btnNFC.isEnabled = false
     }
 }

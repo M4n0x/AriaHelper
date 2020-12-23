@@ -1,17 +1,14 @@
 package ch.hearc.ariahelper.ui.loot.modal
 
-import android.content.Context
 import android.content.Context.WIFI_SERVICE
 import android.content.DialogInterface
 import android.net.wifi.WifiManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.sensors.wifip2p.WifiP2PReceiver
 import kotlinx.android.synthetic.main.fragment_wifip2p_connection_modal.*
@@ -53,11 +50,7 @@ class WifiP2PConnectionDialog : DialogFragment() {
 
         //periodically update peerlist
         btnRefresh.setOnClickListener {
-            if(WifiP2PReceiver.wifiViewModel.searching.value!!){
-                WifiP2PReceiver.stopDiscovery()
-            } else {
-                WifiP2PReceiver.discoverPeers()
-            }
+            refreshDiscovery()
         }
 
         btnCancel.setOnClickListener {
@@ -65,19 +58,17 @@ class WifiP2PConnectionDialog : DialogFragment() {
         }
 
         WifiP2PReceiver.wifiViewModel.searching.observe(viewLifecycleOwner, {
-            if(it){
-                progressBarSearch.visibility = View.VISIBLE
-                btnRefresh.text = resources.getString(R.string.stop_refresh_string)
-            } else {
-                progressBarSearch.visibility = View.GONE
-                btnRefresh.text = resources.getString(R.string.refresh_string)
-            }
+            progressBarSearch.visibility = if(it) View.VISIBLE else View.GONE
         })
 
         with(listDevices) {
             layoutManager = LinearLayoutManager(context)
             adapter = this@WifiP2PConnectionDialog.adapter
         }
+
+        //do a refresh of the discovery to have an updated list of devices
+        // (not disconnected ones from 10min ago..)
+        refreshDiscovery()
     }
 
     override fun onStart() {
@@ -90,5 +81,10 @@ class WifiP2PConnectionDialog : DialogFragment() {
     override fun onDismiss(dialog: DialogInterface) {
         WifiP2PReceiver.stopDiscovery()
         super.onDismiss(dialog)
+    }
+
+    private fun refreshDiscovery(){
+        WifiP2PReceiver.stopDiscovery()
+        WifiP2PReceiver.discoverPeers()
     }
 }

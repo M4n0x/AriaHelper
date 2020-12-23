@@ -16,12 +16,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import ch.hearc.ariahelper.models.Item
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import ch.hearc.ariahelper.sensors.wifip2p.connection.SocketAction
+import ch.hearc.ariahelper.sensors.wifip2p.connection.WifiP2pClient
+import ch.hearc.ariahelper.sensors.wifip2p.connection.WifiP2pServer
 import java.io.BufferedReader
-import java.io.IOException
-import java.net.InetSocketAddress
-import java.net.ServerSocket
 import java.net.Socket
 
 
@@ -30,10 +28,11 @@ object WifiP2PReceiver : BroadcastReceiver() {
     private lateinit var manager: WifiP2pManager
     private lateinit var activity: Activity
     private lateinit var connectionListener : WifiP2pManager.ConnectionInfoListener
-    private var items : List<Item>? = null
     val wifiViewModel = WifiP2PViewModel()
-    private val PORT_CONNECTIONS : Int = 6666
-    private var serverSocket : ServerSocket? = null
+    private const val PORT_CONNECTIONS : Int = 9999
+    //private var serverSocket : ServerSocket? = null
+    private var items: List<Item>? = null
+    private var onItemSent : ItemSentCallback? = null
 
     fun init(
         _channel: WifiP2pManager.Channel,
@@ -60,7 +59,6 @@ object WifiP2PReceiver : BroadcastReceiver() {
                 wifiViewModel._p2pEnabled.value = (state == WifiP2pManager.WIFI_P2P_STATE_ENABLED)
             }
             WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION -> {
-                wifiViewModel._searching.value = false
                 checkPermission()
                 manager.requestPeers(channel) { peers: WifiP2pDeviceList? ->
                     wifiViewModel._peers.value = peers
@@ -68,25 +66,20 @@ object WifiP2PReceiver : BroadcastReceiver() {
             }
             WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION -> {
                 // Respond to new connection or disconnections
-                Log.d("TAG", "CONNECTION CHANGED")
                 manager!!.let {
                     val networkInfo: NetworkInfo =
                         intent.getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO)!!
                     if (networkInfo?.isConnected == true) {
-                        Log.d("TAG", "CONNECTED")
                         // We are connected with the other device, request connection
                         // info to find group owner IP
-
                         manager.requestConnectionInfo(channel, connectionListener)
                     } else {
-                        Log.d("TAG", "DISCONNECTED")
-                        serverSocket?.also {
-                            it.close()
-                            serverSocket == null
-                        }
-
                         //not connected anymore, the distant device quit the connection
-                        wifiViewModel._connectedPeer.value = null
+                        wifiViewModel._peerConnecting.value = null
+                        //restart the discovery service if necessary
+                        if (wifiViewModel.p2pActivated.value == true) {
+                            discoverPeers()
+                        }
                     }
                 }
             }
@@ -135,7 +128,7 @@ object WifiP2PReceiver : BroadcastReceiver() {
         checkPermission()
         manager?.connect(channel, config, object : WifiP2pManager.ActionListener {
             override fun onSuccess() {
-                //nothing to be done (Trying to connect)
+                wifiViewModel._peerConnecting.value = device
             }
 
             override fun onFailure(reason: Int) {
@@ -168,62 +161,57 @@ object WifiP2PReceiver : BroadcastReceiver() {
     }
 
     private fun createConnectionListener() : WifiP2pManager.ConnectionInfoListener {
-        return WifiP2pManager.ConnectionInfoListener { info ->
+        return WifiP2pManager.ConnectionInfoListener {
             // After the group negotiation, we can determine the group owner (server).
-            if (info.groupFormed && info.isGroupOwner) {
-                Log.d("TAG", "SERVER")
-                // Do whatever tasks are specific to the group owner.
-                // Server-side : we send items
-                Toast.makeText(activity, "Server side !", Toast.LENGTH_SHORT).show()
+            if (it.isGroupOwner) {
+                // We are the group owner : Start a server and wait for connection
                 startServer()
-            } else if (info.groupFormed) {
-                Log.d("TAG", "CLIENT")
-                // The other device acts as the peer (client). In this case,
-                // Client-side : we receive items
-                Toast.makeText(activity, "Client side !", Toast.LENGTH_SHORT).show()
-                startClient(info.groupOwnerAddress.hostAddress)
+            } else {
+                // We are not : We were just called and must connect to the server
+                startClient(it.groupOwnerAddress.hostAddress)
             }
         }
     }
 
     private fun startServer(){
-        Toast.makeText(
-            activity,
-            "Server starting...",
-            Toast.LENGTH_LONG
-        ).show()
-        GlobalScope.launch {
-            try {
-                val ephemeralServerSocket = ServerSocket(PORT_CONNECTIONS)
-                Log.d("a", "Server: Socket opened")
-                val client: Socket = ephemeralServerSocket.accept()
-                Log.d("b", "Server: connection done")
-                val outputStream = client.getOutputStream()
-                outputStream.write("Salut".toByteArray())
-                outputStream.close()
-                Log.d("b", "Server: sent message")
+        WifiP2pServer(PORT_CONNECTIONS, sendOrReceive()).start()
+    }
 
-            } catch (e: IOException) {
-                //mince
-                Log.d("d", "EXCEPT $e")
-            }
+    private fun startClient(host: String){
+        try {
+            Thread.sleep(1000)
+        } catch (e: InterruptedException) {}
+        WifiP2pClient(host, PORT_CONNECTIONS, sendOrReceive()).start()
+    }
+
+    fun chargeItems(items: List<Item>, itemSentCallback: ItemSentCallback){
+        this.items = items
+        this.onItemSent = itemSentCallback
+    }
+
+    fun disconnect(){
+        manager.removeGroup(channel, null)
+    }
+
+    private fun sendOrReceive() : SocketAction {
+        return if (wifiViewModel.peerConnecting.value != null) sentItemsAction()  else receiveItemsAction()
+    }
+
+    private fun sentItemsAction() : SocketAction {
+        return SocketAction {
+            Log.d("TAG", "sendItems: sending items")
+            val outputStream = it!!.getOutputStream()
+            outputStream.write("Salut".toByteArray())
+            Log.d("TAG", "sendItems: items sent, closing")
         }
     }
 
-    private fun startClient(host : String){
-        Toast.makeText(
-            activity,
-            "Client starting...",
-            Toast.LENGTH_LONG
-        ).show()
-        GlobalScope.launch {
-            val socket = Socket()
-            socket.bind(null)
-            socket.connect((InetSocketAddress(host, PORT_CONNECTIONS)), 2500)
-
-            val inputStream = socket.getInputStream()
+    private fun receiveItemsAction() : SocketAction {
+        return SocketAction {
+            val inputStream = it!!.getInputStream()
             val reader = BufferedReader(inputStream.reader())
             val reception = StringBuilder()
+            Log.d("TAG", "start: reading")
             reader.use { reader ->
                 var line = reader.readLine()
                 while (line != null) {
@@ -231,20 +219,18 @@ object WifiP2PReceiver : BroadcastReceiver() {
                     line = reader.readLine()
                 }
             }
-            Log.d("c", "RECEIVED: $reception")
-            this@WifiP2PReceiver.disconnect()
-            socket.close()
+            onReceiveItems(reception.toString())
         }
     }
 
-    private fun disconnect(){
-        manager.removeGroup(channel, object : WifiP2pManager.ActionListener{
-            override fun onSuccess() {
-            }
-
-            override fun onFailure(reason: Int) {
-            }
-
-        })
+    fun onReceiveItems(message: String){
+        activity.runOnUiThread{
+            Toast.makeText(
+                activity,
+                "Received : $message",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        onItemSent!!.onSuccess()
     }
 }

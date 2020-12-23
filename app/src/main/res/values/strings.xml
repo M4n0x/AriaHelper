@@ -56,4 +56,5 @@
     <string name="cancel_string">Cancel</string>
     <string name="modal_wifi_title">Connection joueur</string>
     <string name="stop_refresh_string">Stop</string>
+    <string name="Switch_p2p_name">Item exchange</string>
 </resources>

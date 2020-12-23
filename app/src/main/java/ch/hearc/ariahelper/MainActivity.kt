@@ -1,15 +1,14 @@
 package ch.hearc.ariahelper
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.IntentFilter
 import android.net.wifi.p2p.WifiP2pManager
 import android.os.Bundle
 import android.view.Menu
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
-import androidx.navigation.navGraphViewModels
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -18,8 +17,6 @@ import ch.hearc.ariahelper.models.persistence.CharacterPersistenceManager
 import ch.hearc.ariahelper.models.persistence.LootPersistenceManager
 import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
 import ch.hearc.ariahelper.sensors.wifip2p.WifiP2PReceiver
-import ch.hearc.ariahelper.sensors.wifip2p.WifiP2PViewModel
-import ch.hearc.ariahelper.ui.character.CharacterViewModel
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -57,12 +54,14 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        initWifiPeer2Peer()
+        initWifiPeer2PeerReceiver()
+        initP2pObserve()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
+        initP2pSwitch()
         return true
     }
 
@@ -83,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
     }
 
-    private fun initWifiPeer2Peer(){
+    private fun initWifiPeer2PeerReceiver(){
         // --- wifi P2P intent filter init ---
         intentFilter = IntentFilter().apply {
             addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION)
@@ -95,5 +94,35 @@ class MainActivity : AppCompatActivity() {
         manager = getSystemService(Context.WIFI_P2P_SERVICE) as WifiP2pManager
         channel = manager.initialize(this, mainLooper, null)
         WifiP2PReceiver.init(channel, manager, this)
+    }
+
+    private fun initP2pObserve(){
+        //observe and send message to receiver
+        WifiP2PReceiver.wifiViewModel.p2pActivated.observe(this, {
+            updateP2pDiscovery(it)
+        })
+        //init receiver with good value
+        updateP2pDiscovery(WifiP2PReceiver.wifiViewModel.p2pActivated.value ?: false)
+    }
+
+    private fun updateP2pDiscovery(activate : Boolean){
+        if(activate)
+            WifiP2PReceiver.discoverPeers()
+        else
+            WifiP2PReceiver.stopDiscovery()
+    }
+
+    private fun initP2pSwitch(){
+        val switch : Switch = findViewById(R.id.p2pSwitch)
+        //link switch -> discovery
+        switch.setOnClickListener{
+            WifiP2PReceiver.wifiViewModel._p2pActivated.value = switch.isChecked
+        }
+        //link discovery -> switch
+        WifiP2PReceiver.wifiViewModel.p2pActivated.observe(this, {
+            switch.isChecked = WifiP2PReceiver.wifiViewModel.p2pActivated.value ?: false
+        })
+        //initialize switch value
+        switch.isChecked = WifiP2PReceiver.wifiViewModel.p2pActivated.value ?: false
     }
 }
