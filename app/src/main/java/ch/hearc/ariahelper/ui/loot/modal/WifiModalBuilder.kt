@@ -10,8 +10,6 @@ import androidx.fragment.app.FragmentManager
 import ch.hearc.ariahelper.sensors.wifip2p.WifiP2PReceiver
 
 object WifiModalBuilder {
-    private val dialogListener = createListener()
-
     fun buildAndShow(context: Context, fragmentManager: FragmentManager, tag: String): WifiP2PConnectionDialog ? {
         //verify that the wifi P2P is supported
         if(!WifiP2PReceiver.wifiViewModel.p2pSupported.value!!){
@@ -23,20 +21,13 @@ object WifiModalBuilder {
             return null
         }
 
-        //verify that the wifi P2P is enable
+        //verify that the wifi P2P is enabled
         if(!WifiP2PReceiver.wifiViewModel.p2pEnabled.value!!){
             Toast.makeText(
                 context,
                 "Please enable Wifi p2p before going forward",
                 Toast.LENGTH_SHORT
             ).show()
-            return null
-        }
-
-        //verify that the wifi P2P is activated (for discovery)
-        if(!WifiP2PReceiver.wifiViewModel.p2pActivated.value!!){
-            //Give a last chance to the user to activate it
-            createDialogActivation(context)
             return null
         }
 
@@ -50,6 +41,13 @@ object WifiModalBuilder {
             return null
         }
 
+        //verify that the wifi P2P is activated (for discovery)
+        if(!WifiP2PReceiver.wifiViewModel.p2pActivated.value!!){
+            //Give a last chance to the user to activate it
+            createDialogActivation(context, fragmentManager, tag)
+            return null
+        }
+
         val modal = WifiP2PConnectionDialog()
         modal.show(fragmentManager, tag)
         return modal
@@ -60,24 +58,15 @@ object WifiModalBuilder {
         return LocationManagerCompat.isLocationEnabled(locationManager)
     }
 
-    private fun createDialogActivation(context: Context){
+    private fun createDialogActivation(context: Context, fragmentManager: FragmentManager, tag: String){
         val builder: AlertDialog.Builder = AlertDialog.Builder(context)
         builder.setMessage("Enable Wifi for item exchange ?")
-                .setPositiveButton("Yes", dialogListener)
-                .setNegativeButton("No", dialogListener)
+                .setPositiveButton("Yes") { dialog, which ->
+                    WifiP2PReceiver.wifiViewModel._p2pActivated.value = true
+                    buildAndShow(context, fragmentManager, tag)
+                }
+                .setNegativeButton("No", null)
                 .show()
     }
 
-    private fun createListener() : DialogInterface.OnClickListener {
-        return DialogInterface.OnClickListener { dialog, which ->
-                when (which) {
-                    DialogInterface.BUTTON_POSITIVE -> {
-                        WifiP2PReceiver.wifiViewModel._p2pActivated.value = true
-                    }
-                    DialogInterface.BUTTON_NEGATIVE -> {
-                        //nothing to be done
-                    }
-                }
-            }
-    }
 }

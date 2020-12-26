@@ -1,9 +1,13 @@
 package ch.hearc.ariahelper
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.IntentFilter
 import android.net.wifi.p2p.WifiP2pManager
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.Menu
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
@@ -13,21 +17,27 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import ch.hearc.ariahelper.models.Item
 import ch.hearc.ariahelper.models.persistence.CharacterPersistenceManager
 import ch.hearc.ariahelper.models.persistence.LootPersistenceManager
 import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
 import ch.hearc.ariahelper.sensors.wifip2p.WifiP2PReceiver
+import ch.hearc.ariahelper.ui.character.CharacterViewModel
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.app_bar_main.*
+import java.util.stream.Collectors
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var intentFilter : IntentFilter
+    private lateinit var charViewModel : CharacterViewModel
 
     //wifiP2P
     private lateinit var channel: WifiP2pManager.Channel
     private lateinit var manager: WifiP2pManager
+    //vibration on item received
+    private val VIBRATION_DURATION_MS : Long = 600
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         initWifiPeer2PeerReceiver()
-        initP2pObserve()
+        initP2PSwitchObserver()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -96,7 +106,7 @@ class MainActivity : AppCompatActivity() {
         WifiP2PReceiver.init(channel, manager, this)
     }
 
-    private fun initP2pObserve(){
+    private fun initP2PSwitchObserver(){
         //observe and send message to receiver
         WifiP2PReceiver.wifiViewModel.p2pActivated.observe(this, {
             updateP2pDiscovery(it)
@@ -105,7 +115,7 @@ class MainActivity : AppCompatActivity() {
         updateP2pDiscovery(WifiP2PReceiver.wifiViewModel.p2pActivated.value ?: false)
     }
 
-    private fun updateP2pDiscovery(activate : Boolean){
+    private fun updateP2pDiscovery(activate: Boolean){
         if(activate)
             WifiP2PReceiver.discoverPeers()
         else
@@ -114,15 +124,85 @@ class MainActivity : AppCompatActivity() {
 
     private fun initP2pSwitch(){
         val switch : Switch = findViewById(R.id.p2pSwitch)
+        //initialize switch value
+        switch.isChecked = WifiP2PReceiver.wifiViewModel._p2pActivated.value ?: false
+
         //link switch -> discovery
         switch.setOnClickListener{
-            WifiP2PReceiver.wifiViewModel._p2pActivated.value = switch.isChecked
+            if(switch.isChecked){
+                //user want to activate discovery : Verify (ex : wifi is disabled, or not supported...)
+                if(WifiP2PReceiver.wifiViewModel.canP2PActivate()){
+                    //discovery enabled: change discovery value
+                    WifiP2PReceiver.wifiViewModel._p2pActivated.value = switch.isChecked
+                } else {
+                    //discovery impossible: put the switch back
+                    switch.isChecked = false
+                }
+            } else {
+                //discovery can always be disabled
+                WifiP2PReceiver.wifiViewModel._p2pActivated.value = switch.isChecked
+            }
         }
         //link discovery -> switch
         WifiP2PReceiver.wifiViewModel.p2pActivated.observe(this, {
             switch.isChecked = WifiP2PReceiver.wifiViewModel.p2pActivated.value ?: false
         })
-        //initialize switch value
-        switch.isChecked = WifiP2PReceiver.wifiViewModel.p2pActivated.value ?: false
+
+        WifiP2PReceiver.wifiViewModel.p2pSupported.observe(this, {
+            if (it) {
+                switch.isEnabled = true
+            } else {
+                //p2p not supported : exchange is not usable at all
+                WifiP2PReceiver.wifiViewModel._p2pActivated.value = false
+                switch.isChecked = false
+                switch.isEnabled = false
+            }
+        })
+
+        WifiP2PReceiver.wifiViewModel.p2pEnabled.observe(this, {
+            if (!it) {
+                //p2p not enabled -> p2p deactivation
+                WifiP2PReceiver.wifiViewModel._p2pActivated.value = false
+                switch.isChecked = false
+            }
+        })
+    }
+
+    /**
+     * Add the received items from p2p to this player and notify him
+     *
+     */
+    fun onReceiveItems(items: List<Item>){
+        //alert the player with the list of names
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("Items received")
+
+        val names = items.stream().map { it.name }.collect(Collectors.toList()) as List<String>
+        builder.setItems(names.toTypedArray(), null)
+        // add OK and Cancel buttons
+        builder.setPositiveButton("OK", null)
+
+        runOnUiThread{
+            vibratePhone()
+            builder.create().show()
+            //add items to the player if charviewmodel exists
+            CharacterViewModel.instance?.let {
+                val char = it.character.value
+                char!!.itemList.addAll(items)
+                it._character.value = char
+            }
+        }
+    }
+
+    /**
+     * Safely vibrate the phone (with retro-compatibility for old SDK)
+     */
+    fun vibratePhone() {
+        val vibrator = applicationContext?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(VIBRATION_DURATION_MS, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(VIBRATION_DURATION_MS) //used for backward compatibility
+        }
     }
 }

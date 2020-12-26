@@ -13,31 +13,32 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
+import ch.hearc.ariahelper.MainActivity
 import ch.hearc.ariahelper.R
-import kotlinx.android.synthetic.main.fragment_character_view.*
 import ch.hearc.ariahelper.models.CharacterIdSpinnerContainer
 import ch.hearc.ariahelper.sensors.accelerometer.AcceleroManager
-import ch.hearc.ariahelper.sensors.wifip2p.WifiP2PViewModel
 import ch.hearc.ariahelper.ui.character.adapters.AttributeRecViewAdapter
 import ch.hearc.ariahelper.ui.character.adapters.SkillRecViewAdapter
 import ch.hearc.ariahelper.ui.fragments.MoneyValueFragment
+import kotlinx.android.synthetic.main.fragment_character_view.*
 
 
 class CharacterViewFragment : Fragment() {
     // Attributes
     private val NEW_CHARACTER_NAME = "Nouveau personnage"
     private val ADD_CHARACTER_NAME = "Ajouter"
-    private lateinit var attributeAdapter : AttributeRecViewAdapter
-    private lateinit var skillAdapter : SkillRecViewAdapter
-    private lateinit var characterNamesID : ArrayList<CharacterIdSpinnerContainer>
+    private lateinit var attributeAdapter: AttributeRecViewAdapter
+    private lateinit var skillAdapter: SkillRecViewAdapter
+    private lateinit var characterNamesID: ArrayList<CharacterIdSpinnerContainer>
     private lateinit var acceleroManager: AcceleroManager
+
     //Viewmodels : Get them via the navGraph (viewmodels are binded to the activity nav graph, and alive during its whole life)
-    private val characterViewModel : CharacterViewModel by navGraphViewModels(R.id.mobile_navigation) {
+    private val characterViewModel: CharacterViewModel by navGraphViewModels(R.id.mobile_navigation) {
         //defaultViewModelProviderFactory or the ViewModelProvider.Factory you are using.
         defaultViewModelProviderFactory
     }
 
-    private val characterComponentViewModel : CharacterComponentViewModel by navGraphViewModels(R.id.mobile_navigation) {
+    private val characterComponentViewModel: CharacterComponentViewModel by navGraphViewModels(R.id.mobile_navigation) {
         //defaultViewModelProviderFactory or the ViewModelProvider.Factory you are using.
         defaultViewModelProviderFactory
     }
@@ -53,18 +54,24 @@ class CharacterViewFragment : Fragment() {
             val currentCharacter = characterViewModel.character.value!!
             attributeAdapter.changeList(currentCharacter.attributeList)
             skillAdapter.changeList(currentCharacter.skillList)
-            val fragMoney = childFragmentManager.findFragmentById(R.id.fragmentCharacterMoney) as MoneyValueFragment
+            val fragMoney =
+                childFragmentManager.findFragmentById(R.id.fragmentCharacterMoney) as MoneyValueFragment
             fragMoney.linkToPlayer(currentCharacter)
             levelTextEdit.setText(currentCharacter.level.toString())
         })
 
         //attach observers to dice values
-        characterComponentViewModel.D6.observe(viewLifecycleOwner,{textViewD6Result.text = "D$it"})
-        characterComponentViewModel.D10.observe(viewLifecycleOwner,{textViewD10Result.text = "D$it"})
-        characterComponentViewModel.D100.observe(viewLifecycleOwner,{textViewD100Result.text = "D$it"})
-        characterComponentViewModel.DCUSTOM.observe(viewLifecycleOwner,{textViewDCustomResult.text = "D$it"})
+        characterComponentViewModel.D6.observe(viewLifecycleOwner,
+            { textViewD6Result.text = "D$it" })
+        characterComponentViewModel.D10.observe(viewLifecycleOwner,
+            { textViewD10Result.text = "D$it" })
+        characterComponentViewModel.D100.observe(viewLifecycleOwner,
+            { textViewD100Result.text = "D$it" })
+        characterComponentViewModel.DCUSTOM.observe(viewLifecycleOwner,
+            { textViewDCustomResult.text = "D$it" })
         //attach observer to progress bar
-        characterComponentViewModel.Progress.observe(viewLifecycleOwner,{diceProgressBar.setProgress(it, true)})
+        characterComponentViewModel.Progress.observe(viewLifecycleOwner,
+            { diceProgressBar.setProgress(it, true) })
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_character_view, container, false)
@@ -115,7 +122,7 @@ class CharacterViewFragment : Fragment() {
     /**
      * Init the adapters for the 2 recycler view : Attribute and skills
      */
-    private fun initAdapters(){
+    private fun initAdapters() {
         //get character live data from view model
         var currentCharacter = characterViewModel.character.value!!
 
@@ -128,7 +135,7 @@ class CharacterViewFragment : Fragment() {
         skillsRecyclerView!!.adapter = skillAdapter
     }
 
-    private fun initSpinner(){
+    private fun initSpinner() {
         //put characters in spinner (characters are wrapped in a (name, id) wrapper class : @class CharacterIdSpinnerContainer)
         characterNamesID = characterViewModel.getAllCharacters()
         //"add" character line as last : invalid ID se we know it's not a real character
@@ -138,7 +145,8 @@ class CharacterViewFragment : Fragment() {
         spinner.adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
-            characterNamesID)
+            characterNamesID
+        )
 
         //set spinner behavior on item select
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -150,7 +158,7 @@ class CharacterViewFragment : Fragment() {
             ) {
                 //switch over "idSelected", the id of the choosen character
                 val currentCharacterID = characterViewModel.character.value!!.id
-                when(val idSelected = characterNamesID[position].id){
+                when (val idSelected = characterNamesID[position].id) {
                     -1 -> { //invalid id -> "add" line
                         characterViewModel.createAndSetCharacter(NEW_CHARACTER_NAME)
                         Toast.makeText(context, "Character created !", Toast.LENGTH_SHORT).show()
@@ -159,12 +167,14 @@ class CharacterViewFragment : Fragment() {
                             CharacterViewFragmentDirections.actionNavCharacterToCharacterSettingsFragment()
                         this@CharacterViewFragment.findNavController().navigate(directions)
                     }
-                    currentCharacterID -> { /*nothing to be done :-)*/ }
+                    currentCharacterID -> { /*nothing to be done :-)*/
+                    }
                     else -> {
                         characterViewModel.changeCharacter(idSelected)
                     }
                 }
             }
+
             //Nothing to be done
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
@@ -173,13 +183,13 @@ class CharacterViewFragment : Fragment() {
     /**
      * Init the different listeners of the view
      */
-    private fun initListeners(){
+    private fun initListeners() {
         //"level" field binded to player level
         levelTextEdit.doAfterTextChanged {
-            if(it!=null && !it.isEmpty()){
+            if (it != null && !it.isEmpty()) {
                 try {
                     characterViewModel.character.value!!.level = it.toString().toInt()
-                } catch (e : NumberFormatException){
+                } catch (e: NumberFormatException) {
                     levelTextEdit.setText(characterViewModel.character.value!!.level.toString())
                 }
             }
@@ -190,7 +200,7 @@ class CharacterViewFragment : Fragment() {
             if (it != null && !it.isEmpty()) {
                 try {
                     characterComponentViewModel._DCUSTOMREQ.value = it.toString().toInt()
-                } catch (e : NumberFormatException){
+                } catch (e: NumberFormatException) {
                     textViewDCustom.setText(characterComponentViewModel._DCUSTOMREQ.value.toString())
                 }
 
@@ -201,10 +211,10 @@ class CharacterViewFragment : Fragment() {
     /**
      * Put the correct selected character on the spinner
      */
-    private fun selectSpinnerPlayer(){
+    private fun selectSpinnerPlayer() {
         val id = characterViewModel.character.value!!.id
-        for(i in 0..characterNamesID.size){
-            if (characterNamesID[i].id == id){
+        for (i in 0..characterNamesID.size) {
+            if (characterNamesID[i].id == id) {
                 spinner.setSelection(i)
                 break
             }

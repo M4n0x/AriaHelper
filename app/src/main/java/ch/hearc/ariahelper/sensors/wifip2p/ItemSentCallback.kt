@@ -1,5 +1,6 @@
 package ch.hearc.ariahelper.sensors.wifip2p
 
-fun interface ItemSentCallback {
+interface ItemSentCallback {
     fun onSuccess()
+    fun onFailure()
 }

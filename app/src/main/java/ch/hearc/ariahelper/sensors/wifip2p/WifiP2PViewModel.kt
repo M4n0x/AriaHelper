@@ -37,4 +37,7 @@ class WifiP2PViewModel : ViewModel() {
     }
     val p2pActivated: LiveData<Boolean> = _p2pActivated
 
+    fun canP2PActivate() : Boolean {
+        return (p2pSupported.value == true) && (p2pEnabled.value == true)
+    }
 }

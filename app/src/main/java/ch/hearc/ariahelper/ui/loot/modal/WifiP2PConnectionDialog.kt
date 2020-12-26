@@ -36,7 +36,7 @@ class WifiP2PConnectionDialog : DialogFragment() {
         val view = inflater.inflate(R.layout.fragment_wifip2p_connection_modal, container, false)
 
         // Init the devices adapter
-        adapter = WifiConnectionRecyclerViewAdapter(WifiP2PReceiver.wifiViewModel.peers.value)
+        adapter = WifiConnectionRecyclerViewAdapter(WifiP2PReceiver.wifiViewModel.peers.value, this)
 
         return view
     }
@@ -76,11 +76,6 @@ class WifiP2PConnectionDialog : DialogFragment() {
         val width = (resources.displayMetrics.widthPixels * WIDTH_RATIO).toInt()
         val height = (resources.displayMetrics.heightPixels * HEIGHT_RATIO).toInt()
         dialog!!.window?.setLayout(width, height)
-    }
-
-    override fun onDismiss(dialog: DialogInterface) {
-        WifiP2PReceiver.stopDiscovery()
-        super.onDismiss(dialog)
     }
 
     private fun refreshDiscovery(){

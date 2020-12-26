@@ -46,6 +46,16 @@ object PicturePersistenceManager {
      */
     fun save(uri: Uri) : String {
         val bitmap : Bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
+        return save(bitmap)
+    }
+
+    /**
+     * This function is used to save any picture
+     * and store it in the app intern data
+     * @param   bitmap picture we want to save in intern app data
+     * @return  return the file's id newly stored in app
+     */
+    fun save(bitmap : Bitmap) : String{
         val filename : String = UUID.randomUUID().toString() + ".png"
         val file = File(picturesDir, filename)
 
@@ -53,7 +63,7 @@ object PicturePersistenceManager {
         try {
             fos = FileOutputStream(file)
             // Use the compress method on the BitMap object to write image to the OutputStream
-            bitmap.compress(Bitmap.CompressFormat.PNG, 70, fos)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {

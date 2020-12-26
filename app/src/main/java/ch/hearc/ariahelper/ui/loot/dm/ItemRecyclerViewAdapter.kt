@@ -1,5 +1,6 @@
 package ch.hearc.ariahelper.ui.loot.dm
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import ch.hearc.ariahelper.R
@@ -21,9 +23,9 @@ import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
  */
 class ItemRecyclerViewAdapter(
     private val lvm: LootViewModel,
-    private var showSelect: Boolean = false,
+    private val context: Context,
+    private var showSelect: Boolean = false
 ) : RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder>() {
-
     private val values : MutableList<Item> = lvm.itemList.value!!
     private val selected : MutableList<Item> = mutableListOf()
 
@@ -43,7 +45,9 @@ class ItemRecyclerViewAdapter(
         val item : Item = values[position]
         holder.idView.text = item.name
         holder.contentView.text = item.quality.toString()
-        if (item.picture != null && item.picture != "")
+        if (item.picture?.isEmpty())
+            holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.bag_default))
+        else
             holder.imageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(item.picture))
         holder.selectView.visibility = if (showSelect) View.VISIBLE else View.GONE
 
@@ -67,7 +71,6 @@ class ItemRecyclerViewAdapter(
             } else {
                 holder.selectView.isChecked = !holder.selectView.isChecked
                 if (holder.selectView.isChecked) selected.add(item) else selected.remove(item)
-                Log.d("TAG", "onBindViewHolder: value set")
                 lvm._selectedItemList.value = selected
             }
         }
