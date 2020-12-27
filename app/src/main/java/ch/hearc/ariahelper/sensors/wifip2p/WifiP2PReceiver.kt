@@ -87,7 +87,6 @@ object WifiP2PReceiver : BroadcastReceiver() {
                         if (wifiViewModel.p2pActivated.value == true) { //==true to manage null and false
                             discoverPeers()
                         }
-                        Log.d("disconnnection acknowledgment", "onReceive: we are disconnected")
                     }
                 }
             }
@@ -215,22 +214,18 @@ object WifiP2PReceiver : BroadcastReceiver() {
                     .map { SerializableItem(it) }
                     .collect(Collectors.toList())
             ObjectOutputStream(socket.getOutputStream()).writeObject(serializedItems)
-            Log.d("TAG", "sentItemsAction: envois terminé")
         }
     }
 
     private fun receiveItemsAction(): SocketAction {
         return SocketAction { socket ->
             makeToast("Reception d'items en cours...", false)
-            Log.d("TAG", "trying to read...")
-            var serializableItemList = ObjectInputStream(socket.getInputStream()).readObject() as List<SerializableItem>
-            Log.d("TAG", "read items...")
+            //we can ONLY receive a list of serializableitems in this configuration
+            val serializableItemList = ObjectInputStream(socket.getInputStream()).readObject() as List<SerializableItem>
             val items = serializableItemList!!.parallelStream()
                 .map { it.getItem() }
                 .collect(Collectors.toList())
-            Log.d("TAG", "items are deserialized...")
             activity.onReceiveItems(items)
-            Log.d("TAG", "Finished !...")
         }
     }
 

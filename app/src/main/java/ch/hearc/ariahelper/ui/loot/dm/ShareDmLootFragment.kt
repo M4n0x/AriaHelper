@@ -9,6 +9,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.navGraphViewModels
 import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.persistence.LootPersistenceManager
+import ch.hearc.ariahelper.ui.loot.shared.LootViewModel
 import kotlinx.android.synthetic.main.fragment_share_dm_loot.view.*
 
 /**
@@ -30,7 +31,7 @@ class ShareDmLootFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_share_dm_loot, container, false)
 
         // on btn add click we change view
-        view.btnAdd.setOnClickListener {
+        view.btnDmAdd.setOnClickListener {
             view.findNavController().navigate(R.id.action_loot_to_fragmentAddItem)
         }
 

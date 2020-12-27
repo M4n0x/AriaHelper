@@ -31,7 +31,6 @@ import java.util.stream.Collectors
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var intentFilter : IntentFilter
-    private lateinit var charViewModel : CharacterViewModel
 
     //wifiP2P
     private lateinit var channel: WifiP2pManager.Channel
@@ -177,8 +176,8 @@ class MainActivity : AppCompatActivity() {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle("Items received")
 
-        val names = items.stream().map { it.name }.collect(Collectors.toList()) as List<String>
-        builder.setItems(names.toTypedArray(), null)
+        val names = items.stream().map { it.name }.collect(Collectors.toList()) as List<String>?
+        builder.setItems(names?.toTypedArray(), null)
         // add OK and Cancel buttons
         builder.setPositiveButton("OK", null)
 

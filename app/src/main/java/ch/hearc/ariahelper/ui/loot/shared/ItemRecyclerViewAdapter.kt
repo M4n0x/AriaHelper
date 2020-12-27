@@ -1,8 +1,7 @@
-package ch.hearc.ariahelper.ui.loot.dm
+package ch.hearc.ariahelper.ui.loot.shared
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +38,16 @@ class ItemRecyclerViewAdapter(
         selected.clear() // clear selected items as a new view is created
 
         return ViewHolder(view)
+    }
+
+    /**
+     * To be called on list update
+     * Clear the selected items
+     */
+    fun onItemListUpdated(){
+        selected.clear()
+        lvm._selectedItemList.value = selected
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

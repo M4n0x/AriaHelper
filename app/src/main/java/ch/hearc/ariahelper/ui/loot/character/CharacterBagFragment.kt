@@ -1,12 +1,7 @@
 package ch.hearc.ariahelper.ui.loot.character
 
 import android.app.AlertDialog
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,25 +14,27 @@ import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.sensors.wifip2p.ItemSentCallback
 import ch.hearc.ariahelper.sensors.wifip2p.WifiP2PReceiver
 import ch.hearc.ariahelper.ui.character.CharacterViewModel
-import ch.hearc.ariahelper.ui.loot.dm.LootViewModel
 import ch.hearc.ariahelper.ui.loot.modal.WifiModalBuilder
-import ch.hearc.ariahelper.ui.loot.modal.WifiP2PConnectionDialog
+import ch.hearc.ariahelper.ui.loot.shared.LootViewModel
 import kotlinx.android.synthetic.main.fragment_character_bag.*
-import kotlinx.android.synthetic.main.fragment_share_dm_loot.view.*
+import kotlinx.android.synthetic.main.fragment_character_bag.view.*
 
 /**
  * A simple [Fragment] subclass.
  */
 class CharacterBagFragment : Fragment() {
-    private val characterViewModel : CharacterViewModel by navGraphViewModels(R.id.mobile_navigation) {
+    private val characterViewModel: CharacterViewModel by navGraphViewModels(R.id.mobile_navigation) {
         defaultViewModelProviderFactory
     }
-    private val lootViewModel : LootViewModel by navGraphViewModels(R.id.mobile_navigation) {
+    private val lootViewModel: LootViewModel by navGraphViewModels(R.id.mobile_navigation) {
         defaultViewModelProviderFactory
     }
-    private var modal : WifiP2PConnectionDialog ? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // set itemlist to setup ItemFragment as it'll be used in the next navigation fragment
         lootViewModel._itemList.value = characterViewModel.character.value!!.itemList
         //automatically follow the list if the character changes
@@ -49,11 +46,11 @@ class CharacterBagFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_character_bag, container, false)
 
         // on btn add click we change view
-        view.btnAdd.setOnClickListener {
+        view.btnBagAdd.setOnClickListener {
             view.findNavController().navigate(R.id.action_loot_to_fragmentAddItem)
         }
 
-        view.btnNFC.setOnClickListener{
+        view.btnBagTransfer.setOnClickListener {
             //prepare items to send
             val sentList = lootViewModel.selectedItemList.value!!
 
@@ -76,7 +73,7 @@ class CharacterBagFragment : Fragment() {
             })
 
             //start connection modal, which call the receiver to send the items
-            modal = WifiModalBuilder.buildAndShow(
+            WifiModalBuilder.buildAndShow(
                 requireContext(),
                 parentFragmentManager,
                 "Wifi P2P connection modal"
@@ -91,17 +88,17 @@ class CharacterBagFragment : Fragment() {
 
         //enable share button only when item(s) have been selected
         lootViewModel.selectedItemList.observe(viewLifecycleOwner, {
-            btnNFC.isEnabled = !lootViewModel.selectedItemList.value.isNullOrEmpty()
+            btnBagTransfer.isEnabled = !lootViewModel.selectedItemList.value.isNullOrEmpty()
         })
         //no item is selected from start : This button is natively disabled
-        btnNFC.isEnabled = false
+        btnBagTransfer.isEnabled = false
     }
 
-    private fun vibrateAndConfirmSent(){
+    private fun vibrateAndConfirmSent() {
         val builder = AlertDialog.Builder(context)
         builder.setTitle("Envois d'item")
-                .setMessage("Les objets sont envoyés !")
-                .setPositiveButton("Ok", null)
+            .setMessage("Les objets sont envoyés !")
+            .setPositiveButton("Ok", null)
         (activity as MainActivity).vibratePhone()
         builder.show()
     }

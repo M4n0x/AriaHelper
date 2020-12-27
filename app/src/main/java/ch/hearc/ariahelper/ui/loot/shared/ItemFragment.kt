@@ -1,8 +1,7 @@
-package ch.hearc.ariahelper.ui.loot.dm
+package ch.hearc.ariahelper.ui.loot.shared
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -33,7 +32,7 @@ class ItemFragment : Fragment() {
         }
 
         lootViewModel.itemList.observe(viewLifecycleOwner, {
-            itemAdapter.notifyDataSetChanged()
+            itemAdapter.onItemListUpdated()
         })
 
         return view

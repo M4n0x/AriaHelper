@@ -9,18 +9,18 @@
 
     <fragment
         android:id="@+id/fragListItem"
-        android:name="ch.hearc.ariahelper.ui.loot.dm.ItemFragment"
+        android:name="ch.hearc.ariahelper.ui.loot.shared.ItemFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnAdd"
+        app:layout_constraintBottom_toTopOf="@+id/btnBagAdd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout="@layout/fragment_item_list" />
 
     <Button
-        android:id="@+id/btnNFC"
+        android:id="@+id/btnDmTransfer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
@@ -30,14 +30,14 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/btnAdd"
+        android:id="@+id/btnDmAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="20dp"
         android:text="Add loot"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnNFC"
+        app:layout_constraintEnd_toStartOf="@+id/btnBagTransfer"
         app:layout_constraintHorizontal_bias="0.021"
         app:layout_constraintStart_toStartOf="parent" />
 
