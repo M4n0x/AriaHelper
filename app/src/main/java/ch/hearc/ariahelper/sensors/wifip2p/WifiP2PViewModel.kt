@@ -40,4 +40,8 @@ class WifiP2PViewModel : ViewModel() {
     fun canP2PActivate() : Boolean {
         return (p2pSupported.value == true) && (p2pEnabled.value == true)
     }
+
+    fun isConnecting(): Boolean{
+        return peerConnecting.value != null
+    }
 }

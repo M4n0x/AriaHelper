@@ -19,7 +19,8 @@ import java.net.Socket
  */
 class WifiP2pServer (
     private val port: Int,
-    private val action : SocketAction
+    private val action : SocketAction,
+    private val shouldDisconnect : Boolean
 ) : Thread() {
     private lateinit var ephemeralServerSocket : ServerSocket
     private var client: Socket ? = null
@@ -34,7 +35,7 @@ class WifiP2pServer (
             if(client == null){
                 throw Exception("Timeout reached waiting for client")//abort
             }
-            //client connected - perform the action
+            Log.d("TAG", "server is connected")
             action.perform(client!!)
             //everything went correctly
             WifiP2PReceiver.onConnectionResult(true)
@@ -42,10 +43,11 @@ class WifiP2pServer (
             WifiP2PReceiver.onConnectionResult(false)
             Log.d("server", "Error in server : ${e.printStackTrace()}")
         } finally {
-            //always close client, server sockets and disconnect from peer
+            //always disconnect from peer
+            Log.d("TAG", "server disconnecting connection")
             client?.close()
-            ephemeralServerSocket?.close()
-            WifiP2PReceiver.disconnect()
+            ephemeralServerSocket.close()
+            if(shouldDisconnect) WifiP2PReceiver.disconnect()
         }
     }
 }

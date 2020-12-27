@@ -22,16 +22,18 @@ import java.net.Socket
 class WifiP2pClient(
     private val hostAdd: String,
     private val port: Int,
-    private val action : SocketAction
+    private val action : SocketAction,
+    private val shouldDisconnect : Boolean
 ) : Thread() {
-    private val socket: Socket = Socket()
+    private val socket: Socket ? = null
     private val TIMEOUT_DELAY_MS = 2000
-    private val MAX_RETRY = 40
+    private val MAX_RETRY = 50
     private val DELAY_RETRY_MS : Long = 200
 
     override fun run() {
         try {
             //connect - client side : Simply open a socket to given address
+            val socket = Socket()
             socket.bind(null)
 
             //try to connect
@@ -51,16 +53,17 @@ class WifiP2pClient(
                 throw Exception("Could not connect to server")
             }
             //perform the action this socket was opened with
-            action.perform(socket!!)
+            action.perform(socket)
             //everything went correctly
             WifiP2PReceiver.onConnectionResult(true)
         } catch (e: Exception) {
             Log.d("client", "Error in client : ${e.printStackTrace()}")
             WifiP2PReceiver.onConnectionResult(false)
         } finally {
-            //always close & disconnect
+            //always disconnect from peer
+            Log.d("TAG", "client disconnecting connection")
             socket?.close()
-            WifiP2PReceiver.disconnect()
+            if(shouldDisconnect) WifiP2PReceiver.disconnect()
         }
     }
 }

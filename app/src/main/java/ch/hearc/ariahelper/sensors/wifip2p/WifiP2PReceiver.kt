@@ -87,6 +87,7 @@ object WifiP2PReceiver : BroadcastReceiver() {
                         if (wifiViewModel.p2pActivated.value == true) { //==true to manage null and false
                             discoverPeers()
                         }
+                        Log.d("disconnnection acknowledgment", "onReceive: we are disconnected")
                     }
                 }
             }
@@ -175,11 +176,11 @@ object WifiP2PReceiver : BroadcastReceiver() {
     }
 
     private fun startServer() {
-        WifiP2pServer(PORT_CONNECTIONS, sendOrReceive()).start()
+        WifiP2pServer(PORT_CONNECTIONS, sendOrReceive(), !wifiViewModel.isConnecting()).start()
     }
 
     private fun startClient(host: String) {
-        WifiP2pClient(host, PORT_CONNECTIONS, sendOrReceive()).start()
+        WifiP2pClient(host, PORT_CONNECTIONS, sendOrReceive(), !wifiViewModel.isConnecting()).start()
     }
 
     fun chargeItems(items: List<Item>, itemSentCallback: ItemSentCallback) {
@@ -196,7 +197,7 @@ object WifiP2PReceiver : BroadcastReceiver() {
         if (itemSentCallback != null) {
             //run that on UI thread in case an UI action is called on success/failure
             activity.runOnUiThread {
-                if (success) itemSentCallback?.onSuccess() else itemSentCallback?.onFailure()
+                if (success) itemSentCallback!!.onSuccess() else itemSentCallback!!.onFailure()
                 //callback is called only once and then cleaned
                 itemSentCallback = null
             }
@@ -204,31 +205,32 @@ object WifiP2PReceiver : BroadcastReceiver() {
     }
 
     private fun sendOrReceive(): SocketAction {
-        return if (wifiViewModel.peerConnecting.value != null) sentItemsAction() else receiveItemsAction()
+        return if (wifiViewModel.isConnecting()) sentItemsAction() else receiveItemsAction()
     }
 
     private fun sentItemsAction(): SocketAction {
         return SocketAction { socket ->
             makeToast("Envois d'items en cours..", false)
-            val outputStream = socket.getOutputStream()
-            val serializedItems =
-                items!!.parallelStream().map { SerializableItem(it) }.collect(Collectors.toList())
-            ObjectOutputStream(outputStream).use { it.writeObject(serializedItems) }
+            val serializedItems = items!!.parallelStream()
+                    .map { SerializableItem(it) }
+                    .collect(Collectors.toList())
+            ObjectOutputStream(socket.getOutputStream()).writeObject(serializedItems)
+            Log.d("TAG", "sentItemsAction: envois terminé")
         }
     }
 
     private fun receiveItemsAction(): SocketAction {
         return SocketAction { socket ->
             makeToast("Reception d'items en cours...", false)
-            val inputStream = socket.getInputStream()
-            var serializableItemList: List<SerializableItem>?
-            ObjectInputStream(inputStream).use { ois ->
-                serializableItemList = ois.readObject() as List<SerializableItem>
-            }
+            Log.d("TAG", "trying to read...")
+            var serializableItemList = ObjectInputStream(socket.getInputStream()).readObject() as List<SerializableItem>
+            Log.d("TAG", "read items...")
             val items = serializableItemList!!.parallelStream()
                 .map { it.getItem() }
                 .collect(Collectors.toList())
+            Log.d("TAG", "items are deserialized...")
             activity.onReceiveItems(items)
+            Log.d("TAG", "Finished !...")
         }
     }
 
