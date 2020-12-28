@@ -58,7 +58,8 @@
                             android:id="@+id/levelTextEdit"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/level_textview_title" />
+                            android:hint="@string/level_textview_title"
+                            android:inputType="number" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

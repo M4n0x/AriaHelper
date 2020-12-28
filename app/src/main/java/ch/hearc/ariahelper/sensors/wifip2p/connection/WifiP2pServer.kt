@@ -35,16 +35,14 @@ class WifiP2pServer (
             if(client == null){
                 throw Exception("Timeout reached waiting for client")//abort
             }
-            Log.d("TAG", "server is connected")
             action.perform(client!!)
             //everything went correctly
             WifiP2PReceiver.onConnectionResult(true)
         } catch(e : Exception){
             WifiP2PReceiver.onConnectionResult(false)
-            Log.d("server", "Error in server : ${e.printStackTrace()}")
+            Log.e("server", "Error in server : ${e.printStackTrace()}")
         } finally {
             //always disconnect from peer
-            Log.d("TAG", "server disconnecting connection")
             client?.close()
             ephemeralServerSocket.close()
             if(shouldDisconnect) WifiP2PReceiver.disconnect()

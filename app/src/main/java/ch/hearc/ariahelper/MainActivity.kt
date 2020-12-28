@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.Log
 import android.view.Menu
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
@@ -188,7 +189,7 @@ class MainActivity : AppCompatActivity() {
             CharacterViewModel.instance?.let {
                 val char = it.character.value
                 char!!.itemList.addAll(items)
-                it._character.value = char
+                it._character.value = char //post to alert observers of the character
             }
         }
     }

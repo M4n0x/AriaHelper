@@ -1,123 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.character.partials.SkillUpdateFragment" >
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:text="@string/skill_update_title"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:cardCornerRadius="5dp"
-        app:layout_constraintBottom_toTopOf="@id/buttonsLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/TextLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp">
-
-            <EditText
-                android:id="@+id/skillNameEdit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="@string/Base_Textview"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:inputType="text"
-                app:layout_constraintRight_toLeftOf="@id/skillValueNumberEdit"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:id="@+id/skillDescriptionEdit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:gravity="start|top"
-                android:padding="10dp"
-                android:singleLine="false"
-                android:text="@string/Base_Textview"
-                android:textSize="14sp"
-                android:textStyle="italic"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/skillValueNumberEdit"
-                app:layout_constraintTop_toBottomOf="@id/skillNameEdit" />
-
-            <EditText
-                android:id="@+id/skillValueNumberEdit"
-                android:layout_width="40dp"
-                android:layout_height="0dp"
-                android:gravity="center"
-                android:text="@string/Zero_value"
-                android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:inputType="number"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/buttonsLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="95dp"
-        android:padding="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView3">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/buttonConfirm"
+        <TextView
+            android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:padding="10dp"
-            android:text="@string/button_confirm"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/buttonDelete"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/skill_update_title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/buttonDelete"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:cardCornerRadius="5dp"
+            app:layout_constraintBottom_toTopOf="@id/buttonsLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/TextLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+                <EditText
+                    android:id="@+id/skillNameEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="@string/Base_Textview"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:inputType="text"
+                    app:layout_constraintRight_toLeftOf="@id/skillValueNumberEdit"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/skillDescriptionEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:gravity="start|top"
+                    android:padding="10dp"
+                    android:singleLine="false"
+                    android:text="@string/Base_Textview"
+                    android:textSize="14sp"
+                    android:textStyle="italic"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/skillValueNumberEdit"
+                    app:layout_constraintTop_toBottomOf="@id/skillNameEdit" />
+
+                <EditText
+                    android:id="@+id/skillValueNumberEdit"
+                    android:layout_width="40dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:text="@string/Zero_value"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:inputType="number"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/buttonsLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:src="@android:drawable/ic_menu_delete"
+            android:layout_marginTop="95dp"
+            android:padding="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/buttonConfirm"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
+            <Button
+                android:id="@+id/buttonConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:padding="10dp"
+                android:text="@string/button_confirm"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/buttonDelete"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/buttonDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:background="@null"
+                android:src="@android:drawable/ic_menu_delete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/buttonConfirm"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

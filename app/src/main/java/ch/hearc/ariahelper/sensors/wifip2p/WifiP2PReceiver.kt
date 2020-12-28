@@ -22,6 +22,7 @@ import ch.hearc.ariahelper.sensors.wifip2p.connection.WifiP2pClient
 import ch.hearc.ariahelper.sensors.wifip2p.connection.WifiP2pServer
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
+import java.net.ServerSocket
 import java.util.stream.Collectors
 
 
@@ -222,10 +223,14 @@ object WifiP2PReceiver : BroadcastReceiver() {
             makeToast("Reception d'items en cours...", false)
             //we can ONLY receive a list of serializableitems in this configuration
             val serializableItemList = ObjectInputStream(socket.getInputStream()).readObject() as List<SerializableItem>
-            val items = serializableItemList!!.parallelStream()
-                .map { it.getItem() }
-                .collect(Collectors.toList())
-            activity.onReceiveItems(items)
+            //let the deserialization be out of the sockets managment
+            Thread{
+                //parallel deseialization (good if multiple bitmaps)
+                val items = serializableItemList!!.parallelStream()
+                    .map { it.getItem() }
+                    .collect(Collectors.toList())
+                activity.onReceiveItems(items)
+            }.start()
         }
     }
 

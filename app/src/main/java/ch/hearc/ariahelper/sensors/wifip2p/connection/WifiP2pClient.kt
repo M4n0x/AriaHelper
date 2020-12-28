@@ -27,29 +27,27 @@ class WifiP2pClient(
 ) : Thread() {
     private val socket: Socket ? = null
     private val TIMEOUT_DELAY_MS = 2000
-    private val MAX_RETRY = 50
-    private val DELAY_RETRY_MS : Long = 200
+    private val MAX_RETRY = 20
+    private val DELAY_RETRY_MS : Long = 500
 
     override fun run() {
         try {
-            //connect - client side : Simply open a socket to given address
-            val socket = Socket()
-            socket.bind(null)
-
+            var socket : Socket ? = null
             //try to connect
             var retry = 0
             do{
                 try {
-                    Log.d("client", "run: trying to connect...")
-                    socket.connect((InetSocketAddress(hostAdd, port)), TIMEOUT_DELAY_MS)
+                    //connect - client side : Simply open a socket to given address
+                    socket = Socket()
+                    socket.bind(null)
+                    socket.connect(InetSocketAddress(hostAdd, port), TIMEOUT_DELAY_MS)
                 } catch(e : IOException){
                     //server might not be ready, sleep and retry
-                    Log.d("client", "run: delaying...")
                     sleep(DELAY_RETRY_MS)
                 }
-            }while(++retry < MAX_RETRY && !socket.isConnected)
+            }while(++retry < MAX_RETRY && !socket!!.isConnected)
             //failed
-            if(!socket.isConnected){
+            if(!socket!!.isConnected){
                 throw Exception("Could not connect to server")
             }
             //perform the action this socket was opened with
@@ -57,11 +55,10 @@ class WifiP2pClient(
             //everything went correctly
             WifiP2PReceiver.onConnectionResult(true)
         } catch (e: Exception) {
-            Log.d("client", "Error in client : ${e.printStackTrace()}")
+            Log.e("client", "Error in client : ${e.printStackTrace()}")
             WifiP2PReceiver.onConnectionResult(false)
         } finally {
             //always disconnect from peer
-            Log.d("TAG", "client disconnecting connection")
             socket?.close()
             if(shouldDisconnect) WifiP2PReceiver.disconnect()
         }

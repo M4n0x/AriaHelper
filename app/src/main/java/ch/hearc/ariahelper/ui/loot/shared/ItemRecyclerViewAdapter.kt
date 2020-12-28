@@ -2,6 +2,7 @@ package ch.hearc.ariahelper.ui.loot.shared
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +55,8 @@ class ItemRecyclerViewAdapter(
         val item : Item = values[position]
         holder.idView.text = item.name
         holder.contentView.text = item.quality.toString()
-        if (item.picture?.isEmpty())
+        holder.selectView.isChecked = false
+        if (item.picture.isEmpty())
             holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.bag_default))
         else
             holder.imageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(item.picture))

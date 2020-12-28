@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.ColorFilter
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,11 +52,11 @@ class CharacterBagFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_character_bag, container, false)
 
         // on btn add click we change view
-        view.btnBagAdd.setOnClickListener {
+        view.layoutBadAgg.setOnClickListener {
             view.findNavController().navigate(R.id.action_loot_to_fragmentAddItem)
         }
 
-        view.btnBagTransfer.setOnClickListener {
+        view.layoutBagTransfer.setOnClickListener {
             //prepare items to send
             val sentList = lootViewModel.selectedItemList.value!!
 
@@ -71,7 +72,7 @@ class CharacterBagFragment : Fragment() {
                 override fun onFailure() {
                     Toast.makeText(
                         activity,
-                        "Error : Items were not sent !",
+                        "Erreur lors de l'envois : Les objets n'ont pas été envoyés",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -100,11 +101,11 @@ class CharacterBagFragment : Fragment() {
     }
 
     private fun vibrateAndConfirmSent() {
-        val builder = AlertDialog.Builder(context)
-        builder.setTitle("Envois d'item")
+        AlertDialog.Builder(context)
+            .setTitle("Envois : succès")
             .setMessage("Les objets sont envoyés !")
             .setPositiveButton("Ok", null)
-        (activity as MainActivity).vibratePhone()
-        builder.show()
+            .show()
+        (activity as MainActivity?)?.vibratePhone()
     }
 }
