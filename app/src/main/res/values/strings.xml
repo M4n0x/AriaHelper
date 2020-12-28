@@ -61,4 +61,5 @@
     <string name="transfer_txt">Transférer</string>
     <string name="button_add_description">Bouton \"+\" qui permet d\'ajouter un nouvel item</string>
     <string name="button_transfer_decription">Bouton qui permet de transférer les items séléectionnés</string>
+    <string name="treasure_send_txt">Envoyer trésor</string>
 </resources>

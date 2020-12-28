@@ -15,7 +15,7 @@ object WifiModalBuilder {
         if(!WifiP2PReceiver.wifiViewModel.p2pSupported.value!!){
             Toast.makeText(
                 context,
-                "Your device is not compatible with wifiP2P",
+                "Appareil non compatible avec wifiP2P",
                 Toast.LENGTH_SHORT
             ).show()
             return null
@@ -25,7 +25,7 @@ object WifiModalBuilder {
         if(!WifiP2PReceiver.wifiViewModel.p2pEnabled.value!!){
             Toast.makeText(
                 context,
-                "Please enable Wifi p2p before going forward",
+                "Le transfert a besoin du wifip2p activé",
                 Toast.LENGTH_SHORT
             ).show()
             return null
@@ -35,7 +35,7 @@ object WifiModalBuilder {
         if(!isLocationEnabled(context)){
             Toast.makeText(
                 context,
-                "Please enable Location before going forward",
+                "Le transfert a besoin de la localisation activée",
                 Toast.LENGTH_SHORT
             ).show()
             return null
@@ -59,13 +59,13 @@ object WifiModalBuilder {
     }
 
     private fun createDialogActivation(context: Context, fragmentManager: FragmentManager, tag: String){
-        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
-        builder.setMessage("Enable Wifi for item exchange ?")
-                .setPositiveButton("Yes") { dialog, which ->
+        AlertDialog.Builder(context)
+                .setMessage("Activer le wifip2p pour le transfert ?")
+                .setPositiveButton("Oui") { _, _ ->
                     WifiP2PReceiver.wifiViewModel._p2pActivated.value = true
                     buildAndShow(context, fragmentManager, tag)
                 }
-                .setNegativeButton("No", null)
+                .setNegativeButton("Non", null)
                 .show()
     }
 

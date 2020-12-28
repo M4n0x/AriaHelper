@@ -1,15 +1,10 @@
 package ch.hearc.ariahelper.ui.loot.character
 
 import android.app.AlertDialog
-import android.graphics.Color
-import android.graphics.ColorFilter
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -26,7 +21,11 @@ import kotlinx.android.synthetic.main.fragment_character_bag.view.*
 
 
 /**
- * A simple [Fragment] subclass.
+ * CharacterBagFragment : Top-level  class
+ *
+ * Display the current character's bag and offer to add/transfer its items
+ *
+ * Uses the item fragment with the character item list
  */
 class CharacterBagFragment : Fragment() {
     private val characterViewModel: CharacterViewModel by navGraphViewModels(R.id.mobile_navigation) {
@@ -36,11 +35,7 @@ class CharacterBagFragment : Fragment() {
         defaultViewModelProviderFactory
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
         // set itemlist to setup ItemFragment as it'll be used in the next navigation fragment
         lootViewModel._itemList.value = characterViewModel.character.value!!.itemList
         //automatically follow the list if the character changes
@@ -52,7 +47,7 @@ class CharacterBagFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_character_bag, container, false)
 
         // on btn add click we change view
-        view.layoutBadAgg.setOnClickListener {
+        view.layoutBadAdd.setOnClickListener {
             view.findNavController().navigate(R.id.action_loot_to_fragmentAddItem)
         }
 
@@ -63,18 +58,14 @@ class CharacterBagFragment : Fragment() {
             //charge items into the receiver, prepare callback in case of success/failure
             WifiP2PReceiver.chargeItems(sentList, object : ItemSentCallback {
                 override fun onSuccess() {
-                    vibrateAndConfirmSent()
+                    vibrateAndDisplay("Envois : succès", "Les objets sont envoyés !")
                     val newItemList = lootViewModel.itemList.value!!
                     newItemList.removeAll(sentList)
                     lootViewModel._itemList.value = newItemList
                 }
 
                 override fun onFailure() {
-                    Toast.makeText(
-                        activity,
-                        "Erreur lors de l'envois : Les objets n'ont pas été envoyés",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    vibrateAndDisplay("Envois: échec","Les objets n'ont pas pu être envoyés !")
                 }
             })
 
@@ -100,10 +91,10 @@ class CharacterBagFragment : Fragment() {
         btnBagTransfer.isEnabled = false
     }
 
-    private fun vibrateAndConfirmSent() {
+    private fun vibrateAndDisplay(title : String, message: String) {
         AlertDialog.Builder(context)
-            .setTitle("Envois : succès")
-            .setMessage("Les objets sont envoyés !")
+            .setTitle(title)
+            .setMessage(message)
             .setPositiveButton("Ok", null)
             .show()
         (activity as MainActivity?)?.vibratePhone()
