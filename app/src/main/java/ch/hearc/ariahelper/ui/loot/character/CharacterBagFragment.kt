@@ -1,10 +1,14 @@
 package ch.hearc.ariahelper.ui.loot.character
 
 import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.ColorFilter
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -18,6 +22,7 @@ import ch.hearc.ariahelper.ui.loot.modal.WifiModalBuilder
 import ch.hearc.ariahelper.ui.loot.shared.LootViewModel
 import kotlinx.android.synthetic.main.fragment_character_bag.*
 import kotlinx.android.synthetic.main.fragment_character_bag.view.*
+
 
 /**
  * A simple [Fragment] subclass.

@@ -7,4 +7,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="COINS_DIMENSION">60dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="bag_icon_dimensions">25dp</dimen>
 </resources>

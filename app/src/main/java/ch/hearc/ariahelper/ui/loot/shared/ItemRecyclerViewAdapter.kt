@@ -84,6 +84,8 @@ class ItemRecyclerViewAdapter(
             }
         }
 
+        //the entire item handles the click, the checkbox passes it through
+        holder.selectView.isClickable = false
     }
 
     override fun getItemCount(): Int = values.size

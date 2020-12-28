@@ -12,6 +12,7 @@
         android:name="ch.hearc.ariahelper.ui.loot.shared.ItemFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,46 +28,52 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textviewBagTransfer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="TextView"
+            android:layout_marginBottom="8dp"
+            android:text="@string/transfer_txt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/btnBagTransfer"
             app:layout_constraintStart_toStartOf="@+id/btnBagTransfer" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textviewBagAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="TextView"
+            android:layout_marginBottom="8dp"
+            android:text="@string/add_txt"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/btnBagAdd"
             app:layout_constraintStart_toStartOf="@+id/btnBagAdd" />
 
         <ImageButton
             android:id="@+id/btnBagTransfer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:src="@drawable/transfer"
-            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            android:layout_width="@dimen/bag_icon_dimensions"
+            android:layout_height="@dimen/bag_icon_dimensions"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:contentDescription="@string/button_transfer_decription"
+            android:scaleType="centerInside"
+            android:src="@drawable/transfer_selector_disablegrey"
+            app:layout_constraintBottom_toTopOf="@+id/textviewBagTransfer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnBagAdd"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/btnBagAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
+            android:layout_width="@dimen/bag_icon_dimensions"
+            android:layout_height="@dimen/bag_icon_dimensions"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:contentDescription="@string/button_add_description"
+            android:scaleType="centerInside"
             android:src="@drawable/add"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            app:layout_constraintBottom_toTopOf="@+id/textviewBagAdd"
             app:layout_constraintEnd_toStartOf="@+id/btnBagTransfer"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -35,17 +35,17 @@ class MoneyValueFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //get textedit views references once
-        goldEditText = view?.findViewById<EditText>(R.id.goldTextEdit)!!
-        silverEditText = view?.findViewById<EditText>(R.id.silverTextEdit)!!
-        bronzeEditText = view?.findViewById<EditText>(R.id.bronzeTextEdit)!!
+        goldEditText = view?.findViewById(R.id.goldTextEdit)!!
+        silverEditText = view?.findViewById(R.id.silverTextEdit)!!
+        bronzeEditText = view?.findViewById(R.id.bronzeTextEdit)!!
         super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onResume() {
         //get textedit views references (once)
-        goldEditText   = view?.findViewById<EditText>(R.id.goldTextEdit)!!
-        silverEditText = view?.findViewById<EditText>(R.id.silverTextEdit)!!
-        bronzeEditText = view?.findViewById<EditText>(R.id.bronzeTextEdit)!!
+        goldEditText   = view?.findViewById(R.id.goldTextEdit)!!
+        silverEditText = view?.findViewById(R.id.silverTextEdit)!!
+        bronzeEditText = view?.findViewById(R.id.bronzeTextEdit)!!
         super.onResume()
     }
 
@@ -85,7 +85,7 @@ class MoneyValueFragment : Fragment() {
             if(it != null && !it.isEmpty()){
                 try {
                     //try to parse and change the value of the character money
-                    character.money.gold = it.toString()?.toInt()
+                    character.money.gold = it.toString().toInt()
                 } catch (e : NumberFormatException){
                     //not parsable : go back
                     goldEditText.setText(character.money.gold.toString())
@@ -97,7 +97,7 @@ class MoneyValueFragment : Fragment() {
             if(it != null && !it.isEmpty()){
                 try {
                     //try to parse and change the value of the character money
-                    character.money.silver = it.toString()?.toInt()
+                    character.money.silver = it.toString().toInt()
                 } catch (e : NumberFormatException){
                     //not parsable : go back
                     silverEditText.setText(character.money.silver.toString())
@@ -109,7 +109,7 @@ class MoneyValueFragment : Fragment() {
             if(it != null && !it.isEmpty()){
                 try {
                     //try to parse and change the value of the character money
-                    character.money.bronze = it.toString()?.toInt()
+                    character.money.bronze = it.toString().toInt()
                 } catch (e : NumberFormatException){
                     //not parsable : go back
                     bronzeEditText.setText(character.money.bronze.toString())
