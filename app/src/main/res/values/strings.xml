@@ -7,10 +7,10 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_lootdm">Loot DM</string>
-    <string name="menu_loot_char">My bag</string>
+    <string name="menu_lootdm">Trésor</string>
+    <string name="menu_loot_char">Sac</string>
     <string name="loot_details">Details</string>
-    <string name="loot_add">Add loot</string>
+    <string name="loot_add">Ajouter loot</string>
     <string name="App_name">Aria Helper</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Zero_value">0</string>
@@ -62,4 +62,6 @@
     <string name="button_add_description">Bouton \"+\" qui permet d\'ajouter un nouvel item</string>
     <string name="button_transfer_decription">Bouton qui permet de transférer les items séléectionnés</string>
     <string name="treasure_send_txt">Envoyer trésor</string>
+    <string name="group_character_title">Principal</string>
+    <string name="group_DM_title">Maître du donjon</string>
 </resources>

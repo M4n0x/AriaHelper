@@ -3,18 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_character"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menu_char" />
-        <item
-            android:id="@+id/nav_character_loot"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_loot_char" />
-        <item
-            android:id="@+id/nav_lootdm"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_lootdm" />
-    </group>
+
+        <item android:title="@string/group_character_title">
+            <menu>
+                <group android:id="@+id/menuCharacter"
+                    android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_character"
+                        android:icon="@drawable/dnd_icon"
+                        android:title="@string/menu_char" />
+                    <item
+                        android:id="@+id/nav_character_loot"
+                        android:icon="@drawable/bag_icon_2"
+                        android:title="@string/menu_loot_char" />
+                </group>
+            </menu>
+        </item>
+
+        <item android:title="@string/group_DM_title">
+            <menu>
+                <group android:id="@+id/menuDM"
+                    android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_lootdm"
+                        android:icon="@drawable/chest_icon"
+                        android:title="@string/menu_lootdm" />
+                </group>
+            </menu>
+        </item>
 </menu>
