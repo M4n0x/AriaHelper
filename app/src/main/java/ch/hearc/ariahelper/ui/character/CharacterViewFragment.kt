@@ -1,7 +1,13 @@
 package ch.hearc.ariahelper.ui.character
 
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,25 +20,24 @@ import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
-import ch.hearc.ariahelper.MainActivity
 import ch.hearc.ariahelper.R
-import kotlinx.android.synthetic.main.fragment_character_view.*
 import ch.hearc.ariahelper.models.CharacterIdSpinnerContainer
-import ch.hearc.ariahelper.sensors.accelerometer.AcceleroManager
-import ch.hearc.ariahelper.sensors.AcceleroManager
 import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
+import ch.hearc.ariahelper.sensors.accelerometer.AcceleroManager
 import ch.hearc.ariahelper.ui.character.adapters.AttributeRecViewAdapter
 import ch.hearc.ariahelper.ui.character.adapters.SkillRecViewAdapter
 import ch.hearc.ariahelper.ui.common.CreateOrUpdateItemFragment
 import ch.hearc.ariahelper.ui.fragments.MoneyValueFragment
-import kotlinx.android.synthetic.main.fragment_character_view.*
 import kotlinx.android.synthetic.main.fragment_add_or_update_item.*
+import kotlinx.android.synthetic.main.fragment_character_view.*
+import kotlin.math.log
 
 
 class CharacterViewFragment : Fragment() {
     // Attributes
     private val NEW_CHARACTER_NAME = "Nouveau personnage"
     private val ADD_CHARACTER_NAME = "Ajouter"
+    private val VIBRATION_DURATION_MS : Long = 400
     private lateinit var attributeAdapter: AttributeRecViewAdapter
     private lateinit var skillAdapter: SkillRecViewAdapter
     private lateinit var characterNamesID: ArrayList<CharacterIdSpinnerContainer>
@@ -68,16 +73,22 @@ class CharacterViewFragment : Fragment() {
 
         //attach observers to dice values
         characterComponentViewModel.D6.observe(viewLifecycleOwner,
-            { textViewD6Result.text = "D$it" })
+            { textViewD6Result.text = "$it" })
         characterComponentViewModel.D10.observe(viewLifecycleOwner,
-            { textViewD10Result.text = "D$it" })
+            { textViewD10Result.text = "$it" })
         characterComponentViewModel.D100.observe(viewLifecycleOwner,
-            { textViewD100Result.text = "D$it" })
+            { textViewD100Result.text = "$it" })
         characterComponentViewModel.DCUSTOM.observe(viewLifecycleOwner,
-            { textViewDCustomResult.text = "D$it" })
+            { textViewDCustomResult.text = "$it" })
         //attach observer to progress bar
-        characterComponentViewModel.Progress.observe(viewLifecycleOwner,
-            { diceProgressBar.setProgress(it, true) })
+        characterComponentViewModel.Progress.observe(viewLifecycleOwner, {
+            diceProgressBar.setProgress(it, true)
+            Log.d("TAG", "onCreateView: vibrating at $it")
+            if (it == 100) {
+                Log.d("TAG", "onCreateView: vibrating")
+                vibratePhoneDice()
+            }
+        })
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_character_view, container, false)
@@ -136,11 +147,6 @@ class CharacterViewFragment : Fragment() {
         }
     }
 
-    override fun onPause() {
-        acceleroManager.stopSensor()
-        super.onPause()
-    }
-
     /**
      * Init the adapters for the 2 recycler view : Attribute and skills
      */
@@ -197,10 +203,12 @@ class CharacterViewFragment : Fragment() {
                 }
 
                 //on change character we set the picture
-                if (characterViewModel.character.value!=null && characterViewModel.character.value?.picture!=null) {
-                    characterImageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(
-                        characterViewModel.character.value!!.picture!!
-                    ))
+                if (characterViewModel.character.value != null && characterViewModel.character.value?.picture != null) {
+                    characterImageView.setImageBitmap(
+                        PicturePersistenceManager.getBitmapFromFilename(
+                            characterViewModel.character.value!!.picture!!
+                        )
+                    )
                 }
             }
 
@@ -215,7 +223,7 @@ class CharacterViewFragment : Fragment() {
     private fun initListeners() {
         //"level" field binded to player level
         levelTextEdit.doAfterTextChanged {
-            if(it!=null && !it.isEmpty()){
+            if (it != null && !it.isEmpty()) {
                 try {
                     characterViewModel.character.value!!.level = it.toString().toInt()
                 } catch (e: NumberFormatException) {
@@ -253,7 +261,7 @@ class CharacterViewFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
-            CreateOrUpdateItemFragment.RESULT_GALLERY -> if (data != null ) {
+            CreateOrUpdateItemFragment.RESULT_GALLERY -> if (data != null) {
                 //On gallery result, we save the picture in our app intern data
                 if (characterViewModel.character.value != null) {
                     characterViewModel.character.value?.picture =
@@ -265,6 +273,18 @@ class CharacterViewFragment : Fragment() {
                     })
                 }
             }
+        }
+    }
+
+    /**
+     * Safely vibrate the phone (with retro-compatibility for old SDK)
+     */
+    fun vibratePhoneDice() {
+        val vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(VIBRATION_DURATION_MS, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(VIBRATION_DURATION_MS) //used for backward compatibility
         }
     }
 }
