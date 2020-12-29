@@ -22,7 +22,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ImageLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -39,37 +39,29 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/levelLayout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/characterImageView">
 
-                    <TextView
-                        android:id="@+id/levelTextViewTitle"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="5dp"
-                        android:gravity="center"
-                        android:padding="3dp"
-                        android:text="@string/level_textview_title"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <EditText
-                        android:id="@+id/levelTextEdit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="1dp"
-                        android:ems="2"
-                        android:gravity="center|center_horizontal|center_vertical"
-                        android:inputType="number"
-                        android:padding="3dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/levelTextViewTitle"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/levelTextEdit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/level_textview_title"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

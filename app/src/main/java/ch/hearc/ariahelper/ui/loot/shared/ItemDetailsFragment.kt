@@ -1,4 +1,4 @@
-package ch.hearc.ariahelper.ui.loot.dm
+package ch.hearc.ariahelper.ui.loot.shared
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.Item
 import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
+import ch.hearc.ariahelper.ui.loot.shared.LootViewModel
 import kotlinx.android.synthetic.main.fragment_item_details.view.*
 
 /**

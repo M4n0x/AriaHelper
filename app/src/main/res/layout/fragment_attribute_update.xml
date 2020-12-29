@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.character.partials.AttributeUpdateFragment">
-
-    <!-- TODO: Update blank fragment layout -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,9 +16,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
+            android:text="@string/attribute_update_title"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:text="@string/attribute_update_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -30,8 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
             android:padding="20dp"
             app:cardCornerRadius="15dp"
             app:layout_constraintBottom_toTopOf="@id/buttonsLayout"
@@ -42,7 +40,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="30dp">
+                android:padding="10dp">
 
                 <EditText
                     android:id="@+id/valueEdit"
@@ -52,9 +50,9 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="20dp"
                     android:layout_marginTop="8dp"
+                    android:fontFamily="cursive"
                     android:includeFontPadding="false"
                     android:inputType="number"
-                    android:fontFamily="cursive"
                     android:text="TextView"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -86,8 +84,7 @@
             android:padding="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView2">
+            app:layout_constraintStart_toStartOf="parent">
 
             <Button
                 android:id="@+id/buttonConfirm"
@@ -106,6 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
+                android:background="@null"
                 android:src="@android:drawable/ic_menu_delete"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -116,4 +114,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</ScrollView>

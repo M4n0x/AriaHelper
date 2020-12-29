@@ -17,7 +17,7 @@ import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.Item
 import ch.hearc.ariahelper.models.enums.Quality
 import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
-import ch.hearc.ariahelper.ui.loot.dm.LootViewModel
+import ch.hearc.ariahelper.ui.loot.shared.LootViewModel
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.fragment_add_or_update_item.*
 import kotlinx.android.synthetic.main.fragment_add_or_update_item.view.*

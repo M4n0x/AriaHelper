@@ -1,4 +1,4 @@
-package ch.hearc.ariahelper.ui.loot.dm
+package ch.hearc.ariahelper.ui.loot.shared
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

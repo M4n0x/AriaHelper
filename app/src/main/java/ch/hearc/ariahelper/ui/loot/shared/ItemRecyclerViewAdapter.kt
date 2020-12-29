@@ -1,12 +1,15 @@
-package ch.hearc.ariahelper.ui.loot.dm
+package ch.hearc.ariahelper.ui.loot.shared
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import ch.hearc.ariahelper.R
@@ -20,9 +23,9 @@ import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
  */
 class ItemRecyclerViewAdapter(
     private val lvm: LootViewModel,
-    private var showSelect: Boolean = false,
+    private val context: Context,
+    private var showSelect: Boolean = false
 ) : RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder>() {
-
     private val values : MutableList<Item> = lvm.itemList.value!!
     private val selected : MutableList<Item> = mutableListOf()
 
@@ -38,11 +41,24 @@ class ItemRecyclerViewAdapter(
         return ViewHolder(view)
     }
 
+    /**
+     * To be called on list update
+     * Clear the selected items
+     */
+    fun onItemListUpdated(){
+        selected.clear()
+        lvm._selectedItemList.value = selected
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item : Item = values[position]
         holder.idView.text = item.name
         holder.contentView.text = item.quality.toString()
-        if (item.picture != null && item.picture != "")
+        holder.selectView.isChecked = false
+        if (item.picture.isEmpty())
+            holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.bag_default))
+        else
             holder.imageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(item.picture))
         holder.selectView.visibility = if (showSelect) View.VISIBLE else View.GONE
 
@@ -66,10 +82,12 @@ class ItemRecyclerViewAdapter(
             } else {
                 holder.selectView.isChecked = !holder.selectView.isChecked
                 if (holder.selectView.isChecked) selected.add(item) else selected.remove(item)
-                lvm._selectedItemList.postValue(selected)
+                lvm._selectedItemList.value = selected
             }
         }
 
+        //the entire item handles the click, the checkbox passes it through
+        holder.selectView.isClickable = false
     }
 
     override fun getItemCount(): Int = values.size

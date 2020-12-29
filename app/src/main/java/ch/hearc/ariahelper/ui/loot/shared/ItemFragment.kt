@@ -1,8 +1,8 @@
-package ch.hearc.ariahelper.ui.loot.dm
+package ch.hearc.ariahelper.ui.loot.shared
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -16,9 +16,6 @@ import ch.hearc.ariahelper.R
  * this fragment is representing a list of Item.
  */
 class ItemFragment : Fragment() {
-
-    private var columnCount = 1
-
     private val lootViewModel : LootViewModel by navGraphViewModels(R.id.mobile_navigation) {
         defaultViewModelProviderFactory
     }
@@ -27,19 +24,18 @@ class ItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val view = inflater.inflate(R.layout.fragment_item_list, container, false)
+        val itemAdapter = ItemRecyclerViewAdapter(lootViewModel, requireContext())
 
-        // Set the Recyclerview
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = ItemRecyclerViewAdapter(lootViewModel)
-            }
+        with(view as RecyclerView) {
+            layoutManager = LinearLayoutManager(context)
+            adapter = itemAdapter
         }
+
+        lootViewModel.itemList.observe(viewLifecycleOwner, {
+            Log.d("TAG", "onCreateView: itemlist changed")
+            itemAdapter.onItemListUpdated()
+        })
 
         return view
     }

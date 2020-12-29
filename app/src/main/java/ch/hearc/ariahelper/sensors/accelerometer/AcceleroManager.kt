@@ -1,4 +1,4 @@
-package ch.hearc.ariahelper.sensors
+package ch.hearc.ariahelper.sensors.accelerometer
 
 import android.content.Context
 import android.content.Context.SENSOR_SERVICE
@@ -13,9 +13,6 @@ import kotlin.math.roundToInt
 import kotlin.math.sqrt
 import kotlin.random.Random
 
-/**
- * WIP - basic sensor, intelligence is yet to be made
- */
 class AcceleroManager(
     private val characterComponentViewModel: CharacterComponentViewModel,
     context: Context
@@ -33,7 +30,7 @@ class AcceleroManager(
     //coroutine of descending loading bar
     private var loadingBarBouncer : Job ? = null
     private var countEntropy : Boolean = true
-    private val COOLDOWN_DICE = 500L
+    private var lastProgress: Int = 0
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event!!.sensor.type == Sensor.TYPE_ACCELEROMETER && countEntropy) {
@@ -48,23 +45,15 @@ class AcceleroManager(
             val entropyRatio = (currentEntropy / ENTROPY_TRESHOLD)
             //bar is full
             if (entropyRatio >= 1) {
-                characterComponentViewModel._Progress.postValue((100).toInt())
+                characterComponentViewModel._Progress.value = 100
                 rollTheDice(generateEntropy(x, y, z))
                 //cap the entropy charge
                 currentEntropy = ENTROPY_TRESHOLD
                 //avoid the bar filling
                 countEntropy = false
-                startEmptyCooldown()
             }
             startTimeOut()
-            characterComponentViewModel._Progress.postValue((100 * entropyRatio).toInt())
-        }
-    }
-
-    private fun startEmptyCooldown(){
-        GlobalScope.launch {
-            delay(COOLDOWN_DICE)
-            countEntropy = true
+            updateProgressBar()
         }
     }
 
@@ -73,14 +62,17 @@ class AcceleroManager(
         loadingBarBouncer = GlobalScope.launch {
             var nextPrintTime = System.currentTimeMillis()
             // Init values : Sub progress -deltaProgress% every deltaTimeMs
-            val pourcentage : Float = 0.1F / 100F
-            val deltaProgress : Float = ENTROPY_TRESHOLD * pourcentage
+            val isCountingRatio = if (countEntropy) 0.5f else 2f
+            val percentage : Float = 0.1F * isCountingRatio / 100F
+            val deltaProgress : Float = ENTROPY_TRESHOLD * percentage
             val deltaTime = 5L
             while (isActive) { // cancellable computation loop
                 // print a message twice a second
                 if (System.currentTimeMillis() >= nextPrintTime) {
                     currentEntropy -= deltaProgress
                     if(currentEntropy <= 0){
+                        //bar at 0 : Start counting again if we stopped due to dice rolled
+                        countEntropy = true
                         currentEntropy = 0F
                         cancel()
                     }
@@ -93,7 +85,11 @@ class AcceleroManager(
 
     private fun updateProgressBar(){
         val entropyRatio = (currentEntropy / ENTROPY_TRESHOLD)
-        characterComponentViewModel._Progress.postValue((100 * entropyRatio).toInt())
+        val newProgress = (100 * entropyRatio).toInt()
+        if(newProgress != lastProgress){
+            characterComponentViewModel._Progress.postValue(newProgress)
+            lastProgress = newProgress
+        }
     }
 
     private fun rollTheDice(entropy: Int) {
@@ -117,7 +113,7 @@ class AcceleroManager(
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
 
 
-    public fun stopSensor() {
+    fun stopSensor() {
         sensorManager.unregisterListener(this)
     }
 

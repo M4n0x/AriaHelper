@@ -52,4 +52,14 @@
     <string name="character_settings_textview_text">"ID du personnage : "</string>
     <string name="level_textview_title">"Niveau : "</string>
     <string name="custom_dice_text">autre</string>
+    <string name="refresh_string">Refresh</string>
+    <string name="cancel_string">Cancel</string>
+    <string name="modal_wifi_title">Connection joueur</string>
+    <string name="stop_refresh_string">Stop</string>
+    <string name="Switch_p2p_name">Item exchange</string>
+    <string name="add_txt">Ajouter</string>
+    <string name="transfer_txt">Transférer</string>
+    <string name="button_add_description">Bouton \"+\" qui permet d\'ajouter un nouvel item</string>
+    <string name="button_transfer_decription">Bouton qui permet de transférer les items séléectionnés</string>
+    <string name="treasure_send_txt">Envoyer trésor</string>
 </resources>

@@ -1,8 +1,13 @@
 package ch.hearc.ariahelper.ui.character
 
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,31 +21,35 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import ch.hearc.ariahelper.R
-import kotlinx.android.synthetic.main.fragment_character_view.*
 import ch.hearc.ariahelper.models.CharacterIdSpinnerContainer
-import ch.hearc.ariahelper.sensors.AcceleroManager
 import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
+import ch.hearc.ariahelper.sensors.accelerometer.AcceleroManager
 import ch.hearc.ariahelper.ui.character.adapters.AttributeRecViewAdapter
 import ch.hearc.ariahelper.ui.character.adapters.SkillRecViewAdapter
 import ch.hearc.ariahelper.ui.common.CreateOrUpdateItemFragment
 import ch.hearc.ariahelper.ui.fragments.MoneyValueFragment
 import kotlinx.android.synthetic.main.fragment_add_or_update_item.*
+import kotlinx.android.synthetic.main.fragment_character_view.*
+import kotlin.math.log
 
 
 class CharacterViewFragment : Fragment() {
     // Attributes
     private val NEW_CHARACTER_NAME = "Nouveau personnage"
     private val ADD_CHARACTER_NAME = "Ajouter"
-    private lateinit var attributeAdapter : AttributeRecViewAdapter
-    private lateinit var skillAdapter : SkillRecViewAdapter
-    private lateinit var characterNamesID : ArrayList<CharacterIdSpinnerContainer>
+    private val VIBRATION_DURATION_MS : Long = 400
+    private lateinit var attributeAdapter: AttributeRecViewAdapter
+    private lateinit var skillAdapter: SkillRecViewAdapter
+    private lateinit var characterNamesID: ArrayList<CharacterIdSpinnerContainer>
     private lateinit var acceleroManager: AcceleroManager
+
     //Viewmodels : Get them via the navGraph (viewmodels are binded to the activity nav graph, and alive during its whole life)
-    private val characterViewModel : CharacterViewModel by navGraphViewModels(R.id.mobile_navigation) {
+    private val characterViewModel: CharacterViewModel by navGraphViewModels(R.id.mobile_navigation) {
         //defaultViewModelProviderFactory or the ViewModelProvider.Factory you are using.
         defaultViewModelProviderFactory
     }
-    private val characterComponentViewModel : CharacterComponentViewModel by navGraphViewModels(R.id.mobile_navigation) {
+
+    private val characterComponentViewModel: CharacterComponentViewModel by navGraphViewModels(R.id.mobile_navigation) {
         //defaultViewModelProviderFactory or the ViewModelProvider.Factory you are using.
         defaultViewModelProviderFactory
     }
@@ -56,18 +65,30 @@ class CharacterViewFragment : Fragment() {
             val currentCharacter = characterViewModel.character.value!!
             attributeAdapter.changeList(currentCharacter.attributeList)
             skillAdapter.changeList(currentCharacter.skillList)
-            val fragMoney = childFragmentManager.findFragmentById(R.id.fragmentCharacterMoney) as MoneyValueFragment
+            val fragMoney =
+                childFragmentManager.findFragmentById(R.id.fragmentCharacterMoney) as MoneyValueFragment
             fragMoney.linkToPlayer(currentCharacter)
             levelTextEdit.setText(currentCharacter.level.toString())
         })
 
         //attach observers to dice values
-        characterComponentViewModel.D6.observe(viewLifecycleOwner,{textViewD6Result.text = "$it"})
-        characterComponentViewModel.D10.observe(viewLifecycleOwner,{textViewD10Result.text = "$it"})
-        characterComponentViewModel.D100.observe(viewLifecycleOwner,{textViewD100Result.text = "$it"})
-        characterComponentViewModel.DCUSTOM.observe(viewLifecycleOwner,{textViewDCustomResult.text = "$it"})
+        characterComponentViewModel.D6.observe(viewLifecycleOwner,
+            { textViewD6Result.text = "$it" })
+        characterComponentViewModel.D10.observe(viewLifecycleOwner,
+            { textViewD10Result.text = "$it" })
+        characterComponentViewModel.D100.observe(viewLifecycleOwner,
+            { textViewD100Result.text = "$it" })
+        characterComponentViewModel.DCUSTOM.observe(viewLifecycleOwner,
+            { textViewDCustomResult.text = "$it" })
         //attach observer to progress bar
-        characterComponentViewModel.Progress.observe(viewLifecycleOwner,{diceProgressBar.setProgress(it, true)})
+        characterComponentViewModel.Progress.observe(viewLifecycleOwner, {
+            diceProgressBar.setProgress(it, true)
+            Log.d("TAG", "onCreateView: vibrating at $it")
+            if (it == 100) {
+                Log.d("TAG", "onCreateView: vibrating")
+                vibratePhoneDice()
+            }
+        })
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_character_view, container, false)
@@ -80,9 +101,20 @@ class CharacterViewFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        //start accelerometer
+        //Init accelerometer manager
         acceleroManager = AcceleroManager(characterComponentViewModel, requireContext())
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //Start the accelerometer registering
         Thread(acceleroManager).start()
+    }
+
+    override fun onPause() {
+        //Stop the accelerometer (unregister) which also stops the thread
+        acceleroManager.stopSensor()
+        super.onPause()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -115,15 +147,10 @@ class CharacterViewFragment : Fragment() {
         }
     }
 
-    override fun onPause() {
-        acceleroManager.stopSensor()
-        super.onPause()
-    }
-
     /**
      * Init the adapters for the 2 recycler view : Attribute and skills
      */
-    private fun initAdapters(){
+    private fun initAdapters() {
         //get character live data from view model
         var currentCharacter = characterViewModel.character.value!!
 
@@ -136,7 +163,7 @@ class CharacterViewFragment : Fragment() {
         skillsRecyclerView!!.adapter = skillAdapter
     }
 
-    private fun initSpinner(){
+    private fun initSpinner() {
         //put characters in spinner (characters are wrapped in a (name, id) wrapper class : @class CharacterIdSpinnerContainer)
         characterNamesID = characterViewModel.getAllCharacters()
         //"add" character line as last : invalid ID se we know it's not a real character
@@ -146,7 +173,8 @@ class CharacterViewFragment : Fragment() {
         spinner.adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
-            characterNamesID)
+            characterNamesID
+        )
 
         //set spinner behavior on item select
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -158,7 +186,7 @@ class CharacterViewFragment : Fragment() {
             ) {
                 //switch over "idSelected", the id of the choosen character
                 val currentCharacterID = characterViewModel.character.value!!.id
-                when(val idSelected = characterNamesID[position].id){
+                when (val idSelected = characterNamesID[position].id) {
                     -1 -> { //invalid id -> "add" line
                         characterViewModel.createAndSetCharacter(NEW_CHARACTER_NAME)
                         Toast.makeText(context, "Character created !", Toast.LENGTH_SHORT).show()
@@ -167,17 +195,20 @@ class CharacterViewFragment : Fragment() {
                             CharacterViewFragmentDirections.actionNavCharacterToCharacterSettingsFragment()
                         this@CharacterViewFragment.findNavController().navigate(directions)
                     }
-                    currentCharacterID -> { /*nothing to be done :-)*/ }
+                    currentCharacterID -> { /*nothing to be done :-)*/
+                    }
                     else -> {
                         characterViewModel.changeCharacter(idSelected)
                     }
                 }
 
                 //on change character we set the picture
-                if (characterViewModel.character.value!=null && characterViewModel.character.value?.picture!=null) {
-                    characterImageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(
-                        characterViewModel.character.value!!.picture!!
-                    ))
+                if (characterViewModel.character.value != null && characterViewModel.character.value?.picture != null) {
+                    characterImageView.setImageBitmap(
+                        PicturePersistenceManager.getBitmapFromFilename(
+                            characterViewModel.character.value!!.picture!!
+                        )
+                    )
                 }
             }
 
@@ -189,13 +220,13 @@ class CharacterViewFragment : Fragment() {
     /**
      * Init the different listeners of the view
      */
-    private fun initListeners(){
+    private fun initListeners() {
         //"level" field binded to player level
         levelTextEdit.doAfterTextChanged {
-            if(it!=null && it.isNotEmpty()){
+            if (it != null && !it.isEmpty()) {
                 try {
                     characterViewModel.character.value!!.level = it.toString().toInt()
-                } catch (e : NumberFormatException){
+                } catch (e: NumberFormatException) {
                     levelTextEdit.setText(characterViewModel.character.value!!.level.toString())
                 }
             }
@@ -206,7 +237,7 @@ class CharacterViewFragment : Fragment() {
             if (it != null && it.isNotEmpty()) {
                 try {
                     characterComponentViewModel._DCUSTOMREQ.value = it.toString().toInt()
-                } catch (e : NumberFormatException){
+                } catch (e: NumberFormatException) {
                     textViewDCustom.setText(characterComponentViewModel._DCUSTOMREQ.value.toString())
                 }
             }
@@ -216,10 +247,10 @@ class CharacterViewFragment : Fragment() {
     /**
      * Put the correct selected character on the spinner
      */
-    private fun selectSpinnerPlayer(){
+    private fun selectSpinnerPlayer() {
         val id = characterViewModel.character.value!!.id
-        for(i in 0..characterNamesID.size){
-            if (characterNamesID[i].id == id){
+        for (i in 0..characterNamesID.size) {
+            if (characterNamesID[i].id == id) {
                 spinner.setSelection(i)
                 break
             }
@@ -230,7 +261,7 @@ class CharacterViewFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
-            CreateOrUpdateItemFragment.RESULT_GALLERY -> if (data != null ) {
+            CreateOrUpdateItemFragment.RESULT_GALLERY -> if (data != null) {
                 //On gallery result, we save the picture in our app intern data
                 if (characterViewModel.character.value != null) {
                     characterViewModel.character.value?.picture =
@@ -242,6 +273,18 @@ class CharacterViewFragment : Fragment() {
                     })
                 }
             }
+        }
+    }
+
+    /**
+     * Safely vibrate the phone (with retro-compatibility for old SDK)
+     */
+    fun vibratePhoneDice() {
+        val vibrator = activity?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(VIBRATION_DURATION_MS, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(VIBRATION_DURATION_MS) //used for backward compatibility
         }
     }
 }

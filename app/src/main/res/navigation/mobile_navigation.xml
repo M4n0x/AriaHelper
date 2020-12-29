@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/fragmentLootDetail"
-        android:name="ch.hearc.ariahelper.ui.loot.dm.ItemDetailsFragment"
+        android:name="ch.hearc.ariahelper.ui.loot.shared.ItemDetailsFragment"
         android:label="@string/loot_details"
         tools:layout="@layout/fragment_item_details" >
         <argument
