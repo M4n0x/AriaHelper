@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="90dp">
+    android:layout_height="90dp"
+    android:background="#FFFFFF">
 
     <TextView
         android:id="@+id/itemName"
@@ -13,7 +14,6 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
-        android:text="Titre"
         android:textAppearance="?attr/textAppearanceListItem"
         app:layout_constraintEnd_toStartOf="@+id/itemSelected"
         app:layout_constraintStart_toEndOf="@+id/itemImage"
@@ -24,11 +24,12 @@
         android:layout_width="67dp"
         android:layout_height="68dp"
         android:layout_marginStart="16dp"
-        android:contentDescription="Item description"
+        android:contentDescription="@string/item_img"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@drawable/bag_icon"
+        tools:srcCompat="@drawable/bag_icon" />
 
     <TextView
         android:id="@+id/ItemQuality"
@@ -37,7 +38,6 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="13dp"
         android:layout_marginEnd="20dp"
-        android:text="TextView et ce fut vraiment une ép oqe form idable"
         app:layout_constraintEnd_toStartOf="@+id/itemSelected"
         app:layout_constraintStart_toEndOf="@+id/itemImage"
         app:layout_constraintTop_toBottomOf="@+id/itemName" />

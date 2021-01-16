@@ -16,8 +16,8 @@ data class Character(
     var id: Int ? = null,
     var name: String,
     var level: Int,
-    val picture: String? = null,
-    val money : MoneyValue,
+    var picture: String? = null,
+    var money : MoneyValue,
     val itemList : MutableList<Item>,
     val attributeList : MutableList<Attribute>,
     val skillList : MutableList<Skill>) : Parcelable {
