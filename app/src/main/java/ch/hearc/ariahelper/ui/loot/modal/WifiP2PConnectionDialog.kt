@@ -1,7 +1,6 @@
 package ch.hearc.ariahelper.ui.loot.modal
 
 import android.content.Context.WIFI_SERVICE
-import android.content.DialogInterface
 import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_wifip2p_connection_modal.*
 
 
 /**
- * A fragment representing a list of Items.
+ * Dialog to manage connection to other players
  */
 class WifiP2PConnectionDialog : DialogFragment() {
     private val WIDTH_RATIO = 0.85
@@ -32,7 +31,7 @@ class WifiP2PConnectionDialog : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corner);
+        dialog!!.window?.setBackgroundDrawableResource(R.drawable.round_corner)
         val view = inflater.inflate(R.layout.fragment_wifip2p_connection_modal, container, false)
 
         // Init the devices adapter

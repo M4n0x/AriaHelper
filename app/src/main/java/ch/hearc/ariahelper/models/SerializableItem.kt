@@ -10,19 +10,17 @@ import kotlinx.serialization.json.Json
 import java.io.Serializable
 import java.io.ByteArrayOutputStream
 
-class SerializableItem : Serializable {
-    private var itemAsString : String
+class SerializableItem//only build the ByteArray if necessary
+/**
+ * Convert an Item to a serializable item
+ */(item: Item) : Serializable {
+    private var itemAsString : String = Json.encodeToString(item)
     private var pictureAsByte : ByteArray ? = null
 
-    /**
-     * Convert an Item to a serializable item
-     */
-    constructor(item : Item){
-        this.itemAsString = Json.encodeToString(item)
-        //only build the ByteArray if necessary
-        if(!item.picture.isNullOrBlank()){
+    init {
+        if(item.picture.isNotBlank()){
             val buffer = ByteArrayOutputStream()
-            PicturePersistenceManager.getBitmapFromFilename(item.picture).compress(Bitmap.CompressFormat.PNG, 70, buffer)
+            PicturePersistenceManager.getBitmapFromFilename(item.picture)?.compress(Bitmap.CompressFormat.PNG, 70, buffer)
             pictureAsByte = buffer.toByteArray()
         }
     }
@@ -33,7 +31,7 @@ class SerializableItem : Serializable {
     fun getItem() : Item {
         val item = Json.decodeFromString<Item>(itemAsString)
         pictureAsByte?.let {
-            val bitmapPicture = BitmapFactory.decodeByteArray(it, 0, it!!.size);
+            val bitmapPicture = BitmapFactory.decodeByteArray(it, 0, it.size)
             item.picture = PicturePersistenceManager.save(bitmapPicture)
         }
         return item

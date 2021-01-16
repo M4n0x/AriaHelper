@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:contentDescription="@string/item_img"
     tools:context=".ui.common.CreateOrUpdateItemFragment">
 
     <ScrollView
@@ -21,13 +22,14 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="52dp"
+                android:contentDescription="@string/item_img"
                 android:maxWidth="50dp"
                 android:maxHeight="50dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bag_default" />
+                app:srcCompat="@drawable/bag_icon" />
 
             <Spinner
                 android:id="@+id/inputQuality"
@@ -47,7 +49,7 @@
                 android:layout_marginTop="61dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="30dp"
-                android:text="submit"
+                android:text="@string/item_submit"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/inputDescription" />
@@ -68,7 +70,7 @@
                     android:id="@+id/inputNameEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Title" />
+                    android:hint="@string/item_title" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -87,7 +89,7 @@
                     android:id="@+id/inputDescriptionEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Description" />
+                    android:hint="@string/item_description" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,6 +24,19 @@
     <string name="gold_coin_desc">Gold coin icon</string>
     <string name="silver_coin_desc">Silver coin icon</string>
     <string name="bronze_coin_desc">Bronze coin icon</string>
+
+    <string name="item_quality_0">Poor</string>
+    <string name="item_quality_1">Common</string>
+    <string name="item_quality_2">Rare</string>
+    <string name="item_quality_3">Epic</string>
+    <string name="item_quality_4">Legendary</string>
+    <string name="item_quality_5">Quest</string>
+    <string name="item_submit">Submit</string>
+    <string name="item_title">Title</string>
+    <string name="item_description">Description</string>
+    <string name="item_img">Object logo</string>
+    <string name="item_edit">Edit</string>
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
