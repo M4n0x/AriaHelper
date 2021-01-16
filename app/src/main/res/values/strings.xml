@@ -9,6 +9,7 @@
 
     <string name="menu_lootdm">Trésor</string>
     <string name="menu_loot_char">Sac</string>
+    <string name="menu_about">À propos</string>
     <string name="loot_details">Details</string>
     <string name="loot_add">Ajouter loot</string>
     <string name="App_name">Aria Helper</string>

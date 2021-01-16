@@ -77,7 +77,4 @@ object PicturePersistenceManager {
         return filename
     }
 
-    /**
-     * TODO : create a function to delete/remove image
-     */
 }

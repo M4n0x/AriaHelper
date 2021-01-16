@@ -93,4 +93,9 @@
         android:name="ch.hearc.ariahelper.ui.character.partials.CharacterSettingsFragment"
         android:label="@string/menu_char_settings"
         tools:layout="@layout/fragment_character_settings" />
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="ch.hearc.ariahelper.ui.common.AboutFragment"
+        android:label="AboutFragment"
+        android:layout="@layout/fragment_about"/>
 </navigation>
