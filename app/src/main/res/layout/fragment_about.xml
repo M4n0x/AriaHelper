@@ -6,15 +6,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ch.hearc.ariahelper.ui.common.AboutFragment">
-    
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="194dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/hearc_logo_description"
+        android:src="@drawable/arc_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtDescription" />
+
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="test Salut"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/App_name"
+        android:textSize="36sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/app_description"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

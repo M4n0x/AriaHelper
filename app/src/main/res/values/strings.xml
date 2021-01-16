@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">AriaHelper</string>
+    <string name="app_description">AriaHelper is a student project made in Mobile Development\'s course.\n\n2020–2021 He-Arc, Neuchâtel, Switzerland.</string>
+    <string name="hearc_logo_description">He-arc logo</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
     <string name="menu_lootdm">Trésor</string>
     <string name="menu_loot_char">Sac</string>
     <string name="menu_about">À propos</string>
