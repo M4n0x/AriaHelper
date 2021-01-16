@@ -14,6 +14,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import ch.hearc.ariahelper.R
 import ch.hearc.ariahelper.models.Item
+import ch.hearc.ariahelper.models.enums.Quality
 import ch.hearc.ariahelper.models.persistence.PicturePersistenceManager
 
 /**
@@ -54,10 +55,10 @@ class ItemRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item : Item = values[position]
         holder.idView.text = item.name
-        holder.contentView.text = item.quality.toString()
+        holder.contentView.text = Quality.getStringFromId(item.quality)?.let { context.getString(it) }
         holder.selectView.isChecked = false
         if (item.picture.isEmpty())
-            holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.bag_default))
+            holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.bag_icon))
         else
             holder.imageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(item.picture))
         holder.selectView.visibility = if (showSelect) View.VISIBLE else View.GONE

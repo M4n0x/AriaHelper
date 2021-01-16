@@ -24,8 +24,6 @@ import kotlinx.android.synthetic.main.fragment_add_or_update_item.view.*
 
 /**
  * A simple [Fragment] subclass.
- * Use the [CreateOrUpdateItemFragment.newInstance] factory method to
- * create an instance of this fragment.
  */
 class CreateOrUpdateItemFragment : Fragment() {
     private val lootViewModel : LootViewModel by navGraphViewModels(R.id.mobile_navigation) {
@@ -44,10 +42,10 @@ class CreateOrUpdateItemFragment : Fragment() {
         val viewHolder = ViewHolder(view)
 
         //Show a list of quality based on enum [QUALITY]
-        view.inputQuality.adapter = ArrayAdapter<Quality>(
+        view.inputQuality.adapter = ArrayAdapter<String>(
             this.requireContext(),
-            android.R.layout.simple_spinner_item,
-            Quality.values()
+            android.R.layout.simple_spinner_dropdown_item,
+            Quality.getListWithLabel(requireContext())
         )
 
         val position : Int? = arguments?.getInt("position")
@@ -59,7 +57,7 @@ class CreateOrUpdateItemFragment : Fragment() {
         with(viewHolder) {
             titleView.setText(item.name)
             descriptionView.setText(item.description)
-            if (item.picture != null && item.picture != "")
+            if (item.picture != "")
                 imageView.setImageBitmap(PicturePersistenceManager.getBitmapFromFilename(item.picture))
             qualityView.setSelection(item.quality)
         }

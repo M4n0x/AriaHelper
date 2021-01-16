@@ -1,14 +1,16 @@
 <resources>
     <string name="app_name">AriaHelper</string>
+    <string name="app_description">AriaHelper is a student project made in Mobile Development\'s course.\n\n2020–2021 He-Arc, Neuchâtel, Switzerland.</string>
+    <string name="hearc_logo_description">He-arc logo</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
     <string name="menu_lootdm">Trésor</string>
     <string name="menu_loot_char">Sac</string>
+    <string name="menu_about">À propos</string>
     <string name="loot_details">Details</string>
     <string name="loot_add">Ajouter loot</string>
     <string name="App_name">Aria Helper</string>
@@ -22,6 +24,19 @@
     <string name="gold_coin_desc">Gold coin icon</string>
     <string name="silver_coin_desc">Silver coin icon</string>
     <string name="bronze_coin_desc">Bronze coin icon</string>
+
+    <string name="item_quality_0">Poor</string>
+    <string name="item_quality_1">Common</string>
+    <string name="item_quality_2">Rare</string>
+    <string name="item_quality_3">Epic</string>
+    <string name="item_quality_4">Legendary</string>
+    <string name="item_quality_5">Quest</string>
+    <string name="item_submit">Submit</string>
+    <string name="item_title">Title</string>
+    <string name="item_description">Description</string>
+    <string name="item_img">Object logo</string>
+    <string name="item_edit">Edit</string>
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
