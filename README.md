@@ -15,3 +15,7 @@ Un sac pour gérer votre stuff et un emplacement stuff pour le maitre du jeu.
 ![image](https://user-images.githubusercontent.com/6802086/104837133-eab3b180-58b2-11eb-86b4-e8655455fe56.png)
 
 Votre équipement peut être échangé à tout moment avec un autre joueur près de vous avec la technologie WiFi Direct !
+
+_(Ce projet d'étudiants est developpé dans le cadre du cours "Dévelopement Mobile" à la [He-Arc Ingénierie](http://he-arc.ch), Neuchâtel, Suisse)_
+
+Maxime Welcklen & Steve Mendes Reis
