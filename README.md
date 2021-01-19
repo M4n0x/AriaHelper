@@ -4,7 +4,7 @@ Aria Helper est une app Android qui apporte un support numérique jeu de rôle G
 ## Gestion du personnage
 ![image](https://user-images.githubusercontent.com/6802086/104837179-22225e00-58b3-11eb-997f-426428c4cf8c.png)
 
-Depuis cette page il est possible de lancer de secouer l'appareil pour lancer des dés, le dernier dé est configurable !
+Depuis cette page il est possible de secouer l'appareil pour lancer des dés, le dernier dé est configurable !
 
 ## Menu d'accès aux fonctionnalités
 ![image](https://user-images.githubusercontent.com/6802086/104837159-08811680-58b3-11eb-905c-2a98f4fc9422.png)
