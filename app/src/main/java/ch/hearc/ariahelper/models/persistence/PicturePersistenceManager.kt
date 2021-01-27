@@ -12,7 +12,7 @@ import java.io.IOException
 import java.util.*
 
 /**
- * This class is used to persists DM Items loot between app's launch
+ * This class is used to persist and retrieve Pictures
  * This class is working as a singleton
  */
 object PicturePersistenceManager {
@@ -53,8 +53,8 @@ object PicturePersistenceManager {
     /**
      * This function is used to save any picture
      * and store it in the app intern data
-     * @param   bitmap picture we want to save in intern app data
-     * @param resize resize image to 400
+     * @param bitmap picture we want to save in intern app data
+     * @param resize resize image to 512 and reduce image quality
      * @return  return the file's id newly stored in app
      */
     fun save(bitmap: Bitmap, resize: Boolean = true) : String{
