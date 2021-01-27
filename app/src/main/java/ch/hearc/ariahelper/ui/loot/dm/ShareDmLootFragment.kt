@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_share_dm_loot.*
 import kotlinx.android.synthetic.main.fragment_share_dm_loot.view.*
 
 /**
- * CharacterBagFragment : Top-level  class
+ * ShareDmBagFragment : Top-level  class
  *
  * Display the current saved treasure and offer to add to it or give it
  *
